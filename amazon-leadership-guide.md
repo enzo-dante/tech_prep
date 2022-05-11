@@ -1,5 +1,46 @@
+# online resources
 
 https://www.amazon.jobs/en/principles
+
+https://igotanoffer.com/blogs/product-manager/why-google-why-amazon-why-facebook-interview-questions#why-amazon
+
+# QUESTION: Why Amazon?
+
+I want to move into a Software Engineering role at Amazon for two main reasons.
+
+First, I appreciate that Amazon values ownership and customer obsession. I sincerely believe that Amazon is choosing to build a better long-term future by proactively simplifying the lives of its customers each and every day through technology. For example, the Amazon Macie service uses NLP to automatically monitor databases, flag security risks by communicating them to Eventbridge and then alert businesses on the AWS platform.
+
+Second, I am excited by the idea of working alongside others that are also driven to bring people together and realize greatness on a community and personal level. It sounds like a tremendous opportunity that would expedite my own learning & development. 
+
+# QUESTION: Tell us about a feature you developed from start to finish
+
+As an SE at Choice Hotels, I was tasked with inventing the group payment options on their website.
+
+When I first took on the user story, the details provided conveyed simple if-else logic based on meeting specific conditions.
+
+I quickly learned the scope of the project wasn't adequately understood given that the functionality was going to intertwine with various domains that weren't prepared for such functionality yet given our service-oriented architecture and at the time on-going migration on-premise data center to AWS.
+
+So I expressed my concerns to my PM, who organized virtual-meetings with all the stake holders.
+
+After those meeting, I updated the logic on our backend, validated against my unit tests, and made sure our CDN had the necessary content
+
+Unfortunately, there were edge cases that I didn't take into account, so my implementation didn't pass QA. I brought up my failure to provide a scalable-solution and one of the stake holders from another domain possessed an excel that visually demonstrated how all 12 possible customer experiences should play out.
+
+After that meeting, I updated my logic and unit tests, worked closely with QA to make sure all possible scenarios were understood and tested.
+
+Once QA was approved, it was successfully tested in canary in both on-premise and cloud environments.
+
+Upon completion of the project, I was again offered an official role with the company. I was a contractor during my tenure as an SE at Choice Hotels.
+
+# leadership focus
+
+1. Customer Obsession
+
+2. Ownership
+
+3. Bias for Action
+
+4. Have Backbone; Disagree and Commit
 
 # Customer Obsession:
 
@@ -82,6 +123,24 @@ _This story demonstrates the Amazon Principles:_
 > As we do new things, we accept that we may be misunderstood for long periods of time.
 
 **1. Tell me about a time when you innovated on something and it went wrong.**
+
+As an SE at Choice Hotels, I was tasked with inventing the group payment options on their website.
+
+When I first took on the user story, the details provided conveyed simple if-else logic based on meeting specific conditions.
+
+I quickly learned the scope of the project wasn't adequately understood given that the functionality was going to intertwine with various domains that weren't prepared for such functionality yet given our service-oriented architecture and at the time on-going migration on-premise data center to AWS.
+
+So I expressed my concerns to my PM, who organized virtual-meetings with all the stake holders.
+
+After those meeting, I updated the logic on our backend, validated against my unit tests, and made sure our CDN had the necessary content
+
+Unfortunately, there were edge cases that I didn't take into account, so my implementation didn't pass QA. I brought up my failure to provide a scalable-solution and one of the stake holders from another domain possessed an excel that visually demonstrated how all 12 possible customer experiences should play out.
+
+After that meeting, I updated my logic and unit tests, worked closely with QA to make sure all possible scenarios were understood and tested.
+
+Once QA was approved, it was successfully tested in canary in both on-premise and cloud environments.
+
+Upon completion of the project, I was again offered an official role with the company. I was a contractor during my tenure as an SE at Choice Hotels.
 
 _This story demonstrates the Amazon Principles:_
 1. customer obsession
@@ -422,6 +481,7 @@ _This story demonstrates the Amazon Principles:_
 
 **1. Tell me about an unpopular decision of yours.**
 
+In the evenings, I am training to become a salsa world champion in the group and partner categories. I recently decided to switch to a different dance program despite my $3000 financial investment and the positive relationships I had developed. I made this hard decision because I sincerely believe that if I want to have even a chance a realizing greatness, I need to be in a collaborative environment that confronts the facts by providing honest feedback with positive intent for it's students.
 
 _This story demonstrates the Amazon Principles:_
 1. customer obsession
