@@ -1,8 +1,10 @@
-# Econometrics
+# Software Engineering Guide
+
+## Econometrics
 
 Econometrics is the application of statistical methods to economic data in order to give empirical content to economic relationships.
 
-# TRADEOFFS: relational and non-relational databases
+## TRADEOFFS: relational and non-relational databases
 
 SQL is a query language, whereas MySQL is a relational database that uses SQL to query a database
 
@@ -13,8 +15,7 @@ a database, like a MySQL database, is just a bunch of tables aka a relational da
 __relational databases:__
 
 - hold data tables:
-
-    - a collection of columns (headers) and rows (data)
+  - a collection of columns (headers) and rows (data)
 
 - you can have multiple tables joined together by a defined relationship
 
@@ -26,9 +27,9 @@ __relational databases:__
 
 - relational db scale can be either:
 
-    - vertical: build a better machine via more memory, faster hard disk, better cpu
+  - vertical: build a better machine via more memory, faster hard disk, better cpu
 
-    - horizontal: simply add more machines
+  - horizontal: simply add more machines
 
 - relational db access uses raw SQL
 
@@ -38,11 +39,11 @@ __non-relational databases:__
 
 - the cost is that queries are less flexible
 
-    - tables, documents, or graphs hold data together but CANNOT be joined together by a relationship
+  - tables, documents, or graphs hold data together but CANNOT be joined together by a relationship
 
-    - the data is handled by key-value stores where the user needs to know the key
+  - the data is handled by key-value stores where the user needs to know the key
 
-    - best when the data model fits (graphs)
+  - best when the data model fits (graphs)
 
 - storage relies on hashing function for the input and the result is used to identify the partition where the data is stored
 
@@ -50,17 +51,17 @@ __non-relational databases:__
 
 - access: many are no-sql databases that have their own CRUD (create, read, update, delete) functionality that rely on key-value stores
 
-    - REST APIs are used to hit a specific endpoint that comes with certain functionality
+  - REST APIs are used to hit a specific endpoint that comes with certain functionality
 
-# COMPETENCY: service-oriented architectures (SOA)
+## COMPETENCY: service-oriented architectures (SOA)
 
-<img src="/content/soa.gif"/>
+![soa](/content/soa.gif)
 
 __SOA example: ticket payment system__
 
-<img src="/content/soa_example.gif"/>
+![soa example](/content/soa_example.gif)
 
-# COMPETENCY: MapReduce
+## COMPETENCY: MapReduce
 
 MapReduce is a parallel processing technique for processing a big data set which is distributed on a commodity cluster, instead of using serial processing.
 
@@ -89,28 +90,28 @@ ASSIGN REDUCER RESPONSIBILITY/TASK:
 ```json
 
 key = city name
-list = each element/record that has data & shared key 
+list = each element/record that has data & shared key
 reducerTask = for each team per division, get total annual sales (12 months)
 
 reducerPacificWest: {
 
     suns: [
-            [9,5,2,3,6,4,1,5,9,7,1,3], 
+            [9,5,2,3,6,4,1,5,9,7,1,3],
             suns
         ],
- 
+
     warriors: [
-            [1,5,5,3,6,4,1,4,1,4,2,9], 
+            [1,5,5,3,6,4,1,4,1,4,2,9],
             warriors
         ],
-  
+
     clippers: [
-            [3,5,2,9,6,4,1,7,5,9,8,3], 
+            [3,5,2,9,6,4,1,7,5,9,8,3],
             clippers
         ],
- 
+
     kings: [
-            [6,8,2,8,6,4,1,5,2,7,1,1], 
+            [6,8,2,8,6,4,1,5,2,7,1,1],
             kings
         ]
 
@@ -131,9 +132,9 @@ __EXAMPLE: amazon wants to calculate its total sales city wise for the year 2015
 
 ![reducePhaseAmazon](/content/mapReduce_reducePhaseAmazon.gif)
 
-# COMPETENCY: distributed cache
+## COMPETENCY: distributed cache
 
-distributed cache is an optimization technique for faster responses with scalability  
+distributed cache is an optimization technique for faster responses with scalability
 
 ![distributed cache problem to solve](/content/distributedCache_problemToSolve.gif)
 
@@ -145,7 +146,7 @@ with many servers comes larger latency, despite being able to provide for millio
 
 ![distributed cache solution](/content/distributedCache_cacheSolution.gif)
 
-__any layer in the architecture can have cache__
+__any architecture layer caching__
 
 CDN: Content Delivery Network
 
@@ -155,7 +156,7 @@ Local Cache:
 
 - on service in-memory cache for faster responses to client-requests
 
-__distributed cache architecture examples__
+__distributed cache architecture__
 
 Layer Cache: Reddis or Memcached
 
@@ -175,22 +176,69 @@ designing cache, especially in a distributed architecture where multiple levels 
 
 ![cache misses](/content/distributedCache_cacheMisses.gif)
 
-# COMPETENCY: cloud load balancing
+## COMPETENCY: cloud load balancing
 
+load balancing is a backend optimization technique to manage cost, reduce latency, improve performance, & boost security
 
-# COMPETENCY: memory management
+![cloud load balancing architecture](/content/cloudLoadBalancing_architecture.gif)
 
-# COMPETENCY: processes
+benefits:
 
-# COMPETENCY: threads
+- cross-regional failover
 
-# COMPETENCY: synchronization
+- fast autoscaling
 
-# COMPETENCY: paging
+- scales to millions of queries/requests per second
 
-# COMPETENCY: multithreading
+__PROBLEM TO SOLVE__
 
-# COMPETENCY: internet fundamentals
+How do you scale, optimize, & secure a global app while maintaining low-latency for positive user experiences?
+
+![local load balancing](/content/cloudLoadBalancing_localLoadBalancing.gif)
+
+__cloud load balancing architecture__
+
+layer 7 external/global load balancing
+
+![layer 7 global load balancing](/content/cloudLoadBalancing_globalLoadBalancing.gif)
+
+layer 4 internal load balancing
+
+![layer 4 internal load balancing](/content/cloudLoadBalancing_internalLayer4.gif)
+
+__data modeling__ 
+
+layer 7 external/global load balancing
+
+![data model layer 7](/content/cloudLoadBalancing_dataModelLayer7.gif)
+
+layer 4 internal load balancing
+
+![data model layer 4](/content/cloudLoadBalancing_dataModelLayer4.gif)
+
+__security__
+
+SSL Certificates
+
+![certs](/content/cloudLoadBalancing_certificatesSecurity.gif)
+
+prevent any layer attacks
+
+![attack prevention](/content/cloudLoadBalancing_attackSecurity.gif)
+
+## COMPETENCY: memory management
+
+## COMPETENCY: processes
+
+## COMPETENCY: threads
+
+## COMPETENCY: synchronization
+
+## COMPETENCY: paging
+
+## COMPETENCY: multithreading
+
+## COMPETENCY: internet fundamentals
 
 > DNS lookup: get an ip address for a domain name/website URL
 
@@ -285,8 +333,8 @@ apis allows users to get data from another application without needing to unders
 
 apis can often send data back in different formats: JSON or XML
 
-# COMPETENCY: traversals
+## COMPETENCY: traversals
 
-# COMPETENCY: divide and conquer
+## COMPETENCY: divide and conquer
 
-# COMPETENCY: breadth-first search vs. depth-first search
+## COMPETENCY: breadth-first search vs. depth-first search
