@@ -1,4 +1,719 @@
-# Software Engineering Guide
+# Big O Notation
+
+    /*
+        ! Big(O) Notation / O(n): independent of hardware, an algorithm's TIME COMPLEXITY relative to the number of processed items
+            Always measures WORST-CASE scenario
+
+        ! Big(O) TIME COMPLEXITY: the worst case scenario for the number of steps in an algorithm's execution
+
+        ! Big(O) SCALE MEASUREMENT: the algorithm's TIME COMPLEXITY performance as the number of processed items grows
+
+        * Big(O) TYPES
+        best-to-worst performance
+
+            * O(1) = O of 1
+               constant time complexity
+
+            * O(logn) = O of log n to the base 2
+               logarithmic time complexity
+
+            * O(n) = O of n
+               linear time complexity
+
+            * O(nlogn) = O of n log n
+               loglinear time complexity
+
+            * O(n^2) = O of n-squared
+               quadratic time complexity
+     */
+
+# Recursion
+
+    /*
+        ! RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+            an algorithm is a repeatable sequence of steps
+
+        ? RECURSION base case/breaking condition: the algorithm either upward propagates recursive call return for stack resolution or experiences a stack overflow
+
+        * factorial example:
+            after the downward recursive calls, the app stops the recursive calls upon reaching the base case:
+
+                recursiveFactorial(0)
+
+            then, each stack call resolves in an upwards direction from the return values
+
+                !3 = 1*2*3 = 6
+
+                    recursiveFactorial(3)
+                            returns 3 * (2 * 1) = 6
+
+                    recursiveFactorial(2)
+                            returns 2 * 1
+
+                    recursiveFactorial(1)
+                            returns 1 * 1
+
+                    recursiveFactorial(0)
+                            returns 1
+
+        * RECURSION factorial logic:
+
+            !1 = !0 * 1 = 1
+
+            !2 = 1*2 = !1 * 2
+
+            !3 = 1*2*3 = !2 * 3
+
+            !4 = 1*2*3*4 = !3 * 4
+
+            !5 = 1*2*3*4*5 = !4 * 5
+
+        * simplified factorial equation for RECURSION
+
+            !n = !(n-1) * n
+
+        ? DIVIDE & CONQUER
+
+            recursively divide the original problem into 2 or more sub-problems & repeat until the sub-problems become small enough to solve a base case
+
+            after solving the base case/breaking condition, combine the solutions to construct the overall solution to the original problem
+     */
+
+# Data Structures
+
+## arrays
+
+    /*
+        ! ARRAYS: memory efficient because you don't have to store extra info with each element in the array
+
+        ! TIME COMPLEXITY O(1) constant: when getting an element with index in an array
+                step 1: multiply size of the element by its index
+                step 2: get the start address of the array
+                step 3: add the start address to the result of the multiplication
+     */
+
+
+## heaps
+
+    /*
+        ! HEAPS: a complete binary tree w/ array-backing, only interested in  min & max at ROOT of tree O(1) time complexity that functions left-to-right
+
+            node at array[i]
+
+                leftChild_index = 2i + 1
+
+                rightChild_index = 2i + 2
+
+                parent_index = floor((i-1) / 2)
+
+            * ex: 15 at index_3 in [22, 19, 18, 15, 3, 14, 4, 12]
+
+                leftChild_index = 2(3) + 1 = index_7 = 12
+
+                rightChild_index = 2(3) + 2 = index_8 = out-of-bounds, so no child
+
+                parent_index = floor((3-1) / 2) = index_1 = 19
+
+        ! PRIORITY QUEUES HEAPS: max HEAP implementation w/ array backing always want the highest priority item first at O(1) constant time complexity
+            insert() = add()
+            poll() = remove()
+            peak() = getRoot
+
+        ! Java class PRIORITY QUEUE is a MIN HEAP = lower the number, the higher the priority
+            FOR MAX HEAP: you'd need a comparator that will look at the two values and whenever you have one value greater than the other you in fact want to return that that value's less.
+
+        ? HEAPIFY: the process of converting a binary tree into a heap after inserting or deleting a node
+
+        ? HEAP peek(): O(1) constant time complexity to fix by swap replacement item up to root
+            get root
+
+        ? HEAP insert(): O(logn) logarithmic time complexity to fix by swap new item up to root
+
+            step 1: always add to end
+
+            step 2: heapify()
+
+            step 3: compare new item against parent
+
+            step 4: if greater than parent, then swap
+
+            step 5: repeat
+
+                * ex: add 20 as child to 15 parent
+
+                                    22
+
+                               19       18
+
+                       15     3             14     4
+
+                   12
+
+                * since 20 is greater than 15 parent, swap
+
+                                    22
+
+                               19       18
+
+                       20     3             14     4
+
+                 12   15
+
+                * since 20 is greater than 19 parent, swap, afterwards the complete tree has been HEAPIFIED()
+
+                                    22
+
+                               20       18
+
+                       19     3             14     4
+
+                 12   15
+
+        ? HEAP delete(): O(logn) logarithmic time complexity to fix by swap replacement item up to root
+
+            step 1: find replacementValue
+
+            step 2: always take rightmost value to keep tree complete
+
+            * only need to 3A or 3B, but not both
+            step 3A heapify(): if replacementValue greater than parent, then fixHeapAbove, swap replacementValue w/ parent
+
+            step 3B heapify(): if replacementValue lesser than parent, then fixHeapBelow, swap replacementValue w/ larger of two children
+
+            step 5: repeat until replacementValue in correct index
+
+                ! ex) delete 75; replacementValue 67
+
+                                    80
+
+                               75       60
+
+                        68    55          40  52
+
+                    67
+
+                * deleted 75
+
+                                    80
+
+                               67       60
+
+                        68    55          40  52
+
+                * heapify() = fixHeapBelow
+
+                                    80
+
+                               68       60
+
+                        67    55          40  52
+
+                ! ex) delete 40; replacementValue 67
+
+                                    80
+
+                               75       60
+
+                        68    55          40  52
+
+                    67
+
+                * deleted 40
+
+                                    80
+
+                               75       60
+
+                        68    55          67  52
+
+                * heapify() = fixHeapAbove
+
+                                    80
+
+                               75       67
+
+                        68    55          60  52
+
+        ? MAX HEAP: every parent has to have a value greater than or equal to its children in a complete binary tree
+
+                Traversing down to every leaf, all the values along each path should be in descending order.
+
+                                    22
+
+                               19       18
+
+                       15     3             14     4
+
+                   12
+
+        ? MAX HEAP SORT: sort nodes in a max heap
+
+                step 1: root has the largest value
+
+                step 2: swap root w/ last element in the array
+
+                step 3: heapify(), excluding last node
+
+                step 4: after heapify(), the second largest element is at the root
+
+                step 5: repeat
+
+                ! ex) max heap sort
+
+                                    80
+
+                               75       60
+
+                        68    55          40  52
+
+                    67
+                                    67
+
+                               75       60
+
+                        68    55          40  52
+
+                    80
+
+                    * must heapify() index 0 - index 6
+
+                                    75
+
+                               68       60
+
+                        67    55          40  52
+
+                    80
+
+                                     52
+
+                               68       60
+
+                        67    55          40  75
+
+                    80
+
+                    * repeat: must heapify() index 0 - index 5 until root index is left after heapify()
+
+        ? MIN HEAP: every parent has to have a value that is less than or equal to its children in a complete binary tree
+
+                Travelling from the root down to the leaves, all the paths would be in ascending order
+
+                if you start at a leaf and travel up to the root, all the paths would be in descending order
+     */
+
+## LinkedLists
+
+    /*
+        ! ARRAYS: memory efficient because you don't have to store extra info with each element in the array
+
+        ! TIME COMPLEXITY O(1) constant: when getting an element with index in an array
+                step 1: multiply size of the element by its index
+                step 2: get the start address of the array
+                step 3: add the start address to the result of the multiplication
+     */
+
+## maps
+
+     /*
+        ? MAPS INTERFACE: collection of key-value pair HASHMAP implementations that use GENERIC CLASS dataStructures w/ 2 parameters: UNIQUE key & value
+            GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
+
+        ? no-order HASHMAPS & LINKED HASHMAPS classes are the main implementations of the MAPS INTERFACE
+
+            Map<dataType, dataType> instance = new HashMap<>()
+
+        ? hashmapInstance.put(key, value) = add unique_key-value generics class pair into map collection
+
+            ! if you add the key again, the oldValue will be overridden in the map since map keys are unique
+                before overriding the value, .put() will return the previous value of the key-value pair
+                a value being added for the 1st time will initially return null before adding to the map collection
+
+        ? hashmapInstance.get(key) = retrieve record via key in map collection
+
+        ? hashmapInstance.getOrDefault(key, defaultValue) = get the value mapped with specified key. If no value is mapped with the provided key then the default value is returned.
+
+        ? hashmapInstance.containsKey(key) = validate key existence in map before adding/update key in map
+
+        ? hashmapInstance.putIfAbsent(key, value) = for CONCURRENCY, if key is not already present in map, than add key-value pair
+
+        ? Map.entrySet(): create a set out of the same elements contained in the hash map
+        ? use hashmapInstance.keySet() + hashmapInstance.get(key) = loop through map & return all key-value pairs
+
+        ? use hashmapInstance.remove(key) = remove key-value pair from map
+
+        ? use hashmapInstance.remove(key, specificValue) = ONLY IF key has specific value, THAN remove key-value pair from map
+
+        ? use hashmapInstance.replace(key, replaceValue) = IF key already exists, replace the key's value in the map
+
+        ? use hashmapInstance.replace(key, validationValue, replacingValue) = ONLY IF key has specific value, THAN replace key's value in map
+
+        ? HASHSET element/ HASHMAP key custom CLASSES: @Override .equals() & .hashcode() methods - if 2 objects compare equal, then they must have same collection bucket hashcode
+     */
+
+## queues
+
+     /*
+        ! QUEUE: (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
+
+
+            due to FIFO, no random access and can only access the top of a stack
+
+            * add() or enqueue() = add value to end of the queue
+
+                [10, 15, 4, 22]
+
+                front = 10
+                back = 22
+
+                enqueue(20) = [10, 15, 4, 22, 20]
+
+            * pop() or dequeue() = remove value from front of the queue
+
+                [10, 15, 4, 22, 20]
+
+                front = 10
+                back = 20
+
+               dequeue(20) = [10, 15, 4, 22, 20]
+
+            * peek() = get item from front of queue
+
+
+        ! STACK TIME COMPLEXITY:
+
+            * O(1) CONSTANT TIME COMPLEXITY for push(), pop(), & peek() via LINKED LIST backing
+
+            * O(n) LINEAR TIME COMPLEXITY for push(), pop(), & peek() via ARRAY backing
+
+        ? CIRCULAR QUEUE: wrap back to front of the queue instead of resizing potentially front-empty queue
+
+                ! The back field will always be pointing to the next available position in the queue.
+
+                * adding to a full circular queue needs to be resized/doubled
+
+                    1st iteration; back/nextAvailablePosition = index 5 for Bill
+
+                        0 - jane - front
+                        1 - john
+                        2 - mary
+                        3 - mike
+                        4        - back
+
+                    2nd iteration; back/nextAvailablePosition = index 7
+
+                        0 - jane - front
+                        1 - john
+                        2 - mary
+                        3 - mike
+                        4 - bill
+                        5
+                        6
+                        7         - back
+
+                * wrap back to front & no need to resize array if removing & adding elements from a circular queue that's NOT full
+                ! if circular queue is full, during 2x resize elements at the front of the queue assigned to back in order
+
+                    1st iteration; back/nextAvailablePosition = index 2
+
+                        0 - jane - front
+                        1 - john
+                        2        - back
+                        3
+                        4
+
+                    2nd iteration; back/nextAvailablePosition = index 2 still after removing jane
+
+                        0
+                        1 - john - front
+                        2        - back
+                        3
+                        4
+
+                    3rd iteration; back/nextAvailablePosition = index 3 since adding
+
+                        0
+                        1 - john - front
+                        2 - mary
+                        3        - back
+                        4
+
+                    4th iteration; back/nextAvailablePosition = index 3 still after removing john
+
+                        0
+                        1
+                        2 - mary - front
+                        3        - back
+                        4
+
+                    5th iteration; back/nextAvailablePosition = index 4 still after adding mike
+
+                        0
+                        1
+                        2 - mary - front
+                        3 - mike
+                        4        - back
+
+                    6th iteration; back/nextAvailablePosition = index 4 still after removing mary
+
+                        0
+                        1
+                        2
+                        3 - mike - front
+                        4        - back
+
+                    7th iteration; back/nextAvailablePosition = index 4 still after adding bill
+
+                        0        - back
+                        1
+                        2
+                        3 - mike - front
+                        4 - bill
+
+                    nth iteration; back/nextAvailablePosition = index 2 but need unwrapping resize when adding gary
+
+                        0 - jane
+                        1 - john
+                        2        - back
+                        3 - mike - front
+                        4 - bill
+
+                    n+ iteration; back/nextAvailablePosition = index 5 but array has been doubled and elements in correct order
+
+                        0 - mike - front
+                        1 - bill
+                        2 - jane
+                        3 - john
+                        4 - gary
+                        5        - back
+                        6
+                        7
+
+     */
+
+## sets
+
+    /*
+       ? SETS INTERFACE: a computationally fast unordered collection without any duplicates implemented via HASHSET class
+
+       ? SET UNION: a no-duplicate set that contains all the elements of 2 or more sets via hashSet.addAll()
+
+       ? HASHSET equals() & .hashcode(): @Override both methods if using own object as map key or set element
+    */
+
+## stacks
+
+    /*
+        ! STACKS: (LIFO) last-in, first-out abstract class implemented by a LINKED LIST that uses push, pop, peek methods
+
+            due to LIFO, no random access and can only access the top of a stack
+
+        ! STACK O(1) CONSTANT TIME COMPLEXITY: for push(), pop(), & peek() via LINKED LIST backing
+
+            O(n) LINEAR TIME COMPLEXITY for push(), pop(), & peek() via ARRAY backing
+     */
+
+## trees
+
+    /*
+        ! TREES: a collection of 1 parent nodes & their respective children connected by edges
+
+            every item in a tree is a node
+
+            * Red-Black Tree: self-balancing tree will validate balanced nodes after each traversal w/ insert(), delete(), & get() of O(n) linear time complexity
+
+            ? singleton tree: a tree with only one child node
+                ex: node 22 below
+
+            ? edge: each of the single descending connections
+
+            ? subtree: if you start at any given node & it's the node and all of its descendants.
+                ex: node 4 below
+
+            ? path: a no-cycle sequence of nodes required to go from one node to another, for example,
+                ex: node 4 -> node 9 -> node 7 below
+
+            ? node depth: number of edges to a node from the root node
+                how many edges does it take me to get up to the root from the start node
+
+                ex: node 14 has a depth of 3
+
+                ex: node 18 has a depth of 2
+
+            ? node height: the number of edges on the longest path from the node to a leaf.
+                ex: node 4 has a depth of 2
+
+                ex: leaf nodes has a height of 0
+
+                ex: the rode/tree has a height of 3
+
+            ? ancestor: child nodes in the given node's path
+                ex: node 4 is an ancestor of 15
+
+            * Tree example:
+                            15 (root node) LEVEL ZERO
+
+                22          4                17 LEVEL ONE
+
+           19         9    18    3         11  0    LEVEL TWO
+
+                  25   7          14           (leaf: a node that doesn't have any children) LEVEL THREE
+
+        ! BINARY TREE TRAVERSAL: move between nodes in a tree data structure left-to-right
+
+            ? LEVEL TRAVERSAL: visit nodes on each level left-to-right
+
+            * level order: 25, 20, 27, 15, 22, 26, 30, 29, 32
+
+                                    25
+
+                               20       27
+
+                          15    22        26  30
+
+                                                29 32
+
+            ? PRE-ORDER TRAVERSAL: visit the root of the subtree first left-to-right
+                PRE = visit root first
+
+            * pre-order traversal: 25, 20, 15, 22, 27, 26, 30, 29, 32
+
+                                    25
+
+                               20       27
+
+                          15    22        26  30
+
+                                                29 32
+
+            ? POST-ORDER TRAVERSAL: visit the root of every subtree last left-to-right
+
+            * post-order traversal: 15, 22, 20, 26, 29, 32, 30, 27, 25
+
+                                    25
+
+                               20       27
+
+                          15    22        26  30
+
+                                                29 32
+
+            ? IN-ORDER TRAVERSAL: visit the left-child, then root, then right-child (repeat process for subtrees)
+
+             * in-order traversal: 15, 20, 22, 25, 26, 27, 29, 30, 32
+
+                                    25
+
+                               20       27
+
+                          15    22        26  30
+
+                                                29 32
+
+        ! TREE DELETE TRAVERSAL:
+
+            * original:
+                                     25
+
+                               20       27
+
+                          15    22        26  30
+
+                          17                     29 32
+
+            ? delete node is a leaf: null out parent node's left or right child
+
+            * null out 17
+                                     25
+
+                               20       27
+
+                          15    22        26  30
+
+                                                29 32
+
+            ? delete node has one child: save leaf value, delete leaf &  replace it's value at the respective parent node
+
+            * deleted 17 and replaced parent node value 15 with 17
+
+                                     25
+
+                               20       27
+
+                          17    22        26  30
+
+                                              29 32
+
+            ? delete node has two children: get the largest value in left-subtree or the smallest value in right-subtree
+
+            step 1: look for replacement node for minimal disruption from EITHER (NOT both) left or right subtree
+
+            step 2a: if left subtree selected, take the largest value from the left subtree
+
+                    * deleteTargetNode: 20
+                    * subTreeRoot: 15
+                    * look for replacementNode starting at the root of the subtree of the deleteTargetNode (the max in leftSubtree)
+                    * max: completely traverse left edges of a left subtree until discovering a node without a right child
+                    * max: 17
+                        if 17 had a left child, 17 replaces 20 & the left child replaces 17 node value
+
+                    * null out node15 child
+
+                                             25
+
+                                       20       27
+
+                                  15    22        26  30
+
+                                  17                     29 32
+
+                    * post-delete
+                                             25
+
+                                       17       27
+
+                                  15    22        26  30
+
+                                                         29 32
+
+            step 2b: if right subtree selected, take the largest value from the right subtree
+
+                    * deleteTargetNode: 27
+                    * subTreeRoot: 30
+                    * look for replacementNode starting at the root of the subtree of the deleteTargetNode (the min in leftSubtree)
+                    * min: completely traverse right edges of a right subtree until discovering a node without a left child
+                    * min: 29
+                        if 29 had a right child, 29 replaces 27 & the right child replaces 29 node value
+
+                    * null out node15 child
+
+                                             25
+
+                                       20       27
+
+                                  15    22        26  30
+
+                                  17                     29 32
+
+                    * post-delete
+
+                                             25
+
+                                       17       29
+
+                                  15    22        26  30
+
+                                                          32
+     */
+
+## vectors 
+
+    /*
+        ! VECTORS are thread-safe ArrayList
+            thread-safe = no conflict when using on different threads with manually having to synchronize the code (synchronization has overhead performance issue)
+
+        ? use Vectors, if 1 or more threads are writing (CRUD) to an ArrayList there could be thread conflicts
+     */
 
 ## Econometrics
 
