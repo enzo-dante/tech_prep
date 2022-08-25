@@ -134,7 +134,7 @@ __EXAMPLE: amazon wants to calculate its total sales city wise for the year 2015
 
 ## COMPETENCY: distributed cache
 
-distributed cache is an optimization technique for faster responses with scalability
+distributed cache is an optimization technique for faster responses with scalability by reducing multi-server latency by adding multi-level cached data validation
 
 ![distributed cache problem to solve](/content/distributedCache_problemToSolve.gif)
 
@@ -178,7 +178,7 @@ designing cache, especially in a distributed architecture where multiple levels 
 
 ## COMPETENCY: cloud load balancing
 
-load balancing is a backend optimization technique to manage cost, reduce latency, improve performance, & boost security
+backend optimization technique to reduce cost & latency and improve performance & security
 
 ![cloud load balancing architecture](/content/cloudLoadBalancing_architecture.gif)
 
@@ -228,113 +228,415 @@ prevent any layer attacks
 
 ## COMPETENCY: memory management
 
-## COMPETENCY: processes
+![cpu memory](/content/cpu_memory.gif)
 
-## COMPETENCY: threads
+__cpu (central processing unit)__
 
-## COMPETENCY: synchronization
+circutry in a computer that controls the manipulation of data that powers a computer via a small flat square called the motherboard
 
-## COMPETENCY: paging
+__cpu component: ALU (arithmetic logic unit)__
 
-## COMPETENCY: multithreading
+circutry that performs operations like addition & subtration on data 
+
+__cpu component: control unit__
+
+controls the ciruitry for coordinating all of the computer's activities
+
+__cpu component: register unit__
+
+which contains temporary memory for data
+
+__volatile main memory/RAM (random access memory)__
+
+temporary holding of software programs and apps and their associated data until the power is turned off
+
+__non-volatile storage memory__
+
+long-term holding of software programs and apps and their associated data even if the power is turned off
+
+ex) memory sticks, hard disk drive, solid state drives(SSD)
+
+# CONCURRENCY
+
+the ability of software to execute processes simultaneously (one task doesn't have to complete before another one can start)
+
+    Now that doesn't necessarily mean that the application is doing more than one thing at a time or at the same time, what it means is that progress can be made on more than one task.
+
+BENEFITS
+
+    BENEFIT 1:
+        free up the main thread so that it can continue working and executing and you can report progress or accept user input and perform those other tasks on the screen or in other parts of the program,
+        while another long-running task that we kicked off in another thread continues to execute in the background.
+
+    BENEFIT 2: might want to use threads is because an API requires us to provide one.
+
+        EXAMPLE:
+            an application wants to download data and draw a shape on the screen.
+            So if it's a concurrent application, what it can do is it can download a bit of data, then switch to drawing part of the shape and switch back to downloading some more data, then switch back to drawing more of the shape, and so on.
+
+# PROCESS
+
+an instance of a computer program with its own memory space that's sequentially executed by a computer system that has the ability to run several computer programs concurrently.
+
+    java virtual machine instance ->
+            the JVM runs as a process ->
+                running a java console application ->
+                    we're initiating said PROCESS
+
+# THREAD
+
+a unit of execution within a process, each process can have multiple threads, a method for a program to "split" itself into two or more simultaneously or pseudo-simultaneously running tasks.
+
+    creating a thread doesn't require as many resources as creating a process.
+    generally, a thread is contained inside a process and different threads in the same process share the same resources while different processes in the same multitasking operating system do not.
+
+    every Java process or application has at least one thread and that's the main thread
+
+    almost every java process also has multiple system threads that handle everyday tasks like memory management and input/output.
+        for UI applications, this is just called the JavaFx application thread.
+
+# MULTITHREADING:
+
+the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
+
+    So every process has a heap and every thread has a thread stack.
+
+# SYNCHRONIZATION: 
+
+the process of controlling when threads execute code and therefore when they can access the heap is called synchronization.
+
+    When working with threads, we have to synchronize all areas where we think or where interference can happen.
+
+! METHOD SYNCHRONIZATION: when a thread is executing the method, all other threads that want to call the method or any other synchronized method in that class will suspend until the thread running the method exits it. Then another thread can run a synchronized method then another, etc.
+
+    if a class has three synchronized methods, then only one of these methods can ever run at a time and only on one thread.
+
+    since only one thread can execute a synchronized method at a time, threads can't interleave when running a synchronized method.
+
+    that prevents thread interference within synchronized methods, but not outside of those methods.
+
+        if the same instance variables referenced within a synchronized method are also referenced outside it in code that multiple threads can run and that particular code isn't synchronized, then we may still see thread interference.
+
+    In Java to synchronize a method, all we really have to do is add the synchronized keyword to a method declaration.
+
+! STATIC OBJECT SYNCHRONIZATION: the intrinsic lock that's used is owned by the class object
+
+    synchronize a block of statements that work with an object by forcing threads to acquire the object's lock before they execute the statement block.
+
+    only one thread can hold the lock at a time, so other threads that want the lock will be suspended until the running thread releases it.
+
+    Then one and only one of the waiting threads can get the lock and continue executing.
+## COMPETENCY: Page Memory & Paging
+
+memory is split up into small, equal sized sections called pages (or page frames)
+
+a single application may occupy multiple pages, which are not necessarily contiguous
+
+each applications has its own view of the memory (logical memory)
+
+a page table records where the different pages of a program are located in physical memory
+
+unused pages may be paged out to a swap file on disc to make room for other
+
+pages are paged in when needed again
+
+supplementing physical memory with secondary storage is known as virtual memory
+
+when memory is low, excessive swapping can lead to disc threshing & degrade performance
+
+Part 1:
+
+![paging part 1](/content/pageMemory_1.gif)
+
+Part 2:
+
+![paging part 2](/content/pageMemory_2.gif)
+
+__page memory vs segmentated memory__
+
+segmented memory makes an entire block of code available to processor which allows fast access
+
+segmentation can lead to fragmentation of free space
+
+with segmented memory, large processes may not get access to the memory very often
+
+paged memroy can lead to fragmented processes which run more slowly
+
+paged memory makes better use of free space
+
+windows uses paged memory, segmented memory is not as common
 
 ## COMPETENCY: internet fundamentals
 
-> DNS lookup: get an ip address for a domain name/website URL
-
-> computer/client makes a REQUEST to a server
-
-> server processes that request
-
-> server's response is compiling website
-
-__DNS lookups__
-
-The domain name system recursor gets the query and communicates with other domain name system servers in order go get the correct IP address. Once it’s located, the domain name system recursor will send the query to the three other domain name system servers. Next, the root server, designated as the Internet’s domain name system root zone, responds to requests sent in the root zone. A list of authoritative nameservers that correspond with TLDs gets sent back as a response.
-
-The TLD nameserver will then store the second-level domain IP address and release the website’s IP address. The query gets sent to the domain’s nameserver, and finally, the authoritative nameserver can respond to the original domain name system query.
-
-__TCP/IP__
-
-TCP/IP is nonproprietary and, as a result, is not controlled by any single company. Therefore, the IP suite can be modified easily. It is compatible with all operating systems (OSes), so it can communicate with any other system. The IP suite is also compatible with all types of computer hardware and networks.
-
-TCP/IP uses the client-server model of communication in which a user or machine (a client) is provided a service, like sending a webpage, by another computer (a server) in the network.
-
-Collectively, the TCP/IP suite of protocols is classified as stateless, which means each client request is considered new because it is unrelated to previous requests. Being stateless frees up network paths so they can be used continuously.
-
-The transport layer itself, however, is stateful. It transmits a single message, and its connection remains in place until all the packets in a message have been received and reassembled at the destination.
-
-The TCP/IP model differs slightly from the seven-layer Open Systems Interconnection (OSI) networking model designed after it. The OSI reference model defines how applications can communicate over a network.
-
-Network address translation (NAT) is the virtualization of IP addresses. NAT helps improve security and decrease the number of IP addresses an organization needs.
-
-Common TCP/IP protocols include the following:
-
-Hypertext Transfer Protocol (HTTP) handles the communication between a web server and a web browser.
-HTTP Secure handles secure communication between a web server and a web browser.
-File Transfer Protocol handles transmission of files between computers.
-
-> The 4 layers of the TCP/IP model
-
-TCP/IP functionality is divided into four layers, each of which includes specific protocols:
-
-1. The application layer provides applications with standardized data exchange. Its protocols include HTTP, FTP, Post Office Protocol 3, Simple Mail Transfer Protocol and Simple Network Management Protocol. At the application layer, the payload is the actual application data.
-
-2. The transport layer is responsible for maintaining end-to-end communications across the network. TCP handles communications between hosts and provides flow control, multiplexing and reliability. The transport protocols include TCP and User Datagram Protocol, which is sometimes used instead of TCP for special purposes.
-
-3. The network layer, also called the internet layer, deals with packets and connects independent networks to transport the packets across network boundaries. The network layer protocols are IP and Internet Control Message Protocol, which is used for error reporting.
-
-4. The physical layer, also known as the network interface layer or data link layer, consists of protocols that operate only on a link -- the network component that interconnects nodes or hosts in the network. The protocols in this lowest layer include Ethernet for local area networks and Address Resolution Protocol.
-
-__to socket connections__
-
-A socket is one endpoint of a two-way communication link between two programs running on the network. A socket is bound to a port number so that the TCP layer can identify the application that data is destined to be sent to.
-
-__REQUEST/RESPONSE cycle__
-
-> the requests & responses contain HTTP Headers, additional metadata for both request and responses
-
-accept: acceptable content-types for response
-
-cache-control: specify caching behavior
-
-user-agent: information about the software used to make the request
-
-__response status codes__
-
-2xx - success
-3xx - redirect
-4xx - client error (user fault)
-5xx - server error (not user fault)
-
-__HTTP verbs: GET & POST__
-
-> GET
-
-useful for retrieving data
-data passed in query string
-should have no "side-effects"
-can be cached
-can be bookmarked
-
-> POST
-
-useful for writing data
-data passed in request body
-can have "side-effects"
-not cached
-cannot be bookmarked
-
-__api (application programming interface)__
-
-> a version of a website intended for computers to communicate with one another with code
-
-apis allows users to get data from another application without needing to understand how that application functions
-
-apis can often send data back in different formats: JSON or XML
-
 ## COMPETENCY: traversals
+
+BINARY TREE TRAVERSAL: move between nodes in a tree data structure left-to-right
+
+> LEVEL TRAVERSAL: visit nodes on each level left-to-right
+
+     * level order: 25, 20, 27, 15, 22, 26, 30, 29, 32
+
+                             25
+
+                        20       27
+
+                   15    22        26  30
+
+                                         29 32
+
+> PRE-ORDER TRAVERSAL: visit the root of the subtree first then children left-to-right
+         PRE = visit root first
+
+     * pre-order traversal: 25, 20, 15, 22, 27, 26, 30, 29, 32
+
+                             25
+
+                        20       27
+
+                   15    22        26  30
+
+                                         29 32
+
+> POST-ORDER TRAVERSAL: visit the root of every subtree last and children left-to-right first
+
+     * post-order traversal: 15, 22, 20, 26, 29, 32, 30, 27, 25
+
+                             25
+
+                        20       27
+
+                   15    22        26  30
+
+                                         29 32
+
+> IN-ORDER TRAVERSAL: visit the left-child, then root, then right-child (repeat process for subtrees)
+
+      * in-order traversal: 15, 20, 22, 25, 26, 27, 29, 30, 32
+
+                             25
+
+                        20       27
+
+                   15    22        26  30
+
+                                         29 32
 
 ## COMPETENCY: divide and conquer
 
+DIVIDE & CONQUER
+
+- recursively divide the original problem into 2 or more sub-problems & repeat until the sub-problems become small enough to solve a base case
+
+- after solving the base case/breaking condition, combine the solutions to construct the overall solution to the original problem
+
+RECURSION
+
+- an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+
+  - an algorithm is a repeatable sequence of steps
+
+- RECURSION base case/breaking condition
+
+  - the algorithm either upward propagates recursive call return for stack resolution or experiences a stack overflow
+
+divide & conquer algorithms are great for parallel processing because each sub-problem can be run on a different processor simultaneously (extremely performant on modern systems with large core counts)
+
+POTENTIAL PROBLEMS
+- make sure to avoid redundant recursive calls (solved via MEMOIZATION)
+
+- MEMOIZATION: is a technique that can be used to improve the efficiency of divide & conquer algorithms by storing the solutions to earlier problems & eliminating redundant calls
+
+DIVIDE & CONQUER EXAMPLES
+
+1. Merge Sort
+
+         ! Big(O) TIME COMPLEXITY: the worst case scenario for the number of steps in an algorithm's execution
+
+             * LOGARITHMIC TIME COMPLEXITY = O(logn) = O of log to the base 2 n
+                     repeatedly dividing array in half during splitting
+
+         ! SPACE COMPLEXITY:
+
+             * overall: NOT in-place
+
+             splitting phase = in-place algorithm that doesn't use extra memory
+                 track splitting via indices
+
+             merge phase = NOT in-place algorithm
+                 creates temporary arrays for sorting siblings for merge
+
+         ! STABLE ALGORITHM:
+
+             if there are duplicate elements, the original order of these elements will be preserved
+
+                 because only swap if element at index_i > (index_i + 1)
+
+         ! MERGE SORT LOGIC:
+
+             * divide & conquer algorithm:
+
+                 splitting base problem into several mini-problems, solving mini-problems, and then merging mini-solutions to solve base problem
+
+             * recursive algorithm:
+
+                 calls itself until reaching a base case and then feeds return values to itself to solve backwards
+
+             ? PHASE 1: splitting
+
+                 logical splitting (in-place = no new arrays)
+
+                 1. divide the array into two sub-arrays (left & right partition)
+                 2. then recursively divide each subsequent array into two arrays
+                 3. UNTIL you have multiple sorted arrays of 1 length
+
+                     split left side first, then right side last
+                         each split results in 'sibling arrays'
+
+                     EXAMPLE:
+
+                                  [20, 35, -15, 7, 55, 1, -22]
+
+                         [20, 35, -15]       &&            [7, 55, 1, -22]
+
+                     [20]    &&  [35, -15]            [7, 55]    &&      [1, -22]
+
+                                [35] && [-15]       [7] && [55]        [1] && [-22]
+
+             ? PHASE 2: merging (not in-place)
+
+                 MERGING = sorting elements starting from bottom-to-up with temporary array
+
+                     not in-place: uses new temporary arrays
+
+                 handle left side first, then right side
+
+                     merge all sibling arrays on left & right side before proceeding to higher level to recursively merge resulting sibling arrays
+
+                 STEPS:
+
+                 1. create temp array that can hold all elements in the arrays we're merging
+
+                 2. set i to 1st index of left sibling array
+
+                 3. set j to 1st index of right sibling array
+
+                 4. step through left & right array & get the smallest value for temp: compare left[i] to right[j] sibling arrays
+
+                     if left[i] is smaller, copy to temp array and increment i by 1
+                     if right[j] is smaller, copy to temp array and increment j by 1
+
+                     repeat until temp array has merged all elements into temp array in sorted order
+
+                 5. copy temp array back into original input array at the correct position (making it a STABLE algorithm)
+
+                 6. repeat steps 4 & 5 until you have sorted original input array
+
+2. Quick Sort
+
+         ! Big(O) TIME COMPLEXITY: the worst case scenario for the number of steps in an algorithm's execution
+
+             * LOGARITHMIC TIME COMPLEXITY = O(logn) = O of log to the base 2 n
+                     repeatedly dividing array in half during splitting
+
+         ! SPACE COMPLEXITY:
+
+             in-place algorithm that doesn't use extra memory
+
+         ! UNSTABLE ALGORITHM:
+
+             if there are duplicate elements, no guarantee that their original order will be preserved,
+                 since quick sort is predicated on moving elements around a pivotIndex for recursive partitions
+
+         ! QUICK SORT LOGIC:
+
+             * divide & conquer algorithm:
+                 splitting base problem into several mini-problems, solving mini-problems, and then merging mini-solutions to solve base problem
+
+             * recursive algorithm:
+                 calls itself until reaching a base case and then feeds return values to itself to solve backwards
+
+             ? PHASE 1: partitioning step/pivotIndex splitting
+
+                 identify pivotIndex for logical splitting (in-place = no new arrays)
+
+                     each element and it's respective index eventually serves as the pivotIndex
+
+                     CHECK: pivotIndex serves as boundary for 2 sibling sub-arrays that prevent crossover
+
+                 1. divide the array into two sub-arrays (left & right partitions)
+                 2. then recursively divide each subsequent array into two arrays
+                 3. UNTIL you have multiple sorted arrays of 1 length (each containing the pivotIndex element at it's correct position)
+
+                     in left sub-array, elements less than pivotIndex element are moved to the left during traversal
+                     in right sub-array, elements greater than pivotIndex element are moved to the right during traversal
+
+                     AS A RESULT, element at pivotIndex will be in the middle AND in its correct position
+
+                     EXAMPLE:
+
+                                                      [20, 35, -15, 7, 55, 1, -22]
+
+                                     [-15, 7, 20, 35]       pivotIndex = 7            [-22, 1, 7, 55]
+
+                     [-15, 7]    pivotIndex = 7  [7, 20, 35]            [-22, 1]    pivotIndex = 1      [1, 7, 55]
+
+             [-15] && [7]     [7, 20] pivotIndex = 20 [20, 35]       [-22] && [1]        [1, 7] pivotIndex = 7 [7, 55]
+
+                             [7] && [20] && [35]                                     [1] && [7] && [55]
+
+                 STEPS:
+
+                     STEP 1: identify pivotIndex for 2-or-more element arrays
+                         pivotIndex is the correct position in the sorted array
+
+                     STEP 2: use recursion to subsequently partition the left & right partitioned arrays into more sub-arrays using the pivotIndex
+                         BREAK CASE for recursive calls: handle 1 element arrays
+
+                         using the first element respective index in the array as the pivotIndex
+
+                         for left partition, search/traverse from left to right
+                         for right partition, search/traverse from right to left
+                         stop traversal when i and j cross each other to maintain partitions
+
+                         FOUND 1st element less than pivot during traversal of LEFT partition: so move elements at index j to index i (move to LEFT of pivotIndex)
+                         FOUND 1st element greater than pivot during traversal of RIGHT partition: so move elements at index i to index j (move to RIGHT of pivotIndex)
+
+                         after correct index for pivotIndex element has been FOUND after each traversal, re-assign pivotIndex for subsequent sub-arrays/partitions
+
+             ? PHASE 2: merging
+
+                 MERGING = sorting elements/pivotIndex in respective 1-element array that are starting from bottom-to-up in-place
+
+                 handle left side first, then right side
+
+                     merge all sibling arrays on left & right side before proceeding to higher level to recursively merge resulting sibling arrays
+
+                     after correct index for pivotIndex element has been FOUND after each traversal, re-assign pivotIndex for subsequent sub-arrays/partitions
+
 ## COMPETENCY: breadth-first search vs. depth-first search
+
+Use either search algorithm to recursively traverse a graph which is a collection of nodes where each node might point to other nodes that are connected via edges (one-way or two-way)
+
+![graph](/content/graphs.png)
+
+DEPTH-FIRST SEARCH
+
+![depthFirstSearch1](/content/depthFirstSearch_part1.gif)
+
+![depthFirstSearch2](/content/depthFirstSearch_part2.gif)
+
+PROBLEM w/ DEPTH-FIRST SEARCH
+
+![depthFirstSearchProblem](/content/depthFirstSearch_problem.gif)
+
+IMPLEMENTATION: DEPTH-FIRST SEARCH
+
+![depthFirstSearchImplementation](/content/depthFirstSearch_implementation.gif)
+
+BREADTH-FIRST SEARCH
+
+![breadthFirstSearch1](/content/breadthFirstSearch_part1.gif)
+
+IMPLEMENTATION: BREADTH-FIRST SEARCH
+
+![breadthFirstSearchImplementation](/content/breadthFirstSearch_implementation.gif)
