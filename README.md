@@ -535,3 +535,355 @@ public class DoublyLinkedList {
     }
 }
 ```
+
+# Stacks
+
+STACKS: an abstract class that only accesses variables from the top/front on a stack because it's a last-in, first-out (LIFO) data structure implemented by a LINKED_LIST or ARRAY
+
+- O(n) linear TIME COMPLEXITY: due to LIFO (only accessed from the top/front), array STACK for push(), pop(), peek()
+
+- O(1) constant TIME COMPLEXITY: due to LIFO (only accessed from the top/front), linkedList STACK for push(), pop(), peek()
+
+```
+class ArrayStack {
+
+    // private class fields
+    private Employee[] stack;
+
+    // STACK top: always null because it's a placeholder for next potential item; actual top of stack is the last index of the array
+    private int top;
+
+    // OOP CONSTRUCTOR that initializes the class fields & INTRINSIC LOCK on class/object instantiation
+    public ArrayStack(int capacity) {
+
+        this.stack = new Array[capacity]
+        this.top = 0;
+    }
+
+    // OOP CLASS METHODS: unique object behavior
+    public int isEmpty() {
+        return this.top == 0;
+    } 
+
+    /**
+     * get object at top/front of stack but do not remove
+     */
+    public Employee peak() {
+
+        // EXCEPTION HANDLING look before you leap: use if-else statement to handle errors
+        if(this.isEmpty()) throw new EmptyStackException();
+
+        int firstIndex = this.top - 1;
+        return this.stack[firstIndex];
+    }
+
+    public void push() {
+
+        boolean isFullforResize = this.top == this.stack.length;
+
+        if(isFullForResize) {
+
+            // double array size
+            int doubleArraySize = this.stack.length * 2;
+            Employee[] resizedArray = new Array[doubleArraySize];
+
+            // copy elements of stack's old array into new resized array
+            int startIndex = 0;
+            System.arraycopy(this.stack, startIndex, resizedArray, startIndex, doubleArraySize);
+
+            // set stack's backing array to resized array
+            this.stack = resizedArray;
+        }
+
+        // add new object to top of stack
+        this.stack[this.top++] = employee;
+    }
+
+    public Employee pop() {
+
+        // THROW EXCEPTION: initiate specific exception with provided error msg
+        if(this.isEmpty()) throw new EmptyStackException();
+
+
+        // STACK top: the actual top of stack is the last index of the array
+        int indexLIFO = --this.top;
+        Employee poppedEmployee = this.stack[indexLIFO];
+
+        // STACK top is always null because it's a placeholder for next potential item
+        this.stack[this.top] = null;
+
+        return poppedEmployee;
+    }
+
+    // GETTERS & SETTERS
+    public Employee[] getStack() {
+
+        for(int i = 0; i < this.stack.length; i++) {
+            System.out.println(this.stack[i]);
+        }
+
+        return this.stack;
+    }
+}
+```
+
+# Maps
+
+MAPS: an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASHMAP classes with 2 GENERIC parameters
+
+- O(1) constant TIME COMPLEXITY: getting map value with key will always be 1 step
+
+
+```
+// GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
+Map<String, String> languages = new HashMap<>();
+```
+
+add unique_key-value generics class pair into map collection
+
+```
+// re-adding the map key will override the old value 
+hashmapInstance.put(key, value) 
+```
+
+retrieve record via key in map collection
+
+```
+hashmapInstance.get(key)
+```
+
+get the value mapped with specified key. If no value is mapped with the provided key then the default value is returned
+
+```
+hashmapInstance.getOrDefault(key, defaultValue)
+```
+
+validate key existence in map before adding/update key in map
+
+```
+hashmapInstance.containsKey(key)
+```
+
+# Queues 
+
+QUEUES: an abstract class that only accesses variables from the top/front on the queue because it's a first-in, first-out (FIFO) data structure implemented by a LINKED_LIST or ARRAY
+
+- O(n) linear TIME COMPLEXITY: due to FIFO (only accessed from the top/front), array QUEUES for add(), pop(), peek()
+
+- O(1) constant TIME COMPLEXITY: due to FIFO (only accessed from the top/front), linkedList QUEUES for add(), pop(), peek()
+
+CIRCULAR QUEUE: wrap queue back-to-front, where back field is always pointing to next available queue position
+
+```
+class CircularQueue {
+
+    private Employee[] queue;
+    private int front;
+    private int back;
+
+    public CircularQueue(int capacity) {
+
+        this.queue = new Employee[capacity]
+        this.front = 0;
+        this.back = 0;
+    }
+
+    public int getSize() {
+
+        boolean isWrapped = this.front <= this.back;
+        int wrappedSize = this.back - this.front;
+
+        if(isWrappedQueue) return wrappedSize; 
+
+        // to handle negative number when wrapped circular queue size, wrapped queue numElements is add queueLength to wrappedSize 
+        return (wrappedSize + this.queue.length);
+    }
+
+
+    /**
+     * O(1) constant time complexity: preview only first item at the front of the queue
+     */ 
+    public Employee peek() {
+
+        // THROW EXCEPTION: initiate specific exception with provided error msg
+        if(this.getSize() == 0) return throw new NoSuchElementException();
+
+        return this.queue[this.front];
+    }
+
+    /**
+     * O(1) constant time complexity: adding to a full circular queue needs to be resized/doubled
+     */ 
+    public void add(Employee employee) {
+
+        if(employee == null) return;
+
+        int lastIndex = this.queue.length - 1;
+        boolean isFullAndResize = this.getSize() == lastIndex; 
+
+        if(isFullAndResize) {
+
+            int doubleCapacity = 2 * this.queue.length;
+            Employee[] resizedArray = new Employee[doubleCapacity]
+
+            // when necessary to resize array, unwrap wrapped circular queue by copy elements at the front the end of the array
+            int copyStart = 0;
+            int copyEnd = this.queue.length - this.front;
+
+            System.arraycopy(this.queue, this.front, resizedArray, copyStart, copyEnd);
+            /*
+                0 - jane            ->      0 - mike
+                1 - john            ->      1 - bill
+                2        - back     ->      2        - back
+                3 - mike - front    ->      3 - mike - front
+                4 - bill            ->      4 - bill
+             */
+
+             System.arraycopy(this.queue, copyStart, resizedArray, copyEnd, this.back)
+             /*
+                0 - mike            ->      0 - mike - front
+                1 - bill            ->      1 - bill
+                2        - back     ->      2 - jane
+                3 - mike - front    ->      3 - john
+                4 - bill            ->      4 - addItem
+                                            5        - back
+                                            6
+                                            7
+             */
+
+            this.queue = resizedArray;
+        }
+
+        // add object to the back of the queue
+        this.queue[this.back] = employee;
+
+        int lastQueueIndex = this.queue.length - 1; 
+        boolean isWrapped = this.back <= lastQueueIndex;
+
+        this.back = isWrapped ? this.back + 1 : 0; 
+    }
+
+    /**
+     * O(1) constant time complexity: remove first item that is at the front of the queue
+     */ 
+    public Employee pop() {
+
+        // ! THROW EXCEPTION: initiate specific exception with provided error msg
+        if(this.getSize() == 0) throw new NoSuchElementException();
+
+        // FIFO: get employee at the front of the queue
+        Employee employee = this.queue
+
+
+        // null-out first index and move queue front index up by 1
+        this.queue[this.front] = null;
+        this.front++;
+
+        boolean isEmptyQueue = this.getSize() == 0;
+        boolean isFullyWrapped = this.front == this.queue.length;
+
+        // if queue is empty after removal of front: reset queue
+        if(isEmptyQueue) {
+
+            this.back = 0;
+            this.front = 0;
+
+        } else if(isFullyWrapped) {
+
+            // if queue fully wrapped, set front back to index 0 because no more unused space in queue
+            this.front = 0;
+        }
+
+        return employee;
+    }
+}
+```
+
+# Binary Trees
+
+# Graphs
+
+# Linear Search 
+
+traversal beginning to end by incrementing the index by 1 until in the array data structure with O(n) linear time complexity
+
+```
+public static int linearSearch(int[] nums, int value) {
+
+    for(int index = 0; index < nums.length; index++) {
+
+        if(nums[index] == value) {
+            return index;
+        }
+    }
+    return -1;
+}
+```
+
+# Binary Search
+
+```
+searchValue = 55
+
+    [-22, -15, 1, 7, 20, 35, 55] where midpoint: 7
+
+        [7, 20, 35, 55] where midpoint: 35
+
+            [35, 55] where midpoint == searchValue (55)
+
+                return 55
+```
+
+pre-sorted array traversal & recursively LEFT/RIGHT partitions, until respective middle element equals search value
+
+O(logn) logarithmic TIME COMPLEXITY: keep dividing sorted array in half
+
+```
+public static int binarySearch(int[] nums, int value) {
+
+    int start = 0;
+    int end = nums.length;
+
+    // STEP 1: recursively divide the array down the middle into 2 partitions
+    return recursivePartition(nums, start, end, value);
+}
+
+private static int recursivePartition(int[] nums, int start, int end, int searchValue) {
+
+    // STEP 3: recursive calls will gradually traverse down to a sorted one-element partition and either return found searchValue or null
+    boolean isBaseCase = (start >= end)
+
+    if(isBaseCase) return -1;
+
+    // STEP 2: compare middle element against searchValue
+    int midpoint = (start + end) / 2
+
+    boolean foundSearchValue = nums[midpoint] == searchValue;
+
+    /*
+        leftP = lesser values respective to parent node midpoint
+
+        rightP = greater values respective to parent node midpoint
+    */
+    boolean inLeftPartition = nums[midpoint] < searchValue;
+
+    if(foundSearchValue) {
+
+        return midpoint;
+
+    } else if(inLeftPartition) {
+
+        int indexRight = midpoint + 1;
+        int start = 0;
+
+        return recursivePartition(nums, indexRight, end, searchValue);
+
+    } else { 
+        
+        // in rightPartition
+        int indexLeft = midpoint - 1;
+
+        return recursivePartition(nums, 0, indexLeft, searchValue);
+    }
+}
+```

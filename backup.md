@@ -212,25 +212,6 @@
 ## maps
 
      /*
-        ? MAPS INTERFACE: collection of key-value pair HASHMAP implementations that use GENERIC CLASS dataStructures w/ 2 parameters: UNIQUE key & value
-            GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
-
-        ? no-order HASHMAPS & LINKED HASHMAPS classes are the main implementations of the MAPS INTERFACE
-
-            Map<dataType, dataType> instance = new HashMap<>()
-
-        ? hashmapInstance.put(key, value) = add unique_key-value generics class pair into map collection
-
-            ! if you add the key again, the oldValue will be overridden in the map since map keys are unique
-                before overriding the value, .put() will return the previous value of the key-value pair
-                a value being added for the 1st time will initially return null before adding to the map collection
-
-        ? hashmapInstance.get(key) = retrieve record via key in map collection
-
-        ? hashmapInstance.getOrDefault(key, defaultValue) = get the value mapped with specified key. If no value is mapped with the provided key then the default value is returned.
-
-        ? hashmapInstance.containsKey(key) = validate key existence in map before adding/update key in map
-
         ? hashmapInstance.putIfAbsent(key, value) = for CONCURRENCY, if key is not already present in map, than add key-value pair
 
         ? Map.entrySet(): create a set out of the same elements contained in the hash map
@@ -614,55 +595,6 @@
 ## Econometrics
 
 Econometrics is the application of statistical methods to economic data in order to give empirical content to economic relationships.
-
-## TRADEOFFS: relational and non-relational databases
-
-SQL is a query language, whereas MySQL is a relational database that uses SQL to query a database
-
-a database, like a MySQL database, is just a bunch of tables aka a relational database
-
-<img src="/content/SQLvsNOSQL.png"/>
-
-__relational databases:__
-
-- hold data tables:
-  - a collection of columns (headers) and rows (data)
-
-- you can have multiple tables joined together by a defined relationship
-
-- relationships help force constraints using primary keys and foreign keys
-
-- table constraints: all the data is structured into a uniform manner
-
-- storage is concentrated: 1 node that contains an entire copy of the data, not partitioned by default
-
-- relational db scale can be either:
-
-  - vertical: build a better machine via more memory, faster hard disk, better cpu
-
-  - horizontal: simply add more machines
-
-- relational db access uses raw SQL
-
-__non-relational databases:__
-
-- non-relational databases work best when data is distributed over multiple servers to be built to scale with high performance & low latency
-
-- the cost is that queries are less flexible
-
-  - tables, documents, or graphs hold data together but CANNOT be joined together by a relationship
-
-  - the data is handled by key-value stores where the user needs to know the key
-
-  - best when the data model fits (graphs)
-
-- storage relies on hashing function for the input and the result is used to identify the partition where the data is stored
-
-- nonrelational db scale is easily improved by adding more partitions that function & improved independently
-
-- access: many are no-sql databases that have their own CRUD (create, read, update, delete) functionality that rely on key-value stores
-
-  - REST APIs are used to hit a specific endpoint that comes with certain functionality
 
 ## COMPETENCY: service-oriented architectures (SOA)
 
