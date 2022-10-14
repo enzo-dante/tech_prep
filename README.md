@@ -1,12 +1,14 @@
 # Big O Notation
 
-ALGORITHM: repeatable sequence of steps
+TIME COMPLEXITY:
 
-TIME COMPLEXITY: independent of hardware, the worst-case number of steps required for an algorithm to perform successfully.
+independent of hardware, the worst-case number of steps required for an algorithm (a consistently repeatable sequence of steps) to perform successfully.
 
-SPACE COMPLEXITY: the total memory space required by the algorithm's input size plus the extra space or temporary space used by an algorithm (AUXILIARY SPACE).
+SPACE COMPLEXITY:
 
-### Big O Types (best-to-worst)
+the total memory space required for an algorithm to successfully complete comprised of the input size and the temporary extra memory space (AUXILLARY SPACE).
+
+### 5 Big O Types (best-to-worst)
 
 O(1) CONSTANT time complexity
 
@@ -30,12 +32,9 @@ O(n^2) QUADRATIC time complexity
 
 # Serialization
 
-SERIALIZATION: the conversion of a Java object into a static stream (sequence) of bytes, which we can then save to a database or transfer over a network.
-
-The serialization process is instance-independent; classes that are eligible for serialization need to implement Serializable interface.
+SERIALIZATION: the conversion of a Java object into a static stream (sequence) of bytes, which we can then be saved to a database or transfer over a network.
 
 TRANSIENT: use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
-
 ```
 public class Book implements Serializable {
 
@@ -49,7 +48,9 @@ public class Book implements Serializable {
 }
 ```
 
-serialize & deserialize
+SERIALIZE & DESERIALIZE
+
+The serialization process is instance-independent; classes that are eligible for serialization need to implement Serializable interface.
 
 ```
     /**
@@ -67,7 +68,8 @@ serialize & deserialize
     }
 
     /**
-     * Call the ObjectInputStream() reads a stream of bytes and converts it back into a Java object. It can then be cast back to the original object.
+     * Call the ObjectInputStream() reads a stream of bytes and converts it back into a Java object.
+     * It can then be cast back to the original object.
      */
     public static Book deserialize() throws Exception {
 
@@ -88,6 +90,7 @@ serialize & deserialize
     void bookSerialization() {
 
         Book book = new Book();
+
         book.setBookName("Java Reference");
         book.setDescription("will not be saved");
         book.setCopies(25);
@@ -152,31 +155,30 @@ recursive factorial method
     !3 = 1*2*3 = 6
 
         recursiveFactorial(3)
-                returns 3 * (2 * 1) = 6
+                returns recursiveFactorial(2) * 3
 
         recursiveFactorial(2)
-                returns 2 * 1
+                returns recursiveFactorial(1) * 2
 
         recursiveFactorial(1)
-                returns 1 * 1
+                returns recursiveFactorial(0) * 1
 
         recursiveFactorial(0)
                 returns 1
 ```
 
-RECURSIVE BASE CASE: the breaking condition that initiates an upward propogation of return of values for the waiting calls that results in a call-stack resolution or overflow
+RECURSIVE BASE CASE: the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
 
 ```
-private static int recursiveFactorial(int n) {
+private static int recursiveFactorial(int number) {
 
-    boolean isBaseCase = (n == 0);
+    boolean isBaseCase = (number == 0);
 
     if(isBaseCase) return 1;
 
-    System.out.println("factorial: " + n)
+    int decrementedNumber = number - 1;
 
-    return recursiveFactorial(n - 1) * n;
-
+    return recursiveFactorial(decrementedNumber) * number;
 }
 ```
 
@@ -293,6 +295,7 @@ public class EmployeeLinkedList {
         // set new node as new head
         this.head = node;
 
+        // increment length of linkedList
         this.size++;
     }
 
@@ -374,7 +377,7 @@ public class EmployeeNode {
 }
 ```
 
-null --> HEAD <--> { currentNodeValue, nextNodePointer } <--> { currentNodeValue, nextNodePointer } <--> TAIL --> null
+null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {previousPointer, currentNodeValue, nextNodePointer } <--> TAIL --> null
 
 ```
 public class DoublyLinkedList {
@@ -386,7 +389,7 @@ public class DoublyLinkedList {
     public DoublyLinkedList() {
         this.head = null;
         this.tail = null;
-        this.size = null;
+        this.size = 0;
     }
 
     public boolean isEmpty() {
@@ -396,14 +399,15 @@ public class DoublyLinkedList {
     public void printList() {
 
         EmployeeNode currentNode = this.head;
-
         System.out.print("HEAD <--> ");
+
         while(currentNode != null) {
             System.out.print(currentNode);
             System.out.print("<-->");
 
             currentNode = currentNode.getNext();
         }
+
         System.out.print("<--> null");
         System.out.println("size: " + this.size);
     }
@@ -415,24 +419,26 @@ public class DoublyLinkedList {
     public void addToFront(Employee employee) {
 
         // instantiate a new node that will serve as the new head of the linkedList
-        EmployeeNode node = new EmployeeNode(employee);
+        EmployeeNode newNode = new EmployeeNode(employee);
 
         if(isEmpty()) {
 
-            // if the linkedList is empty, than added node will serve as head and tail
-            this.tail = node;
+            // if the linkedList is empty, then new node will serve as head and tail
+            this.tail = newNode;
 
         } else {
 
-            // If list is NOT empty, set the current head node's doubly previous pointer to the new node. 
-            this.head.setPrevious(node);
+            // If list is NOT empty, set the current head node's previous pointer to the new node. 
+            this.head.setPrevious(newNode);
 
             // set the current head as the new node's next value (shift current head down 1 node)
-            node.setNext(this.head);
+            newNode.setNext(this.head);
         }
 
         // establish new doubly-linked node as new head
-        this.head = node;
+        this.head = newNode;
+
+        // increment size of doubly linkedList
         this.size++;
     }
 
@@ -443,29 +449,31 @@ public class DoublyLinkedList {
     public void addToEnd(Employee employee) {
 
         // instantiate a new node that will serve as the new head of the linkedList
-        EmployeeNode node = new EmployeeNode(employee);
+        EmployeeNode newNode = new EmployeeNode(employee);
 
         if(isEmpty()) {
 
             // if the linkedList is empty, than added node will serve as head and tail
-            this.head = node;
+            this.head = newNode;
 
         } else {
 
             // If list is NOT empty, set the current tail node's doubly next pointer to the new node. 
-            this.tail.setNext(node);
+            this.tail.setNext(newNode);
 
             // set the current tail as the new node's previous value (shift current tail up 1 node)
-            node.setPrevious(this.tail);
+            newNode.setPrevious(this.tail);
         }
 
         // establish new doubly-linked node as new tail
-        this.tail = node;
+        this.tail = newNode;
+
+        // increment size of doubly linkedList
         this.size++;
     }
 
     /**
-     * O(1) CONSTANT time complexity when removing node to the front of a list since index will always be 0
+     * O(1) CONSTANT time complexity when removing node from the front of a list since index will always be 0
      * O(1) CONSTANT space complexity when removing node from a list 
      */
     public EmployeeNode removeFromFront() {
@@ -474,9 +482,11 @@ public class DoublyLinkedList {
 
         EmployeeNode removedNode = this.head;
 
-        if(this.head.getNext() == null) {
+        boolean hasOnlyOneNode = this.head.getNext() == null;
 
-            // if linkedList only has 1 node, set tail to null to facilitate linkedList emptiness 
+        if(hasOnlyOneNode) {
+
+            // set tail to null to facilitate linkedList emptiness 
             this.tail = null;
 
         } else {
@@ -487,6 +497,8 @@ public class DoublyLinkedList {
 
         // establish new head
         this.head = this.head.getNext();
+
+        // decrement size of linkedList
         this.size--;
 
         removedNode.setNext(null);
@@ -494,7 +506,7 @@ public class DoublyLinkedList {
     }
 
     /**
-     * O(1) CONSTANT time complexity when removing node to the front of a list since index will always be 0
+     * O(1) CONSTANT time complexity when removing node from the front of a list since index will always be 0
      * O(1) CONSTANT space complexity when removing node from a list 
      */
     public EmployeeNode removeFromEnd() {
@@ -502,10 +514,11 @@ public class DoublyLinkedList {
         if(isEmpty()) return null;
 
         EmployeeNode removedNode = this.tail;
+        boolean hasOnlyOneNode = (this.tail.getPrevious() == null);
 
-        if(this.tail.getPrevious() == null) {
+        if(hasOnlyOneNode) {
 
-            // if linkedList only has 1 node, set head to null to facilitate linkedList emptiness 
+            // set head to null to facilitate linkedList emptiness 
             this.head = null;
 
         } else {
@@ -579,7 +592,7 @@ class ArrayStack {
 
     public void push() {
 
-        boolean isFullforResize = this.top == this.stack.length;
+        boolean isFullForResize = this.top == this.stack.length;
 
         if(isFullForResize) {
 
@@ -637,31 +650,35 @@ MAPS: an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKE
 ```
 // GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
 Map<String, String> languages = new HashMap<>();
+
+String key = "English";
+String value = "Primary language in the United States";
+
 ```
 
 add unique_key-value generics class pair into map collection
 
 ```
 // re-adding the map key will override the old value 
-hashmapInstance.put(key, value) 
+languages.put(key, value) 
 ```
 
 retrieve record via key in map collection
 
 ```
-hashmapInstance.get(key)
+languages.get(key)
 ```
 
 get the value mapped with specified key. If no value is mapped with the provided key then the default value is returned
 
 ```
-hashmapInstance.getOrDefault(key, defaultValue)
+languages.getOrDefault(key, defaultValue)
 ```
 
 validate key existence in map before adding/update key in map
 
 ```
-hashmapInstance.containsKey(key)
+languages.containsKey(key)
 ```
 
 # Queues 
@@ -774,7 +791,6 @@ class CircularQueue {
         // FIFO: get employee at the front of the queue
         Employee employee = this.queue
 
-
         // null-out first index and move queue front index up by 1
         this.queue[this.front] = null;
         this.front++;
@@ -800,6 +816,263 @@ class CircularQueue {
 ```
 
 # Binary Trees
+
+BINARY TREE:
+
+a collection of 1 parent node to respective 2 children nodes with parent child connection edges and left-to-right node movement depends on child value comparisons
+
+LEVEL-ORDER TRAVERSAL
+
+left-to-right recursively traverse down binary tree for node value by comparing the current node's 2 child values
+
+    level order: [25, 20, 27, 15, 22, 26, 30, 29, 32]
+
+                        25
+
+                   20       27
+
+              15    22        26  30
+
+                                    29 32
+
+PRE-ORDER TRAVERSAL:
+
+visit the main root first, next the root of the subtree, children left-to-right, and repeat
+
+    pre-order: [25, 20, 15, 22, 27, 26, 30, 29, 32]
+
+                        25
+
+                   20       27
+
+              15    22        26  30
+
+                                    29 32
+
+POST-ORDER TRAVERSAL:
+
+visit the root of every subtree last left-to-right, and repeat
+
+    post-order: [15, 22, 20, 26, 29, 32, 30, 27, 25]
+
+                        25
+
+                   20       27
+
+              15    22        26  30
+
+                                    29 32
+
+IN-ORDER TRAVERSAL:
+
+visit the left-child, then root, then right-child, and repeat 
+
+    in-order: 15, 20, 22, 25, 26, 27, 29, 30, 32
+
+                       25
+
+                  20       27
+
+             15    22        26  30
+
+                                   29 32
+
+```
+class BinaryTree {
+
+    // OOP ENCAPSULATION private class fields
+    private TreeNode root;
+
+    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
+    public BinaryTree() {
+        this.root = null;
+    }
+
+    // CLASS METHODS: unique object behavior
+
+    // OOP POLYMORPHISM: uniquely implement/@Override for same-name methods per class/object
+
+    // OOP GETTERS & SETTERS
+    public TreeNode getRoot() {
+        return this.root;
+    }
+
+    // INNER CLASSES: logically grouped class components within an extending parent class 
+    protected class TreeNode {
+
+        private Integer data;
+        private TreeNode leftChild;
+        private TreeNode rightChild;
+
+        public TreeNode(int data) {
+
+            // AUTOBOXING: casting primitive dataType to higher class wrapper dataType
+            this.data = data;
+        }
+
+        /**
+         * left-to-right recursively traverse down binary tree for insertion node position by comparing the current node's left & right child values
+         *
+         * @return searched node or null
+         */
+        public void insert(int value) {
+
+            // No duplicate values allowed in implementation
+            boolean isDuplicateValue = (value == this.data);
+
+            if(isDuplicateValue) return;
+
+            boolean shouldTraverseDownLeftChild = (value < this.data);
+
+            if(shouldTraverseDownLeftChild) {
+
+                boolean foundInsertionLeftNode = (this.leftChild == null);
+
+                if(foundInsertionLeftNode) {
+
+                    this.leftChild = new TreeNode(value);
+
+                } else {
+
+                    // ! RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+                    this.leftChild.insert(value);
+                }
+            } else {
+
+                boolean foundInsertionRightNode = (this.rightChild == null);
+
+                if(foundInsertionRightNode) {
+
+                    this.rightChild = new TreeNode(value);
+
+                } else {
+
+                    // ! RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+                    this.rightChild.insert(value);
+                }
+            }
+        }
+
+        /**
+         * get values lowest-to-highest by traversing the left-child, then root, then right-child, and repeat
+         */
+        public void traverseInOrder() {
+
+            boolean hasLeftChild = (this.leftChild != null);
+
+            if(hasLeftChild) {
+                this.leftChild.traverseInOrder();
+            }
+
+            System.out.print(this.data + ", ");
+
+            boolean hasRightChild = (this.rightChild != null);
+
+            if(hasRightChild) {
+                this.rightChild.traverseInOrder();
+            }
+        }
+
+        /**
+         * left-to-right recursively traverse down binary tree for LEFT-most node with min value
+         *
+         * @return min value
+         */
+        public int getMin() {
+
+            // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in call-stack resolution or overflow
+            boolean isBaseCase = (this.leftChild == null);
+
+            if(isBaseCase) {
+                return this.data;
+            }
+
+            // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
+            return this.leftChild.getMin();
+        }
+
+        /**
+         * left-to-right recursively traverse down binary tree for RIGHT-most node with max value
+         *
+         * @return max value
+         */
+        public int getMax() {
+
+            // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in call-stack resolution or overflow
+            boolean isBaseCase = (this.rightChild == null);
+
+            if(isBaseCase) {
+                return this.data;
+            }
+
+            // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
+            return this.rightChild.getMax();
+        }
+
+        /**
+         * left-to-right recursively traverse down binary tree for RIGHT-most node with max value
+         *
+         * @return searched node or null 
+         */
+        public TreeNode getNode(int value) {
+
+            // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in call-stack resolution or overflow
+            boolean isBaseCase = (value == this.data);
+
+            if(isBaseCase) return this;
+
+            boolean shouldTraverseDownLeftChild = (value < this.data);
+
+            if(shouldTraverseDownLeftChild) {
+
+                boolean hasLeftChild = (this.leftChild != null);
+
+                if(hasLeftChild) {
+
+                    // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
+                    return this.leftChild.getNode(value);
+                }
+
+            } else {
+
+                boolean hasRightChild = (this.rightChild != null);
+
+                if(hasRightChild) {
+
+                    // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
+                    return this.rightChild.getNode(value);
+                }
+            }
+            return null;
+        }
+
+        // GETTERS & SETTERS
+        public int getData() {
+            return data;
+        }
+
+        public void setData(int data) {
+            this.data = data;
+        }
+
+        public TreeNode getLeftChild() {
+            return leftChild;
+        }
+
+        public void setLeftChild(TreeNode leftChild) {
+            this.leftChild = leftChild;
+        }
+
+        public TreeNode getRightChild() {
+            return rightChild;
+        }
+
+        public void setRightChild(TreeNode rightChild) {
+            this.rightChild = rightChild;
+        }
+    }
+}
+```
 
 # Graphs
 
