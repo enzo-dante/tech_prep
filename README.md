@@ -644,8 +644,7 @@ class ArrayStack {
 
 MAPS: an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASHMAP classes with 2 GENERIC parameters
 
-- O(1) constant TIME COMPLEXITY: getting map value with key will always be 1 step
-
+- O(1) CONSTANT time complexity: getting a map value with a key will always take the same number of steps (3)
 
 ```
 // GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
@@ -878,200 +877,7 @@ visit the left-child, then root, then right-child, and repeat
                                    29 32
 
 ```
-class BinaryTree {
 
-    // OOP ENCAPSULATION private class fields
-    private TreeNode root;
-
-    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
-    public BinaryTree() {
-        this.root = null;
-    }
-
-    // CLASS METHODS: unique object behavior
-
-    // OOP POLYMORPHISM: uniquely implement/@Override for same-name methods per class/object
-
-    // OOP GETTERS & SETTERS
-    public TreeNode getRoot() {
-        return this.root;
-    }
-
-    // INNER CLASSES: logically grouped class components within an extending parent class 
-    protected class TreeNode {
-
-        private Integer data;
-        private TreeNode leftChild;
-        private TreeNode rightChild;
-
-        public TreeNode(int data) {
-
-            // AUTOBOXING: casting primitive dataType to higher class wrapper dataType
-            this.data = data;
-        }
-
-        /**
-         * left-to-right recursively traverse down binary tree for insertion node position by comparing the current node's left & right child values
-         *
-         * @return searched node or null
-         */
-        public void insert(int value) {
-
-            // No duplicate values allowed in implementation
-            boolean isDuplicateValue = (value == this.data);
-
-            if(isDuplicateValue) return;
-
-            boolean shouldTraverseDownLeftChild = (value < this.data);
-
-            if(shouldTraverseDownLeftChild) {
-
-                boolean foundInsertionLeftNode = (this.leftChild == null);
-
-                if(foundInsertionLeftNode) {
-
-                    this.leftChild = new TreeNode(value);
-
-                } else {
-
-                    // ! RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
-                    this.leftChild.insert(value);
-                }
-            } else {
-
-                boolean foundInsertionRightNode = (this.rightChild == null);
-
-                if(foundInsertionRightNode) {
-
-                    this.rightChild = new TreeNode(value);
-
-                } else {
-
-                    // ! RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
-                    this.rightChild.insert(value);
-                }
-            }
-        }
-
-        /**
-         * get values lowest-to-highest by traversing the left-child, then root, then right-child, and repeat
-         */
-        public void traverseInOrder() {
-
-            boolean hasLeftChild = (this.leftChild != null);
-
-            if(hasLeftChild) {
-                this.leftChild.traverseInOrder();
-            }
-
-            System.out.print(this.data + ", ");
-
-            boolean hasRightChild = (this.rightChild != null);
-
-            if(hasRightChild) {
-                this.rightChild.traverseInOrder();
-            }
-        }
-
-        /**
-         * left-to-right recursively traverse down binary tree for LEFT-most node with min value
-         *
-         * @return min value
-         */
-        public int getMin() {
-
-            // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in call-stack resolution or overflow
-            boolean isBaseCase = (this.leftChild == null);
-
-            if(isBaseCase) {
-                return this.data;
-            }
-
-            // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
-            return this.leftChild.getMin();
-        }
-
-        /**
-         * left-to-right recursively traverse down binary tree for RIGHT-most node with max value
-         *
-         * @return max value
-         */
-        public int getMax() {
-
-            // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in call-stack resolution or overflow
-            boolean isBaseCase = (this.rightChild == null);
-
-            if(isBaseCase) {
-                return this.data;
-            }
-
-            // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
-            return this.rightChild.getMax();
-        }
-
-        /**
-         * left-to-right recursively traverse down binary tree for RIGHT-most node with max value
-         *
-         * @return searched node or null 
-         */
-        public TreeNode getNode(int value) {
-
-            // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in call-stack resolution or overflow
-            boolean isBaseCase = (value == this.data);
-
-            if(isBaseCase) return this;
-
-            boolean shouldTraverseDownLeftChild = (value < this.data);
-
-            if(shouldTraverseDownLeftChild) {
-
-                boolean hasLeftChild = (this.leftChild != null);
-
-                if(hasLeftChild) {
-
-                    // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
-                    return this.leftChild.getNode(value);
-                }
-
-            } else {
-
-                boolean hasRightChild = (this.rightChild != null);
-
-                if(hasRightChild) {
-
-                    // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
-                    return this.rightChild.getNode(value);
-                }
-            }
-            return null;
-        }
-
-        // GETTERS & SETTERS
-        public int getData() {
-            return data;
-        }
-
-        public void setData(int data) {
-            this.data = data;
-        }
-
-        public TreeNode getLeftChild() {
-            return leftChild;
-        }
-
-        public void setLeftChild(TreeNode leftChild) {
-            this.leftChild = leftChild;
-        }
-
-        public TreeNode getRightChild() {
-            return rightChild;
-        }
-
-        public void setRightChild(TreeNode rightChild) {
-            this.rightChild = rightChild;
-        }
-    }
-}
 ```
 
 # Graphs
@@ -1107,28 +913,29 @@ searchValue = 55
                 return 55
 ```
 
-pre-sorted array traversal & recursively LEFT/RIGHT partitions, until respective middle element equals search value
+pre-sorted array traversal & recursively divide array into LEFT/RIGHT partitions, until respective middle element equals search value
 
 O(logn) logarithmic TIME COMPLEXITY: keep dividing sorted array in half
 
 ```
 public static int binarySearch(int[] nums, int value) {
 
+    // STEP 1: initialize pointers at the start and end of an array
     int start = 0;
     int end = nums.length;
 
-    // STEP 1: recursively divide the array down the middle into 2 partitions
+    // STEP 2: recursively divide the array down the middle into 2 partitions
     return recursivePartition(nums, start, end, value);
 }
 
 private static int recursivePartition(int[] nums, int start, int end, int searchValue) {
 
-    // STEP 3: recursive calls will gradually traverse down to a sorted one-element partition and either return found searchValue or null
+    // STEP 4: recursive calls will gradually traverse down to a sorted one-element partition and either return found searchValue or null
     boolean isBaseCase = (start >= end)
 
     if(isBaseCase) return -1;
 
-    // STEP 2: compare middle element against searchValue
+    // STEP 3: compare middle element against searchValue
     int midpoint = (start + end) / 2
 
     boolean foundSearchValue = nums[midpoint] == searchValue;
