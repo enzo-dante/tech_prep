@@ -166,6 +166,48 @@ for(int index = 0; index < intArray.length; index++) {
 }
 ```
 
+# sets
+
+sets are a computationally fast unordered collection WITHOUT DUPLICATES implemented via a HASHSET class
+
+```
+Set<Integer> numbers = new HashSet<>();
+numbers.add(1);
+```
+
+SET UNION:
+
+a set (WITHOUT DUPLICATES) that contains ALL elements of 2 or more hashsets via hashSet.addAll()
+
+```
+Set<Integer> set1 = new HashSet<>();
+Set<Integer> set2 = new HashSet<>();
+
+set1.addAll(set2);
+```
+
+.EQUALS & .HASHCODE @Override both methods if using own object as map key or set element
+
+- HASHSET element/ HASHMAP key custom CLASSES: @Override .equals() & .hashcode() methods - if 2 objects compare equal, then they must have same collection bucket hashcode
+
+VENN DIAGRAM ASYMMETRIC DIFF:
+
+remove all shared elements of 1 set found in another set via bulk operation hashSet.removeAll()
+
+```
+Set<Integer> set1 = new HashSet<>();
+Set<Integer> set2 = new HashSet<>();
+
+set1.addAll(set2);
+
+Set<Integer> asymmetric = new HashSet<>(set1);
+asymmetric.removeAll(set2);
+```
+
+VENN DIAGRAM SYMMETRIC DIFF:
+
+remove all shared elements found in both sets & return all non-shared elements of both sets (hashSetUnion - hashSetIntersection)
+
 ### Singly LinkedLists
 
 Singly LinkedLists w/ an array backing
@@ -1334,6 +1376,72 @@ private static int recursivePartition(int[] nums, int start, int end, int search
         return recursivePartition(nums, 0, indexLeft, searchValue);
     }
 }
+```
+
+# Algorithm Sort
+
+```
+public static void swapValues(int[] array, int i, int j) {
+
+    if(i == j) return;
+
+    int tempDisplaced = array[i];
+
+    array[i] = array[j];
+    array[j] = tempDisplaced;
+}
+```
+
+BUBBLE SORT:
+
+```
+/*
+    Big(O) TIME COMPLEXITY: the worst case scenario for the number of steps in an algorithm's execution
+
+        QUADRATIC TIME COMPLEXITY = O(n^2) = O of n-squared
+
+                WORST: each loop corresponds to n in Big-O notation, thus O(n^2)
+
+    SPACE COMPLEXITY:
+
+          in-place algorithm that doesn't use extra memory
+
+    STABLE ALGORITHM:
+
+          if there are duplicate elements, the original order of these elements will be preserved
+
+              only swap if element at index_i > (index_i + 1)
+
+    LOGIC:
+
+          bubble sort breaks the array into 2 partitions:
+
+              sorted and unsorted
+
+                  bubble the largest element to the top/unsorted partition that grows with each loop
+
+                  right-to-left sorted partition growth
+ */
+public static void bubbleSort(int[] array) {
+
+    // sorted partition
+    for(int lastUnsortedIndex = array.length - 1; lastUnsortedIndex > 0; lastUnsortedIndex--) {
+
+        // unsorted partition
+        for(int i = 0; i < lastUnsortedIndex; i++) {
+
+            // comparison index
+            int j = i + 1;
+
+            // right-to-left sorted partition growth
+            if(array[i] > array[j]) {
+                swapValues(array, i, j);
+            }
+        }
+    }
+    System.out.println(Arrays.toString(array));
+}
+
 ```
 
 # SQL
