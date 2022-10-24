@@ -141,6 +141,113 @@ private static int recursiveFactorial(int number) {
 }
 ```
 
+# INTERFACES
+
+an abstract collection of publicly-shared method signatures that MUST be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
+
+```
+interface ITelephone {
+
+    // define the public 'signature' (only method names & parameters) of the shared behavior used by the set of class
+    void powerOn();
+    boolean dial(int phoneNumber);
+
+    final String NO_POWER = "No power button";
+}
+
+class DeskPhone implements ITelephone {
+
+    // CONSTANTS/static class variables assigned FINAL value before compilation/instantiation
+    private static final String RINGING = "Ring ring ring";
+
+    // OOP ENCAPSULATION private class fields
+    private int myNumber;
+    private boolean isRinging;
+
+    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
+    public DeskPhone(int myNumber) {
+        this.myNumber = myNumber;
+        this.isRinging = false;
+    }
+
+    // OOP POLYMORPHISM: unique implementation of method for this object despite same signature shared by multiple objects via @Override
+    @Override
+    public void powerOn() {
+        System.out.println(NO_POWER);
+    }
+
+    @Override
+    public boolean dial(int phoneNumber) {
+        System.out.println(RINGING);
+        this.isRinging = true;
+    }
+}
+```
+
+# ABSTRACT CLASSES
+
+ABSTRACTION:
+
+defining the inherited signature, WITHOUT implementation
+
+ABSTRACT CLASS
+
+force child subclass OOP INHERITANCE of method, signatures, & parent super-class fields for a set of classes
+
+- This is achieved by mandating OOP POLYMORPHISM method signatures to be defined in order to execute respectively-unique implementation
+
+  - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
+
+OOP INHERITANCE:
+
+child subclass inherits public class fields + methods from extending parent super class
+
+```
+// abstract keyword = no logic, only define the class or method signature shared across adhering classes
+abstract class AbstractAnimal {
+    
+    private String name;
+
+    public AbstractAnimal(String name) {
+        this.name = name;
+    }
+
+    public abstract void eat();
+
+    public String getName() {
+        return this.name;
+    }
+}
+
+// OOP INHERITANCE: child-class constructor needs to extend parent super-class Animal in addition to abstract class method implementation
+class Dog extends AbstractAnimal {
+
+    private String color;
+
+    public Dog(String color, String name) {
+        super(name);
+        this.color = color;
+    }
+
+    @Override
+    public void eat() {
+        System.out.println(super.getName() + " is eating");
+    }
+
+    public String getColor() {
+        return this.color;
+    }
+}
+```
+
+# INTERFACES VS ABSTRACT CLASSES
+
+- ABSTRACT CLASSES can have class fields/object instance members AND define abstract publicly-shared signatures
+
+  - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
+
+- INTERFACES can ONLY define publicly-shared signatures
+
 # Concurrency
 
 software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
@@ -168,9 +275,62 @@ a unit of execution within a process, each process can have multiple threads, a 
 
 - every process has a heap and every thread has a thread stack.
 
+```
+// THREADS .start(): only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
+new Thread() {
+    @Override
+    public void run() {
+        System.out.println("Hello from anonymous class Thread")
+    }
+}.start();
+```
+
 MULTITHREADING:
 
 the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
+
+THREAD JOIN:
+
+when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
+
+```
+public static void main(String[] args) {
+
+    // THREADS + GENERIC CLASSES/LAMBDAS: Thread.instance w/ parameter class instance that implements Runnable INTERFACE & immediately .start() no-name instance on it's own thread in the HEAP
+    Thread anotherThread = new Thread(new MyRunnableThread());
+    anotherThread.start();
+
+    Thread anonymousThread = new Thread(new MyRunnableThread() {
+        @Override
+        public void run() {
+
+            try {
+
+                // anotherThread.interrupt();
+
+
+                // THREAD JOIN: And when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
+                int timeout = 2000;
+                anotherThread.join(timeout)
+
+                System.out.println("anotherThread terminated or timed out, so I'm running again");
+
+            } catch(InterruptedException e) {
+                System.out.println("this.thread counldn't wait...it was interrupted");
+            }
+        }
+    });
+    anonymousRunnableThread.start();
+    System.out.println("Again, hello from the main Thread");
+}
+
+class MyRunnableThread implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("Hello from MyRunnableThread interface implementation of .run()");
+    }
+}
+```
 
 # SYNCHRONIZATION
 
@@ -237,6 +397,71 @@ private static class Thread1 extends Thread {
         }
     }
 }
+```
+
+ARRAY BLOCKING QUEUE:
+
+a queue is a (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
+
+```
+// ArrayBlockingQueue: we have to pass in the number of elements the array should be able to hold
+int numElements = 6;
+
+// THREAD SYNCHRONIZATION + EXCEPTION HANDLING + INTRINSIC REENTRANT LOCK: in TRY-FINALLY code block, use ReentrantLock.lock() to acquire the object's intrinsic lock & execute code one at a time -- other calling threads will suspend until the single running thread calls Reentrant.unlock() to pass the class/object's INTRINSIC LOCK.
+ArrayBlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(numElements);
+
+QueueProducer producer = new QueueProducer(arrayBlockingQueue, ThreadColor.ANSI_YELLOW);
+QueueConsumer consumer1 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI_PURPLE);
+QueueConsumer consumer2 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI_CYAN);
+```
+
+EXECUTOR SERVICE:
+
+optimize a managed set of threads, thus reducing the overhead of thread creation
+
+```
+int numThreads = 3;
+ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
+
+executorService.execute(producer);
+executorService.execute(consumer1);
+executorService.execute(consumer2);
+```
+
+THREAD POOLS + Future: a return value from an executed thread in a thread pool
+
+THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
+
+```
+Future<String> future = executorService.submit(new Callable<String>() {
+    @Override
+    public String call() throws Exception {
+        return "executorService.submit() was called; this is the result";
+    }
+});
+```
+
+ATOMIC ACTIONS:
+
+once a thread starts these actions, they cannot be suspended during execution, and must complete
+
+- reading and writing reference variables
+
+- reading and writing primitive variables, exception long & double
+
+- reading and writing volatile variables
+
+```
+int atomicAction1 = 1;
+int atomicAction2 = atomicAction1;
+```
+
+VOLATILE VARIABLES:
+
+the JVM writes the value back to main memory immediately after a thread updates the value in its CPU cache, and it also guarantees that every time a variable reads from a volatile variable, it will get the latest value.
+
+```
+public volatile int volatileVariable;
 ```
 
 THREAD STARVATION:
