@@ -141,6 +141,109 @@ private static int recursiveFactorial(int number) {
 }
 ```
 
+# Concurrency
+
+software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
+
+CONCURRENCY BENEFITS:
+
+- free up the main thread so that it can continue working and executing, you can report progress or accept user input and perform those other tasks on the screen or in other parts of the program, while another long-running task that we kicked off in another thread continues to execute in the background.
+
+- might want to use threads is because an API requires us to provide one.
+
+PROCESS:
+
+an instance of a computer program with its own memory space that's sequentially executed by a computer system that has the ability to run several computer programs concurrently.
+
+```
+java virtual machine instance ->
+        the JVM runs as a process ->
+            running a java console application ->
+                we're initiating said PROCESS
+```
+
+THREAD:
+
+a unit of execution within a process, each process can have multiple threads, a method for a program to "split" itself into two or more simultaneously or pseudo-simultaneously running tasks.
+
+- every process has a heap and every thread has a thread stack.
+
+MULTITHREADING:
+
+the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
+
+# SYNCHRONIZATION
+
+the process of controlling when threads execute code and therefore when they can access the heap is called synchronization.
+
+- when working with threads, we have to synchronize all areas where we think or where interference can happen.
+
+THREAD SYNCHRONIZATION code blocks:
+
+use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
+
+```
+public synchronized void doCountdown() {
+    String color = ThreadColor.ANSI_CYAN;
+    String threadName = Thread.currentThread().getName();
+
+    switch(threadName) {
+        case THREAD_ONE:
+            color = ThreadColor.ANSI_CYAN;
+            break;
+        case THREAD_TWO:
+            color = ThreadColor.ANSI_PURPLE;
+            break;
+        default: 
+            color = ThreadColor.ANSI_GREEN;
+            break;
+    }
+    synchronizedLoop(color, threadName);
+}
+
+private void synchronizedLoop(String color, String threadName) {
+
+    synchronized(this) {
+        for(int i = 10; i > 0; i--) {
+            System.out.println(color + threadName + ": i = " + i);
+        }
+    }
+}
+```
+
+DEAD LOCKS:
+
+application freezes during execution due to unreleased INTRINSIC LOCKS - the synchronized shared-resource code executes one at a time and the single running thread is holding the objects INTRINSIC LOCK blocking other threads that WAIT for the lock release via NOTIFY
+
+THREAD SYNCHRONIZATION + DEADLOCKS:
+
+key to avoiding deadlocks when two or more threads will be competing for two or more locks. You want to make sure that all threads or all the threads will try to obtain the locks in the same order.
+
+```
+public static Object lock1 = new Object();
+
+private static class Thread1 extends Thread {
+
+    public void run() {
+
+        synchronized(lock1) {
+
+            // THREAD SYNCHRONIZATION + EXCEPTION HANDLING + INTRINSIC REENTRANT LOCK: in TRY-FINALLY code block, use ReentrantLock.lock() to acquire the object's intrinsic lock & execute code one at a time -- other calling threads will suspend until the single running thread calls Reentrant.unlock() to pass the class/object's INTRINSIC LOCK.
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
+```
+
+THREAD STARVATION:
+
+threads aren't given the opportunity to progress due to threat priority - assigning a high priority to a thread means the OS should try and run the thread before other waiting threads.
+
+
 # Data Structures 
 
 ### arrays
@@ -1395,33 +1498,29 @@ public static void swapValues(int[] array, int i, int j) {
 BUBBLE SORT:
 
 ```
-/*
-    Big(O) TIME COMPLEXITY: the worst case scenario for the number of steps in an algorithm's execution
+[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
+```
 
-        QUADRATIC TIME COMPLEXITY = O(n^2) = O of n-squared
+TIME COMPLEXITY O(n-squared) = worst performing nested loops, each loop corresponds to n in Big-O notation, thus O(n^2)
 
-                WORST: each loop corresponds to n in Big-O notation, thus O(n^2)
+SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
 
-    SPACE COMPLEXITY:
+STABLE ALGORITHM: if there are duplicate elements, the original order of these elements will be preserved
 
-          in-place algorithm that doesn't use extra memory
+- only swap if index_i > (index_i + 1)
 
-    STABLE ALGORITHM:
+BUBBLE SORT LOGIC:
 
-          if there are duplicate elements, the original order of these elements will be preserved
+bubble sort breaks the array into 2 partitions:
 
-              only swap if element at index_i > (index_i + 1)
+- sorted and unsorted
 
-    LOGIC:
+bubble the largest element to the top/unsorted partition that grows with each loop
 
-          bubble sort breaks the array into 2 partitions:
+- right-to-left sorted partition growth
 
-              sorted and unsorted
+```
 
-                  bubble the largest element to the top/unsorted partition that grows with each loop
-
-                  right-to-left sorted partition growth
- */
 public static void bubbleSort(int[] array) {
 
     // sorted partition
@@ -1441,7 +1540,78 @@ public static void bubbleSort(int[] array) {
     }
     System.out.println(Arrays.toString(array));
 }
+```
 
+SELECTION SORT
+
+```
+[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
+```
+
+TIME COMPLEXITY O(n-squared) = worst performing nested loops, each loop corresponds to n in Big-O notation, thus O(n^2)
+
+SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
+
+STABLE ALGORITHM: if there are duplicate elements, the original order of these elements will be preserved
+
+- only swap if index_i > (index_i + 1)
+
+SELECTION SORT LOGIC:
+
+selection sort breaks the array into 2 partitions:
+
+- sorted and unsorted: the arrays starts unsorted & unsorted partition shrinks from left to right
+
+```
+[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
+```
+
+selection sort looks for the largest element in the unsorted partition
+- swap the largest element found with last element in the unsorted partition via respective index
+- then decrement the lastUnsortedIndex var by 1 and repeat the process
+
+```
+public static void selectionSort(int[] array) {
+
+    // last index in the given iteration of the unsorted partition (array starts as unsorted)
+    int lastUnsortedIndex = array.length - 1;
+
+    // largest value in the given iteration of the unsorted array
+    int currentLargestIndex = 0;
+
+    // UNSORTED PARTITION
+    for(int index = 0; index <= lastUnsortedIndex; index++) {
+
+        boolean isTraversingUnsortedArray = (index != lastUnsortedIndex);
+        if(isTraversingUnsortedArray) {
+
+            // track index with largest element
+            if(array[currentLargestIndex] < array[index]) {
+                currentLargestIndex = index;
+            }
+        } else { // reached unsortedPartition end
+
+            boolean foundLargerElement = (array[currentLargestIndex] < array[lastUnsortedIndex]);
+            if(foundLargerElement) {
+
+                // if you find a larger value during unsortedPartition traversal, replace currentValue
+                currentLargestIndex = lastUnsortedIndex;
+            }
+
+            // SORTED PARTITION
+            // swap the largest element with element at the end of the unsorted partition
+            swapValues(array, currentLargestIndex, lastUnsortedIndex);
+
+            // reset largest element index for next unsortedPartition traversal
+            index = 0;
+            currentLargestIndex = 0;
+
+            // decrement length of unsorted partition AKA increment length of sorted partition
+            lastUnsortedIndex--;
+        }
+    }
+    System.out.println(Arrays.toString(array));
+} 
 ```
 
 # SQL
