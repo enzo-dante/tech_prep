@@ -10,7 +10,7 @@ the total memory space required for an algorithm to successfully complete compri
 
 ### 5 Big O Types (best-to-worst)
 
-O(1) CONSTANT time complexity
+O(1) CONSTANT time complexity: worst-case, getting a value with a key will always take the same number of steps (3)
 
 - pronounced: O of 1
 
@@ -18,7 +18,7 @@ O(logn) LOGARITHMIC time complexity
 
 - pronounced: O of log n to the base 2
 
-O(n) LINEAR time complexity 
+O(n) LINEAR time complexity: worst-case, the number of steps is directly proportional to the length of the input because getting a value WITHOUT a key will require traversing to the end of a collection 
 
 - pronounced: O of n
 
@@ -30,27 +30,137 @@ O(n^2) QUADRATIC time complexity
 
 - pronounced: O of n-squared
 
-# Serialization
+# Keywords
 
-SERIALIZATION: the conversion of a Java object into a static stream (sequence) of bytes, which we can then be saved to a database or transfer over a network.
+CONSTANTS
 
-TRANSIENT: use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
+static class variables assigned FINAL value before compilation/instantiation
+
 ```
-public class Book implements Serializable {
+private static final String POWER_USER = "I am a power user";
+```
 
-    private static final long serialVersionUID = -2936687026040726549L;
-    private String bookName;
+METHOD OVERLOADING:
 
-    private transient String description;
-    private transient int copies;
-    
-    // getters and setters
+use same name, but with unique parameters, for related methods to reduce tech debt and optimize readability & scalability
+
+```
+public int add() {
+    return 1 + 1;
+}
+
+public int add(int a, int b) {
+    return a + b;
+}
+
+public int add(int n, String msg) {
+    System.out.println("added 100 to " + n);
+    return 100 + n; 
 }
 ```
 
-SERIALIZE & DESERIALIZE
+ACCESS-MODIFIERS
 
-The serialization process is instance-independent; classes that are eligible for serialization need to implement Serializable interface.
+```
+public class Person {
+    // PRIVATE: accessibility the variable or method is limited to the scope of the defining class 
+    private String name;
+
+    // PUBLIC: the variable or method can be accessed from any scope 
+    public Person(String name) {
+        this.name = name;
+    }
+
+    // PROTECTED: accessibility to the variable or method is limited to the scope of the defining class & it's OOP INHERITANCE subclasses within the package
+    protected String talk() {
+        return "This is protected speech";
+    }
+} 
+
+```
+
+OOP INHERITANCE:
+
+child subclass inherits public class fields + methods from extending parent super class
+
+```
+public class Animal {
+
+    private String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+}
+
+public class Dog extends Animal {
+
+    public Dog(String name) {
+        super(name);
+    }
+} 
+```
+
+OOP POLYMORPHISM + INTERFACES:
+
+must implement publicly-shared method signatures via @Override
+
+```
+interface ISports {
+    void play();
+}
+
+public class Player implements ISports {
+
+    private final String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void play() {
+        System.out.println("I play sports");
+    }
+}
+```
+
+OOP ENCAPSULATION:
+
+use access modifiers to guard the class fields & methods methods from inappropriate external access
+
+```
+public class Toy {
+
+    private String name;
+    
+    public Toy(String name) {
+        this.name = name;
+    }
+
+    private int sendError() {
+        return -1; 
+    } 
+
+    public String getName() {
+        return this.name;
+    }
+}
+```
+
+EXCEPTION HANDLING
+
+look before you leap: use if-else statement to handle errors
+
+```
+if(n == 0) return false;
+```
+
+easier to ask for forgiveness than permission: use try-catch block to handle errors 
+
+# Serialization
+
+the conversion of a Java object into a static stream (sequence) of bytes, which we can then be saved to a database or transfer over a network.
 
 ```
     /**
@@ -83,6 +193,25 @@ The serialization process is instance-independent; classes that are eligible for
 
         return book;
     }
+```
+
+The serialization process is instance-independent: classes that are eligible for serialization need to implement Serializable interface.
+
+TRANSIENT:
+
+use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
+
+```
+public class Book implements Serializable {
+
+    private static final long serialVersionUID = -2936687026040726549L;
+    private String bookName;
+
+    private transient String description;
+    private transient int copies;
+    
+    // getters and setters
+}
 ```
 
 ```
@@ -157,20 +286,16 @@ interface ITelephone {
 
 class DeskPhone implements ITelephone {
 
-    // CONSTANTS/static class variables assigned FINAL value before compilation/instantiation
     private static final String RINGING = "Ring ring ring";
 
-    // OOP ENCAPSULATION private class fields
     private int myNumber;
     private boolean isRinging;
 
-    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
     public DeskPhone(int myNumber) {
         this.myNumber = myNumber;
         this.isRinging = false;
     }
 
-    // OOP POLYMORPHISM: unique implementation of method for this object despite same signature shared by multiple objects via @Override
     @Override
     public void powerOn() {
         System.out.println(NO_POWER);
@@ -247,6 +372,109 @@ class Dog extends AbstractAnimal {
   - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
 
 - INTERFACES can ONLY define publicly-shared signatures
+
+# Generics
+
+improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
+
+```
+ArrayList<Integer> onlyIntegers = new ArrayList<>();
+numbers.add(1);
+
+// not using generics
+ArrayList elements = new ArrayList<>();
+elements.add(1);
+```
+
+GENERICS make identifying bugs/code breaks faster throughout lifecycle (preferably before prod runtime & in compile time) and subsequently cheaper to fix due to less resources being exhausted
+
+```
+
+interface ISports {
+    String getName();
+}
+
+abstract class Player implements ISports {
+
+    private final String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+}
+
+class FootballPlayer extends Player {
+
+    public FootballPlayer(String name) {
+        super(name);
+    }
+}
+
+// Comparable<Team<T>> = only compare the same-sport teams
+class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
+
+    private final String ALREADY_ON_TEAM = " already on team";
+    private final String ADDED_TO_TEAM = " added to team";
+
+    private String name;
+    private int won;
+    private int tied;
+
+    // GENERICS: specify datatype parameters when creating classes, interfaces, or methods thus improving ENCAPSULATION
+    private ArrayList<T> members;
+
+    public SportsTeam(String name) {
+        this.name = name;
+
+        this.members = new ArrayList<T>();
+        this.won = 0;
+        this.tied = 0;
+    }
+
+    public boolean addPlayer(T p) {
+
+        if(members.contains(p)) {
+
+            // since using GENERICS CLASS extends bound Type parameter, no need to cast dataType
+            System.out.println(p.getName() + ALREADY_ON_TEAM);
+            return false;
+        }
+
+        this.members.add(p);
+        System.out.println(p.getName() + ADDED_TO_TEAM + " " + this.getName());
+
+        return true;
+    }
+
+    public int ranking() {
+        return (this.won * 2) + this.tied;
+    }
+
+    @Override
+    public int compareTo(SportsTeam<T> team) {
+
+        boolean isLowerRank = (this.ranking() > team.ranking());
+        boolean isHigherRank = (this.ranking() < team.ranking());
+        int sameRank = 0;
+
+        if(isLowerRank) {
+            return -1;
+        } else if(isHigherRank){
+            return 1;
+        }
+        return sameRank;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+```
 
 # Concurrency
 
@@ -538,6 +766,8 @@ remove all shared elements found in both sets & return all non-shared elements o
 
 ### Singly LinkedLists
 
+HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodePointer } --> null
+
 Singly LinkedLists w/ an array backing
 
 ```
@@ -572,8 +802,6 @@ public class EmployeeNode {
     }
 }
 ```
-
-HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodePointer } --> null
 
 ```
 public class EmployeeLinkedList {
@@ -660,6 +888,8 @@ public class EmployeeLinkedList {
 
 ### Doubly LinkedLists
 
+null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {previousPointer, currentNodeValue, nextNodePointer } <--> TAIL --> null
+
 Doubly LinkedLists w/ an array backing
 
 ```
@@ -680,33 +910,9 @@ public class EmployeeNode {
         return this.employee.toString();
     }
 
-    public Employee getEmployee() {
-        return this.employee;
-    }
-
-    public Employee getNext() {
-        return this.next;
-    }
-
-    public Employee getPrevious() {
-        return this.previous;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public void setNext(Employee employee) {
-        this.next = employee;
-    }
-
-    public void setPrevious(Employee employee) {
-        this.previous = employee;
-    }
+    // OOP GETTERS & SETTERS
 }
 ```
-
-null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {previousPointer, currentNodeValue, nextNodePointer } <--> TAIL --> null
 
 ```
 public class DoublyLinkedList {
@@ -750,7 +956,7 @@ public class DoublyLinkedList {
         // instantiate a new node that will serve as the new head of the linkedList
         EmployeeNode newNode = new EmployeeNode(employee);
 
-        if(isEmpty()) {
+        if(this.isEmpty()) {
 
             // if the linkedList is empty, then new node will serve as head and tail
             this.tail = newNode;
@@ -780,7 +986,7 @@ public class DoublyLinkedList {
         // instantiate a new node that will serve as the new head of the linkedList
         EmployeeNode newNode = new EmployeeNode(employee);
 
-        if(isEmpty()) {
+        if(this.isEmpty()) {
 
             // if the linkedList is empty, than added node will serve as head and tail
             this.head = newNode;
@@ -807,11 +1013,11 @@ public class DoublyLinkedList {
      */
     public EmployeeNode removeFromFront() {
 
-        if(isEmpty()) return null;
+        if(this.isEmpty()) return null;
 
         EmployeeNode removedNode = this.head;
 
-        boolean hasOnlyOneNode = this.head.getNext() == null;
+        boolean hasOnlyOneNode = (this.head.getNext() == null);
 
         if(hasOnlyOneNode) {
 
@@ -840,7 +1046,7 @@ public class DoublyLinkedList {
      */
     public EmployeeNode removeFromEnd() {
 
-        if(isEmpty()) return null;
+        if(this.isEmpty()) return null;
 
         EmployeeNode removedNode = this.tail;
         boolean hasOnlyOneNode = (this.tail.getPrevious() == null);
@@ -864,46 +1070,31 @@ public class DoublyLinkedList {
         return removedNode;
     }
 
-    public int getSize() {
-        return this.size;
-    }
-
-    public EmployeeNode getHead() {
-        return this.head;
-    }
-
-    public EmployeeNode getTail() {
-        return this.tail;
-    }
+    // OOP GETTERS & SETTERS
 }
 ```
 
 # Stacks
 
-STACKS: an abstract class that only accesses variables from the top/front on a stack because it's a last-in, first-out (LIFO) data structure implemented by a LINKED_LIST or ARRAY
+LIFO STACKS: an abstract class that only accesses variables from the top/front on a stack because it's a last-in, first-out (LIFO) data structure implemented by a LINKED_LIST or ARRAY
 
-- O(n) linear TIME COMPLEXITY: due to LIFO (only accessed from the top/front), array STACK for push(), pop(), peek()
+- LINKED_LIST STACK O(1) constant TIME COMPLEXITY: due to LIFO (only accessed from the top/front), for push(), pop(), peek()
 
-- O(1) constant TIME COMPLEXITY: due to LIFO (only accessed from the top/front), linkedList STACK for push(), pop(), peek()
+- ARRAY STACK O(n) linear TIME COMPLEXITY: due to LIFO (only accessed from the top/front), for push(), pop(), peek()
 
 ```
-class ArrayStack {
-
-    // private class fields
-    private Employee[] stack;
+public class ArrayStack {
 
     // STACK top: always null because it's a placeholder for next potential item; actual top of stack is the last index of the array
     private int top;
+    private Employee[] stack;
 
-    // OOP CONSTRUCTOR that initializes the class fields & INTRINSIC LOCK on class/object instantiation
     public ArrayStack(int capacity) {
-
         this.stack = new Array[capacity]
         this.top = 0;
     }
 
-    // OOP CLASS METHODS: unique object behavior
-    public int isEmpty() {
+    public boolean isEmpty() {
         return this.top == 0;
     } 
 
@@ -912,7 +1103,6 @@ class ArrayStack {
      */
     public Employee peak() {
 
-        // EXCEPTION HANDLING look before you leap: use if-else statement to handle errors
         if(this.isEmpty()) throw new EmptyStackException();
 
         int firstIndex = this.top - 1;
@@ -943,7 +1133,6 @@ class ArrayStack {
 
     public Employee pop() {
 
-        // THROW EXCEPTION: initiate specific exception with provided error msg
         if(this.isEmpty()) throw new EmptyStackException();
 
 
@@ -957,13 +1146,11 @@ class ArrayStack {
         return poppedEmployee;
     }
 
-    // GETTERS & SETTERS
     public Employee[] getStack() {
 
         for(int i = 0; i < this.stack.length; i++) {
             System.out.println(this.stack[i]);
         }
-
         return this.stack;
     }
 }
@@ -971,7 +1158,7 @@ class ArrayStack {
 
 # Maps
 
-MAPS: an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASHMAP classes with 2 GENERIC parameters
+an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASHMAP classes with 2 GENERIC parameters
 
 - O(1) CONSTANT time complexity: getting a map value with a key will always take the same number of steps (3)
 
@@ -981,7 +1168,6 @@ Map<String, String> languages = new HashMap<>();
 
 String key = "English";
 String value = "Primary language in the United States";
-
 ```
 
 add unique_key-value generics class pair into map collection
@@ -1011,23 +1197,22 @@ languages.containsKey(key)
 
 # Queues 
 
-QUEUES: an abstract class that only accesses variables from the top/front on the queue because it's a first-in, first-out (FIFO) data structure implemented by a LINKED_LIST or ARRAY
+FIFO QUEUES: an abstract class that only accesses variables from the top/front on the queue because it's a first-in, first-out (FIFO) data structure implemented by a LINKED_LIST or ARRAY
 
-- O(n) linear TIME COMPLEXITY: due to FIFO (only accessed from the top/front), array QUEUES for add(), pop(), peek()
+- ARRAY QUEUES O(n) linear TIME COMPLEXITY: due to FIFO (only accessed from the top/front), for add(), pop(), peek()
 
-- O(1) constant TIME COMPLEXITY: due to FIFO (only accessed from the top/front), linkedList QUEUES for add(), pop(), peek()
+- LINKED_LIST QUEUES O(1) constant TIME COMPLEXITY: due to FIFO (only accessed from the top/front), for add(), pop(), peek()
 
 CIRCULAR QUEUE: wrap queue back-to-front, where back field is always pointing to next available queue position
 
 ```
-class CircularQueue {
+public class CircularQueue {
 
     private Employee[] queue;
     private int front;
     private int back;
 
     public CircularQueue(int capacity) {
-
         this.queue = new Employee[capacity]
         this.front = 0;
         this.back = 0;
@@ -1044,14 +1229,16 @@ class CircularQueue {
         return (wrappedSize + this.queue.length);
     }
 
+    public boolean isEmpty() {
+        return this.getSize() == 0;
+    }
 
     /**
      * O(1) constant time complexity: preview only first item at the front of the queue
      */ 
     public Employee peek() {
 
-        // THROW EXCEPTION: initiate specific exception with provided error msg
-        if(this.getSize() == 0) return throw new NoSuchElementException();
+        if(this.isEmpty()) return throw new NoSuchElementException();
 
         return this.queue[this.front];
     }
@@ -1059,12 +1246,12 @@ class CircularQueue {
     /**
      * O(1) constant time complexity: adding to a full circular queue needs to be resized/doubled
      */ 
-    public void add(Employee employee) {
+    public void push(Employee employee) {
 
         if(employee == null) return;
 
         int lastIndex = this.queue.length - 1;
-        boolean isFullAndResize = this.getSize() == lastIndex; 
+        boolean isFullAndResize = (this.getSize() == lastIndex); 
 
         if(isFullAndResize) {
 
@@ -1103,7 +1290,7 @@ class CircularQueue {
         this.queue[this.back] = employee;
 
         int lastQueueIndex = this.queue.length - 1; 
-        boolean isWrapped = this.back <= lastQueueIndex;
+        boolean isWrapped = (this.back <= lastQueueIndex);
 
         this.back = isWrapped ? this.back + 1 : 0; 
     }
@@ -1113,8 +1300,7 @@ class CircularQueue {
      */ 
     public Employee pop() {
 
-        // ! THROW EXCEPTION: initiate specific exception with provided error msg
-        if(this.getSize() == 0) throw new NoSuchElementException();
+        if(this.isEmpty()) throw new NoSuchElementException();
 
         // FIFO: get employee at the front of the queue
         Employee employee = this.queue
@@ -1123,11 +1309,10 @@ class CircularQueue {
         this.queue[this.front] = null;
         this.front++;
 
-        boolean isEmptyQueue = this.getSize() == 0;
-        boolean isFullyWrapped = this.front == this.queue.length;
+        boolean isFullyWrapped = (this.front == this.queue.length);
 
         // if queue is empty after removal of front: reset queue
-        if(isEmptyQueue) {
+        if(this.isEmpty()) {
 
             this.back = 0;
             this.front = 0;
@@ -1137,7 +1322,6 @@ class CircularQueue {
             // if queue fully wrapped, set front back to index 0 because no more unused space in queue
             this.front = 0;
         }
-
         return employee;
     }
 }
@@ -1225,43 +1409,37 @@ visit the left-child, then root, then right-child, and repeat
                                    29 32
 
 ```
-class BinaryTree {
+public class BinaryTree {
 
-    // CONSTANTS/static class variables assigned FINAL value before compilation/instantiation
     private static final String EMPTY_TREE = "This binary tree is empty";
     private static final String IN_ORDER_TRAVERSAL = "In-order Traversal";
 
-    // OOP ENCAPSULATION private class fields
     private TreeNode root;
 
-    // OOP CONSTRUCTOR that initializes the class fields & INTRINSIC LOCK on class/object instantiation
     public BinaryTree() {
         this.root = null;
     }
 
-    // CLASS METHODS: unique object behavior
-    // ACCESS-MODIFIER protected: accessibility the variable or method is limited to the scope of the defining class & it's OOP INHERITANCE subclasses within the package
     public boolean isEmpty() {
         return this.root == null;
     }
 
     public void traverseInOrder() {
 
-        if(isEmpty()) return;
+        if(this.isEmpty()) return;
 
         System.out.println(IN_ORDER_TRAVERSAL);
         this.root.traverseInOrder();
     }
 
     public void insertNode(int value) {
-        if(isEmpty()) {
+        if(this.isEmpty()) {
             this.root = new TreeNode(value);
         } else {
             this.root.insertNode(value);
         }
     }
 
-    // METHOD OVERLOADING: use same name, but with unique parameters, for related methods to reduce tech debt and optimize readability & scalability
     public void delete(int value) {
         this.root = delete(this.root, value);
     }
@@ -1416,7 +1594,7 @@ class BinaryTree {
     }
 
     public int getMin() {
-        if(isEmpty()) {
+        if(this.isEmpty()) {
             System.out.println(EMPTY_TREE);
             return Integer.MIN_VALUE;
         } else {
@@ -1425,7 +1603,7 @@ class BinaryTree {
     }
 
     public int getMax() {
-        if(isEmpty()) {
+        if(this.isEmpty()) {
             System.out.println(EMPTY_TREE);
             return Integer.MIN_VALUE;
         } else {
@@ -1434,13 +1612,12 @@ class BinaryTree {
     }
 
     public TreeNode getNode(int value) {
-        // EXCEPTION HANDLING look before you leap: use if-else statement to handle errors
-        if(isEmpty()) return null;
+
+        if(this.isEmpty()) return null;
 
         return this.root.getNode(value);
     }
 
-    // OOP GETTERS & SETTERS
     public TreeNode getRoot() {
         return this.root;
     }
@@ -1448,17 +1625,14 @@ class BinaryTree {
     // INNER CLASS: logically grouped components within an extending parent super class
     protected class TreeNode {
 
-        // OOP ENCAPSULATION private class fields
         private int data;
         private TreeNode leftChild;
         private TreeNode rightChild;
 
-        // OOP constructor that initializes the class fields on class/object instantiation
         public TreeNode(int data) {
             this.data = data;
         }
 
-        // OOP CLASS METHODS: unique object behavior
         /**
          * get values lowest-to-highest by traversing the left-child, then root, then right-child, and repeat
          */
@@ -1565,9 +1739,7 @@ class BinaryTree {
             // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in call-stack resolution or overflow
             boolean isBaseCase = (this.leftChild == null);
 
-            if(isBaseCase) {
-                return this.data;
-            }
+            if(isBaseCase) return this.data;
 
             // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
             return this.leftChild.getMin();
@@ -1582,38 +1754,13 @@ class BinaryTree {
             // ! RECURSION BASE CASE: the breaking condition that initiates an upward propagation of return values for the waiting calls resulting in a call-stack resolution or overflow
             boolean isBaseCase = (this.rightChild == null);
 
-            if(isBaseCase) {
-                return this.data;
-            }
+            if(isBaseCase) return this.data;
 
             // ! RECURSION: continuously self-calling algorithm & each call waits for a return value until reaching a base case or experiences a stack overflow
             return this.rightChild.getMax();
         }
 
         // OOP GETTERS & SETTERS
-        public int getData() {
-            return this.data;
-        }
-
-        public void setData(int data) {
-            this.data = data;
-        }
-
-        public TreeNode getLeftChild() {
-            return this.leftChild;
-        }
-
-        public void setLeftChild(TreeNode leftChild) {
-            this.leftChild = leftChild;
-        }
-
-        public TreeNode getRightChild() {
-            return this.rightChild;
-        }
-
-        public void setRightChild(TreeNode rightChild) {
-            this.rightChild = rightChild;
-        }
     }
 }
 ```
