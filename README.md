@@ -18,7 +18,7 @@ O(logn) LOGARITHMIC time complexity
 
 - pronounced: O of log n to the base 2
 
-O(n) LINEAR time complexity: worst-case, the number of steps is directly proportional to the length of the input because getting a value WITHOUT a key will require traversing to the end of a collection 
+O(n) LINEAR time complexity: worst-case, the number of steps is directly proportional to the length of the input because getting a value WITHOUT a key will require traversing to the end of a collection
 
 - pronounced: O of n
 
@@ -31,6 +31,36 @@ O(n^2) QUADRATIC time complexity
 - pronounced: O of n-squared
 
 # Keywords
+
+STATIC
+
+a unique class variable assigned to a single space in memory & referenced across entire application
+
+```
+public class Test {
+
+    private static final String NAME = "My name";
+
+    public static void sayMyName() {
+        System.out.println(NAME);
+    }
+}
+```
+
+STATIC INITIALIZATION BLOCKS:
+
+one-time on-initialization execution of 'static {}' and their assigned STATIC FINAL variables
+
+```
+private static final String OWNER;
+private static final String FIRST_STATIC_MSG;
+
+static {
+    OWNER = "Tim";
+    FIRST_STATIC_MSG = "STATIC INITIALIZATION BLOCKS: one-time on-initialization execution of 'static {}' and their assigned STATIC FINAL variables";
+    System.out.println(FIRST_STATIC_MSG);
+}
+```
 
 CONSTANTS
 
@@ -55,7 +85,7 @@ public int add(int a, int b) {
 
 public int add(int n, String msg) {
     System.out.println("added 100 to " + n);
-    return 100 + n; 
+    return 100 + n;
 }
 ```
 
@@ -63,10 +93,10 @@ ACCESS-MODIFIERS
 
 ```
 public class Person {
-    // PRIVATE: accessibility the variable or method is limited to the scope of the defining class 
+    // PRIVATE: accessibility the variable or method is limited to the scope of the defining class
     private String name;
 
-    // PUBLIC: the variable or method can be accessed from any scope 
+    // PUBLIC: the variable or method can be accessed from any scope
     public Person(String name) {
         this.name = name;
     }
@@ -75,7 +105,7 @@ public class Person {
     protected String talk() {
         return "This is protected speech";
     }
-} 
+}
 
 ```
 
@@ -98,7 +128,7 @@ public class Dog extends Animal {
     public Dog(String name) {
         super(name);
     }
-} 
+}
 ```
 
 OOP POLYMORPHISM + INTERFACES:
@@ -133,19 +163,54 @@ use access modifiers to guard the class fields & methods methods from inappropri
 public class Toy {
 
     private String name;
-    
+
     public Toy(String name) {
         this.name = name;
     }
 
     private int sendError() {
-        return -1; 
-    } 
+        return -1;
+    }
 
     public String getName() {
         return this.name;
     }
 }
+```
+
+OOP COMPOSITION + INNER CLASS:
+
+logically grouped class components within an extending parent super class
+
+```
+
+public class PC {
+
+    private Motherboard motherboard;
+
+    public PC(int ramSlots) {
+        this.motherboard = new MotherBoard(ramSlots);
+    }
+
+    public Monitor getMonitor() {
+        return this.motherboard;
+    }
+
+    class Motherboard {
+
+        private int ramSlots;
+
+        public Motherboard(int ramSlots) {
+            this.ramSlots = ramSlots;
+        }
+
+        public int getRamSlots() {
+            return this.ramSlots;
+        }
+    }
+}
+
+
 ```
 
 EXCEPTION HANDLING
@@ -156,7 +221,17 @@ look before you leap: use if-else statement to handle errors
 if(n == 0) return false;
 ```
 
-easier to ask for forgiveness than permission: use try-catch block to handle errors 
+easier to ask for forgiveness than permission: use try-catch block to handle errors
+
+```
+try {
+    System.out.println(future.get());
+} catch(ExecutionException e) {
+    System.out.println(e.getMessage());
+} catch(ExecutionException e) {
+    System.out.println("Thread running the task was interrupted");
+}
+```
 
 # Serialization
 
@@ -164,7 +239,7 @@ the conversion of a Java object into a static stream (sequence) of bytes, which 
 
 ```
     /**
-     * Call the ObjectOutputStream() which takes a serializable object and converts it into a sequence (stream) of bytes. 
+     * Call the ObjectOutputStream() which takes a serializable object and converts it into a sequence (stream) of bytes.
      */
     public static void serialize(Book book) throws Exception {
 
@@ -209,7 +284,7 @@ public class Book implements Serializable {
 
     private transient String description;
     private transient int copies;
-    
+
     // getters and setters
 }
 ```
@@ -270,7 +345,7 @@ private static int recursiveFactorial(int number) {
 }
 ```
 
-# INTERFACES
+# Interfaces
 
 an abstract collection of publicly-shared method signatures that MUST be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
 
@@ -309,7 +384,7 @@ class DeskPhone implements ITelephone {
 }
 ```
 
-# ABSTRACT CLASSES
+# Abstract Classes 
 
 ABSTRACTION:
 
@@ -330,7 +405,7 @@ child subclass inherits public class fields + methods from extending parent supe
 ```
 // abstract keyword = no logic, only define the class or method signature shared across adhering classes
 abstract class AbstractAnimal {
-    
+
     private String name;
 
     public AbstractAnimal(String name) {
@@ -365,7 +440,7 @@ class Dog extends AbstractAnimal {
 }
 ```
 
-# INTERFACES VS ABSTRACT CLASSES
+# Interfaces vs Abstract Classes 
 
 - ABSTRACT CLASSES can have class fields/object instance members AND define abstract publicly-shared signatures
 
@@ -582,7 +657,7 @@ public synchronized void doCountdown() {
         case THREAD_TWO:
             color = ThreadColor.ANSI_PURPLE;
             break;
-        default: 
+        default:
             color = ThreadColor.ANSI_GREEN;
             break;
     }
@@ -697,7 +772,7 @@ THREAD STARVATION:
 threads aren't given the opportunity to progress due to threat priority - assigning a high priority to a thread means the OS should try and run the thread before other waiting threads.
 
 
-# Data Structures 
+# Data Structures
 
 ### arrays
 
@@ -785,21 +860,7 @@ public class EmployeeNode {
         return this.employee.toString();
     }
 
-    public Employee getEmployee() {
-        return this.employee;
-    }
-
-    public Employee getNext() {
-        return this.next;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public void setNext(Employee employee) {
-        this.next = employee;
-    }
+    // OOP GETTERS & SETTERS
 }
 ```
 
@@ -837,7 +898,7 @@ public class EmployeeLinkedList {
 
     /**
      * O(1) CONSTANT time complexity when adding node to the front of a list since index will always be 0
-     * O(n) LINEAR space complexity when adding node to a list to account for new field in memory 
+     * O(n) LINEAR space complexity when adding node to a list to account for new field in memory
      */
     public void addToFront(Employee employee) {
 
@@ -858,13 +919,13 @@ public class EmployeeLinkedList {
 
     /**
      * O(1) CONSTANT time complexity when removing node to the front of a list since index will always be 0
-     * O(1) CONSTANT space complexity when removing node from a list 
+     * O(1) CONSTANT space complexity when removing node from a list
      */
     public EmployeeNode pop() {
 
         if(this.isEmpty()) return null;
 
-        // save removed node 
+        // save removed node
         EmployeeNode removedNode = this.head;
 
         // set head as next node of current head that is going to be removed
@@ -876,13 +937,7 @@ public class EmployeeLinkedList {
         return removedNode;
     }
 
-    public int getSize() {
-        return this.size;
-    }
-
-    public EmployeeNode getHead() {
-        return this.head;
-    }
+    // OOP GETTERS & SETTERS
 }
 ```
 
@@ -949,7 +1004,7 @@ public class DoublyLinkedList {
 
     /**
      * O(1) CONSTANT time complexity when adding node to the front of a list since index will always be 0
-     * O(n) LINEAR space complexity when adding node to a list to account for new field in memory 
+     * O(n) LINEAR space complexity when adding node to a list to account for new field in memory
      */
     public void addToFront(Employee employee) {
 
@@ -963,7 +1018,7 @@ public class DoublyLinkedList {
 
         } else {
 
-            // If list is NOT empty, set the current head node's previous pointer to the new node. 
+            // If list is NOT empty, set the current head node's previous pointer to the new node.
             this.head.setPrevious(newNode);
 
             // set the current head as the new node's next value (shift current head down 1 node)
@@ -979,7 +1034,7 @@ public class DoublyLinkedList {
 
     /**
      * O(1) CONSTANT time complexity when adding node to the front of a list since index will always be last
-     * O(n) LINEAR space complexity when adding node to a list to account for new field in memory 
+     * O(n) LINEAR space complexity when adding node to a list to account for new field in memory
      */
     public void addToEnd(Employee employee) {
 
@@ -993,7 +1048,7 @@ public class DoublyLinkedList {
 
         } else {
 
-            // If list is NOT empty, set the current tail node's doubly next pointer to the new node. 
+            // If list is NOT empty, set the current tail node's doubly next pointer to the new node.
             this.tail.setNext(newNode);
 
             // set the current tail as the new node's previous value (shift current tail up 1 node)
@@ -1009,7 +1064,7 @@ public class DoublyLinkedList {
 
     /**
      * O(1) CONSTANT time complexity when removing node from the front of a list since index will always be 0
-     * O(1) CONSTANT space complexity when removing node from a list 
+     * O(1) CONSTANT space complexity when removing node from a list
      */
     public EmployeeNode removeFromFront() {
 
@@ -1021,7 +1076,7 @@ public class DoublyLinkedList {
 
         if(hasOnlyOneNode) {
 
-            // set tail to null to facilitate linkedList emptiness 
+            // set tail to null to facilitate linkedList emptiness
             this.tail = null;
 
         } else {
@@ -1042,7 +1097,7 @@ public class DoublyLinkedList {
 
     /**
      * O(1) CONSTANT time complexity when removing node from the front of a list since index will always be 0
-     * O(1) CONSTANT space complexity when removing node from a list 
+     * O(1) CONSTANT space complexity when removing node from a list
      */
     public EmployeeNode removeFromEnd() {
 
@@ -1053,7 +1108,7 @@ public class DoublyLinkedList {
 
         if(hasOnlyOneNode) {
 
-            // set head to null to facilitate linkedList emptiness 
+            // set head to null to facilitate linkedList emptiness
             this.head = null;
 
         } else {
@@ -1096,7 +1151,7 @@ public class ArrayStack {
 
     public boolean isEmpty() {
         return this.top == 0;
-    } 
+    }
 
     /**
      * get object at top/front of stack but do not remove
@@ -1173,8 +1228,8 @@ String value = "Primary language in the United States";
 add unique_key-value generics class pair into map collection
 
 ```
-// re-adding the map key will override the old value 
-languages.put(key, value) 
+// re-adding the map key will override the old value
+languages.put(key, value)
 ```
 
 retrieve record via key in map collection
@@ -1195,7 +1250,7 @@ validate key existence in map before adding/update key in map
 languages.containsKey(key)
 ```
 
-# Queues 
+# Queues
 
 FIFO QUEUES: an abstract class that only accesses variables from the top/front on the queue because it's a first-in, first-out (FIFO) data structure implemented by a LINKED_LIST or ARRAY
 
@@ -1220,12 +1275,12 @@ public class CircularQueue {
 
     public int getSize() {
 
-        boolean isWrapped = this.front <= this.back;
+        boolean isWrapped = (this.front <= this.back);
         int wrappedSize = this.back - this.front;
 
-        if(isWrappedQueue) return wrappedSize; 
+        if(isWrappedQueue) return wrappedSize;
 
-        // to handle negative number when wrapped circular queue size, wrapped queue numElements is add queueLength to wrappedSize 
+        // to handle negative number when wrapped circular queue size, wrapped queue numElements is add queueLength to wrappedSize
         return (wrappedSize + this.queue.length);
     }
 
@@ -1235,7 +1290,7 @@ public class CircularQueue {
 
     /**
      * O(1) constant time complexity: preview only first item at the front of the queue
-     */ 
+     */
     public Employee peek() {
 
         if(this.isEmpty()) return throw new NoSuchElementException();
@@ -1245,13 +1300,13 @@ public class CircularQueue {
 
     /**
      * O(1) constant time complexity: adding to a full circular queue needs to be resized/doubled
-     */ 
+     */
     public void push(Employee employee) {
 
         if(employee == null) return;
 
         int lastIndex = this.queue.length - 1;
-        boolean isFullAndResize = (this.getSize() == lastIndex); 
+        boolean isFullAndResize = (this.getSize() == lastIndex);
 
         if(isFullAndResize) {
 
@@ -1289,15 +1344,15 @@ public class CircularQueue {
         // add object to the back of the queue
         this.queue[this.back] = employee;
 
-        int lastQueueIndex = this.queue.length - 1; 
+        int lastQueueIndex = this.queue.length - 1;
         boolean isWrapped = (this.back <= lastQueueIndex);
 
-        this.back = isWrapped ? this.back + 1 : 0; 
+        this.back = isWrapped ? this.back + 1 : 0;
     }
 
     /**
      * O(1) constant time complexity: remove first item that is at the front of the queue
-     */ 
+     */
     public Employee pop() {
 
         if(this.isEmpty()) throw new NoSuchElementException();
@@ -1337,7 +1392,7 @@ a collection of 1 parent node to respective 2 children nodes with parent child c
 public static BinaryTree buildTree() {
 
     BinaryTree binaryTree = new BinaryTree();
-    
+
     binaryTree.insertNode(25);
     binaryTree.insertNode(20);
     binaryTree.insertNode(15);
@@ -1396,7 +1451,7 @@ visit the root of every subtree last left-to-right, and repeat
 
 IN-ORDER TRAVERSAL:
 
-visit the left-child, then root, then right-child, and repeat 
+visit the left-child, then root, then right-child, and repeat
 
     in-order: 15, 20, 22, 25, 26, 27, 29, 30, 32
 
@@ -1618,9 +1673,7 @@ public class BinaryTree {
         return this.root.getNode(value);
     }
 
-    public TreeNode getRoot() {
-        return this.root;
-    }
+    // OOP GETTERS & SETTERS
 
     // INNER CLASS: logically grouped components within an extending parent super class
     protected class TreeNode {
@@ -1767,7 +1820,7 @@ public class BinaryTree {
 
 # Graphs
 
-# Linear Search 
+# Linear Search
 
 traversal beginning to end by incrementing the index by 1 until in the array data structure with O(n) linear time complexity
 
@@ -1843,8 +1896,8 @@ private static int recursivePartition(int[] nums, int start, int end, int search
 
         return recursivePartition(nums, indexRight, end, searchValue);
 
-    } else { 
-        
+    } else {
+
         // in rightPartition
         int indexLeft = midpoint - 1;
 
@@ -1867,7 +1920,7 @@ public static void swapValues(int[] array, int i, int j) {
 }
 ```
 
-BUBBLE SORT:
+__BUBBLE SORT:__
 
 ```
 [[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
@@ -1914,7 +1967,7 @@ public static void bubbleSort(int[] array) {
 }
 ```
 
-SELECTION SORT
+__SELECTION SORT:__
 
 ```
 [[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
@@ -1983,7 +2036,189 @@ public static void selectionSort(int[] array) {
         }
     }
     System.out.println(Arrays.toString(array));
-} 
+}
+```
+
+__INSERTION SORT:__
+
+```
+[[][unsortedPartition]] -> [[sortedPartition][unsortedPartition]]
+```
+
+TIME COMPLEXITY O(n-squared) = worst performing nested loops, each loop corresponds to n in Big-O notation, thus O(n^2)
+
+SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
+
+STABLE ALGORITHM: if there are duplicate elements, the original order of these elements will be preserved
+
+- only swap if index_i > (index_i + 1)
+
+LOGIC:
+
+STEP 1) insertion sort breaks the array into 2 partitions: sorted and unsorted
+
+- sorted partition starts as a 1 element array (index 0)
+
+- unsorted partition starting at index 1
+
+STEP 2) the inserting of the UNSORTED_PARTITION_VALUE is done in the SORTED partition where there is no swapping, the elements shift
+
+- on 1st iteration, take first element in the unsorted partition (index 1)
+
+- save unsorted inserting value since shifting of elements might cause overwritten value
+
+- then "insert" it into the sorted partition by comparing if it is greater than or equal to the value in the sorted partition
+
+    - if sorted partition value is less than or equal to the unsorted inserting value,
+        than the inserting value is inserted at the index above the sorted partition value
+
+    - if the sorted partition value is greater than the unsorted inserting value,
+        than you shift the sorted partition value up 1
+        next, compare unsorted inserting value to the next decremented index value
+
+    - repeat this process until you find the correct index for the unsorted inserting value, or you reach the beginning of the array (index 0)
+
+STEP 3) after the comparison(s) & inserting of the unsorted inserting value
+
+- GAP VALUE 1 = the sorted partition is grown by 1 and the index in the unsorted partition is incremented by 1
+
+STEP 4) repeat this process until the entire array is sorted
+
+```
+public static void insertionSort(int[] array) {
+
+    int insertValue;
+
+    // outer FOR_LOOP is growing UNSORTED_PARTITION by 1 after inserting it's values into SORTED_PARTITION
+    // sorted partition starts with index 0; unsorted partition starts with index 1 as it's first element
+    for(int unsortedIndex = 1; unsortedIndex < array.length; unsortedIndex++) {
+
+        // save unsorted inserting value since shifting of elements might cause overwritten value
+        insertValue = array[unsortedIndex];
+
+        // traverse sorted partition for correct index of insertValue
+        // while not at beginning of partition AND (sortedPartitionElement is greater than unsorted insertElement)
+        for(int i = unsortedIndex; (i > 0) && (array[i - 1] > insertValue); i--) {
+
+            // if unsortedPartition insertValue less than currentSortedValue, shift left-to-right currentSortedValue up
+            int sortedPartitionElement = array[i - 1];
+
+            // shift left-to-right currentSortedValue up
+            array[i] = sortedPartitionElement;
+        }
+
+        // on finding correct index, assign unsorted insertValue to index in sorted partition
+        array[i] = insertValue;
+
+        // outer FOR_LOOP is growing both partitions by 1 after inserting UNSORTED_PARTITION_ELEMENT into SORTED_PARTITION
+    }
+}
+```
+
+__SHELL SORT:__
+
+SHELL SORT is a VARIATION of INSERTION SORT
+
+```
+[[][unsortedPartition]] -> [[sortedPartition][unsortedPartition]]
+```
+
+Big(O) TIME COMPLEXITY: the varying gap value you decide on influences the time complexity for shell sort
+
+SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
+
+UNSTABLE ALGORITHM: if there are duplicate elements, the original order of these elements will NOT always be preserved
+
+SHELL SORT LOGIC:
+
+- PRELIMINARY WORK
+
+    - if majority array is mostly in correct order, no need to shift every element like insertion sort
+
+    - do preliminary work by starting with large gap value that gradually decreases with each iteration & shift elements (no swapping)
+
+        - shell sort uses larger than 1 gapValue unlike insertion sort which has gapValue of 1
+
+        - after initial iteration w/ large gap value, increment index of both gapValue and compValue & repeat until gapValue index is greater than array length
+
+        - compare array[j-gapValue] with insertingElement
+
+- INSERTION SORT
+
+    - on the last iteration, when the gap value is 1
+
+    - the array has been partially sorted and no longer requires extensive shifting,
+
+    - then insertion sort is applied
+
+GAP VALUE STRATEGY POPULAR: Knuth Sequence
+
+GAP VALUE STRATEGY EXAMPLE:
+
+- gap value is calculated using array's length:
+
+```
+int gapValue = array.length / 2
+```
+
+- on each iteration, we will divide the gap value by 2 to get the next gap value
+
+- for the array below, there will only be 2 iterations
+
+```
+[20,35,-15,7,55,1,-22]
+
+// the (i) initialized gapValue = 3
+// the (j) sorted partitionValue = i = 3
+// gap value = array.length / 2
+// unsortedPreliminaryElement = array[gapValue]
+```
+
+- compare array[j-gapValue] against unsortedPreliminaryElement
+
+- once you reach the end of the array on the 1st iteration, compare the first element again using the gap value
+- on the next/last iteration, the gapValue will be 1 for this array
+- if the gapValue is 1, then execute insertion sort
+
+```
+public static void shellSort(int[] array) {
+
+    int insertValue;
+
+    /*
+        PRELIMINARY WORK
+
+            [20,35,-15,7,55,1,-22]
+
+        gap = midpoint index of array (7 at index 3)
+        continue loop while gap is greater than 0
+        after each iteration divide gap by 2
+     */
+    for(int gap = (array.length / 2); gap > 0; gap /= 2) {
+
+        for(int i = gap; i < array.length; i++) {
+
+            // save unsorted inserting value since shifting of elements might cause overwritten value
+            insertValue = array[i];
+
+            // use j to traverse sorted partition
+            int j = i;
+
+            // if index j is less than gap, reached front of array/sortedPartition
+            while((j >= gap) && (array[j - gap] > insertValue)) {
+
+                array[j] = array[j - gap];
+
+                // decrement to repeat until reaching the beginning of the array/sortedPartition
+                j -= gap;
+
+                // INSERTION SORT when gap = 1
+            }
+            // shift insertingValue to approximated correct index
+            array[j] = insertValue;
+        }
+    }
+}
 ```
 
 # SQL
