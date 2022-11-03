@@ -2221,6 +2221,176 @@ public static void shellSort(int[] array) {
 }
 ```
 
+__MERGE SORT:__
+
+Big(O) LOGARITHMIC TIME COMPLEXITY = O(logn) = O of log to the base 2 n
+
+- repeatedly dividing array in half during splitting
+
+SPACE COMPLEXITY NOT in-place
+
+- splitting phase = in-place algorithm that doesn't use extra memory
+    - track splitting via indices
+
+- merge phase = NOT in-place algorithm
+    - creates temporary arrays for sorting siblings for merge
+
+STABLE ALGORITHM: if there are duplicate elements, the original order of these elements will be preserved
+
+- only swap if index_i > (index_i + 1)
+
+MERGE SORT LOGIC:
+
+- divide & conquer algorithm:
+
+    - splitting base problem into several mini-problems, solving mini-problems, and then merging mini-solutions to solve base problem
+
+- recursive algorithm:
+
+    - calls itself until reaching a base case and then feeds return values to itself to solve backwards
+
+PHASE 1: logical splitting (in-place = no new arrays)
+
+- divide the array into two sub-arrays (left & right partition)
+- then recursively divide each subsequent array into two arrays
+- UNTIL you have multiple sorted arrays of 1 length
+
+```
+split left side first, then right side last
+    each split results in 'sibling arrays'
+
+      EXAMPLE:
+
+                   [20, 35, -15, 7, 55, 1, -22]
+
+          [20, 35, -15]       &&            [7, 55, 1, -22]
+
+      [20]    &&  [35, -15]            [7, 55]    &&      [1, -22]
+
+                 [35] && [-15]       [7] && [55]        [1] && [-22]
+```
+
+
+PHASE 2: not in-place merging, sorting elements starting from bottom-to-top with temporary array
+
+- handle left side first, then right side, merge all sibling arrays on left & right side before proceeding to higher level to recursively merge resulting sibling arrays
+
+STEPS:
+
+- create temp array that can hold all elements in the arrays we're merging
+
+- set i to 1st index of left sibling array
+
+- set j to 1st index of right sibling array
+
+- traverse through left & right array & get the smallest value for temp: compare left[i] to right[j] sibling arrays
+
+    - if left[i] is smaller, copy to temp array and increment i by 1
+    - if right[j] is smaller, copy to temp array and increment j by 1
+
+    repeat until temp array has merged all elements into temp array in sorted order
+
+- copy temp array back into original input array at the correct position (making it a STABLE algorithm)
+
+- repeat steps 4 & 5 until you have sorted original input array
+
+```
+public class MergeSort {
+
+    private static int[] array = {20, 35, -15, 7, 55, 1, -22};
+
+    public static int[] execute() {
+        recursivePartition(array, 0, array.length);
+        return array;
+    }
+
+    // RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+    private static void recursivePartition(int[] array, int start, int end) {
+
+        // RECURSIVE BASE CASE: the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
+        int partitionLength = end - start;
+        boolean isBaseCase = (partitionLength < 2);
+
+        if(isBaseCase) return;
+
+        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices 
+        int midpoint = (start + end) / 2;
+
+        // LEFT partitions
+        // [20, 35, -15] ->
+        //      [20] [35, -15] ->
+        //          [20] [35] [-15]
+
+        recursivePartition(array, start, midpoint);
+
+        // RIGHT partitions 
+        // [7, 55, 1, -22] ->
+        //      [7, 55] [1,-22] ->
+        //          [7] [55] [1] [-22]
+
+        recursivePartition(inputArray, midpoint, end);
+
+        // merging left & right RECURSIVE partitions returns arrays w/ sorted elements
+        merge(array, start, midpoint, end);
+    }
+
+    private static void merge(int[] array, int start, int midpoint, int end) {
+
+        int leftPartitionEnd = array[midpoint - 1];
+        int leftPartitionStart = array[midpoint];
+
+        boolean isAlreadySorted = (leftPartition <= rightPartitionStart);
+
+        if(isAlreadySorted) return;
+
+        int i = start;
+        int j = midpoint;
+        int tempIndex = 0;
+
+        int tempLength = end - start;
+        int tempArray = new int[tempLength];
+
+        // isTraversingLeft = (i < midpoint);
+        // isTraversingRight = (j < end);
+
+        while(i < midpoint && j < end) {
+
+            // preserve partition bounds
+            int currentLeftElement = array[i];
+            int currentRightElement = array[j];
+
+            // MERGE SORT: write smaller of 2 comparison elements to temp array for left-to-right sorted order
+            // STABLE ALGORITHM: if equal, write left first to preserve original order
+
+            tempArray[tempIndex++] = (currentLeftElement <= currentRightElement) ? inputArray[i++] : inputArray[j++];
+        }
+
+        /*
+            MERGE SORT OPTIMIZATION
+
+                LEFT partition remaining elements, must copy to temp array
+
+                RIGHT partition remaining elements, no copying into temp array needed bc already will be in sorted order for input array
+         */
+
+        int[] srcArray;
+        int destinationIndex = start + tempIndex;
+        int remainingElementIndex = i;
+
+        // no action, if no remainder left partition elements, else move to correct index
+        int notCopiedCount = midpoint - i;
+
+        // copying sorted tempArray elements back into inputArray
+        srcArray = array;
+        System.arraycopy(srcArray, remainingElementIndex, array, destinationIndex, notCopiedCount);
+
+        // only copy numElements in tempArray into array
+        srcArray = tempArray;
+        System.arraycopy(srcArray, 0, array, start, tempIndex);
+    }
+}
+```
+
 # SQL
 
 SQL is a query language, whereas MySQL is a relational database that uses SQL to query a database
