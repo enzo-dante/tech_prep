@@ -1,10 +1,10 @@
 # Big O Notation
 
-TIME COMPLEXITY:
+__TIME COMPLEXITY:__
 
 independent of hardware, the worst-case number of steps required for an algorithm (a consistently repeatable sequence of steps) to perform successfully.
 
-SPACE COMPLEXITY:
+__SPACE COMPLEXITY:__
 
 the total memory space required for an algorithm to successfully complete comprised of the input size and the temporary extra memory space (AUXILLARY SPACE).
 
@@ -14,25 +14,25 @@ O(1) CONSTANT time complexity: worst-case, getting a value with a key will alway
 
 - pronounced: O of 1
 
-O(logn) LOGARITHMIC time complexity
+O(logn) LOGARITHMIC time complexity: worst-case, using a divide & conquer algorithm to get a value will only slowly increase the number of steps
 
 - pronounced: O of log n to the base 2
 
-O(n) LINEAR time complexity: worst-case, the number of steps is directly proportional to the length of the input because getting a value WITHOUT a key will require traversing to the end of a collection
+O(n) LINEAR time complexity: worst-case, the number of steps is directly proportional to the length of the input size because getting a value WITHOUT a key will require traversing to the end of a collection
 
 - pronounced: O of n
 
-O(nlogn) loglinear time complexity
+O(nlogn) LOGLINEAR time complexity
 
 - pronounced: O of n log n
 
-O(n^2) QUADRATIC time complexity
+O(n-squared) QUADRATIC time complexity: the absolute worst-case, the number of steps exponentially increases due to nested loops.
 
 - pronounced: O of n-squared
 
 # Keywords
 
-STATIC
+__STATIC__
 
 a unique class variable assigned to a single space in memory & referenced across entire application
 
@@ -47,7 +47,7 @@ public class Test {
 }
 ```
 
-STATIC INITIALIZATION BLOCKS:
+__STATIC INITIALIZATION BLOCKS__
 
 one-time on-initialization execution of 'static {}' and their assigned STATIC FINAL variables
 
@@ -62,7 +62,7 @@ static {
 }
 ```
 
-CONSTANTS
+__CONSTANTS__
 
 static class variables assigned FINAL value before compilation/instantiation
 
@@ -70,7 +70,7 @@ static class variables assigned FINAL value before compilation/instantiation
 private static final String POWER_USER = "I am a power user";
 ```
 
-METHOD OVERLOADING:
+__METHOD OVERLOADING__
 
 use same name, but with unique parameters, for related methods to reduce tech debt and optimize readability & scalability
 
@@ -84,16 +84,17 @@ public int add(int a, int b) {
 }
 
 public int add(int n, String msg) {
-    System.out.println("added 100 to " + n);
+    System.out.println(msg);
     return 100 + n;
 }
 ```
 
-ACCESS-MODIFIERS
+__ACCESS-MODIFIERS__
 
 ```
 public class Person {
-    // PRIVATE: accessibility the variable or method is limited to the scope of the defining class
+
+    // PRIVATE: access to the variable or method is limited to the scope of the defining class
     private String name;
 
     // PUBLIC: the variable or method can be accessed from any scope
@@ -101,7 +102,7 @@ public class Person {
         this.name = name;
     }
 
-    // PROTECTED: accessibility to the variable or method is limited to the scope of the defining class & it's OOP INHERITANCE subclasses within the package
+    // PROTECTED: access to the variable or method is limited to the scope of the defining class & it's OOP INHERITANCE subclasses within the package
     protected String talk() {
         return "This is protected speech";
     }
@@ -109,53 +110,7 @@ public class Person {
 
 ```
 
-OOP INHERITANCE:
-
-child subclass inherits public class fields + methods from extending parent super class
-
-```
-public class Animal {
-
-    private String name;
-
-    public Animal(String name) {
-        this.name = name;
-    }
-}
-
-public class Dog extends Animal {
-
-    public Dog(String name) {
-        super(name);
-    }
-}
-```
-
-OOP POLYMORPHISM + INTERFACES:
-
-must implement publicly-shared method signatures via @Override
-
-```
-interface ISports {
-    void play();
-}
-
-public class Player implements ISports {
-
-    private final String name;
-
-    public Player(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void play() {
-        System.out.println("I play sports");
-    }
-}
-```
-
-OOP ENCAPSULATION:
+__OOP ENCAPSULATION__
 
 use access modifiers to guard the class fields & methods methods from inappropriate external access
 
@@ -178,12 +133,57 @@ public class Toy {
 }
 ```
 
-OOP COMPOSITION + INNER CLASS:
+__OOP INHERITANCE__
+
+child subclass inherits public class fields + methods from extending parent super class
+
+```
+public class Animal {
+
+    private String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+}
+
+public class Dog extends Animal {
+
+    public Dog(String name) {
+        super(name);
+    }
+}
+```
+
+__OOP POLYMORPHISM + INTERFACES__
+
+must implement ALL publicly-shared method signatures via @Override
+
+```
+interface ISports {
+    void play();
+}
+
+public class Player implements ISports {
+
+    private final String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void play() {
+        System.out.println("I play sports");
+    }
+}
+```
+
+__OOP COMPOSITION + INNER CLASS__
 
 logically grouped class components within an extending parent super class
 
 ```
-
 public class PC {
 
     private Motherboard motherboard;
@@ -209,11 +209,9 @@ public class PC {
         }
     }
 }
-
-
 ```
 
-EXCEPTION HANDLING
+__EXCEPTION HANDLING__
 
 look before you leap: use if-else statement to handle errors
 
@@ -272,7 +270,7 @@ the conversion of a Java object into a static stream (sequence) of bytes, which 
 
 The serialization process is instance-independent: classes that are eligible for serialization need to implement Serializable interface.
 
-TRANSIENT:
+__TRANSIENT__
 
 use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
 
@@ -345,14 +343,125 @@ private static int recursiveFactorial(int number) {
 }
 ```
 
+# DIVIDE & CONQUER
+
+recursively divide the original problem into 2 or more sub-problems & repeat until the sub-problems become small enough to solve a base case
+
+- after solving the base case/breaking condition, combine the solutions to construct the overall solution to the original problem
+
+divide & conquer algorithms are great for parallel processing because each sub-problem can be run on a different processor simultaneously (extremely performant on modern systems with large core counts)
+
+```
+public class MergeSort {
+
+    private static int[] array = {20, 35, -15, 7, 55, 1, -22};
+
+    public static int[] execute() {
+        recursivePartition(array, 0, array.length);
+        return array;
+    }
+
+    // RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+    private static void recursivePartition(int[] array, int start, int end) {
+
+        // RECURSIVE BASE CASE: the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
+        int partitionLength = end - start;
+        boolean isBaseCase = (partitionLength < 2);
+
+        if(isBaseCase) return;
+
+        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices 
+        int midpoint = (start + end) / 2;
+
+        // LEFT partitions
+        // [20, 35, -15] ->
+        //      [20] [35, -15] ->
+        //          [20] [35] [-15]
+
+        recursivePartition(array, start, midpoint);
+
+        // RIGHT partitions 
+        // [7, 55, 1, -22] ->
+        //      [7, 55] [1,-22] ->
+        //          [7] [55] [1] [-22]
+
+        recursivePartition(inputArray, midpoint, end);
+
+        // merging left & right RECURSIVE partitions returns arrays w/ sorted elements
+        merge(array, start, midpoint, end);
+    }
+
+    private static void merge(int[] array, int start, int midpoint, int end) {
+
+        int leftPartitionEnd = array[midpoint - 1];
+        int leftPartitionStart = array[midpoint];
+
+        boolean isAlreadySorted = (leftPartition <= rightPartitionStart);
+
+        if(isAlreadySorted) return;
+
+        int i = start;
+        int j = midpoint;
+        int tempIndex = 0;
+
+        int tempLength = end - start;
+        int tempArray = new int[tempLength];
+
+        // isTraversingLeft = (i < midpoint);
+        // isTraversingRight = (j < end);
+
+        while(i < midpoint && j < end) {
+
+            // preserve partition bounds
+            int currentLeftElement = array[i];
+            int currentRightElement = array[j];
+
+            // MERGE SORT: write smaller of 2 comparison elements to temp array for left-to-right sorted order
+            // STABLE ALGORITHM: if equal, write left first to preserve original order
+
+            tempArray[tempIndex++] = (currentLeftElement <= currentRightElement) ? inputArray[i++] : inputArray[j++];
+        }
+
+        /*
+            MERGE SORT OPTIMIZATION
+
+                LEFT partition remaining elements, must copy to temp array
+
+                RIGHT partition remaining elements, no copying into temp array needed bc already will be in sorted order for input array
+         */
+
+        int[] srcArray;
+        int destinationIndex = start + tempIndex;
+        int remainingElementIndex = i;
+
+        // no action, if no remainder left partition elements, else move to correct index
+        int notCopiedCount = midpoint - i;
+
+        // copying sorted tempArray elements back into inputArray
+        srcArray = array;
+        System.arraycopy(srcArray, remainingElementIndex, array, destinationIndex, notCopiedCount);
+
+        // only copy numElements in tempArray into array
+        srcArray = tempArray;
+        System.arraycopy(srcArray, 0, array, start, tempIndex);
+    }
+}
+```
+
+__POTENTIAL PROBLEMS__
+
+make sure to avoid redundant recursive calls (solved via MEMOIZATION)
+
+- MEMOIZATION: is a technique that can be used to improve the efficiency of divide & conquer algorithms by storing the solutions to earlier problems & eliminating redundant calls
+
 # Interfaces
 
-an abstract collection of publicly-shared method signatures that MUST be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
+an abstract collection of publicly-shared method signatures & public CONSTANTS that MUST ALL be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
 
 ```
 interface ITelephone {
 
-    // define the public 'signature' (only method names & parameters) of the shared behavior used by the set of class
+    // define the public 'signature' (only method names & parameters) of the shared behavior & public CONSTANTS used by the set of class
     void powerOn();
     boolean dial(int phoneNumber);
 
@@ -386,11 +495,11 @@ class DeskPhone implements ITelephone {
 
 # Abstract Classes 
 
-ABSTRACTION:
+__ABSTRACTION__
 
 defining the inherited signature, WITHOUT implementation
 
-ABSTRACT CLASS
+__ABSTRACT CLASS__
 
 force child subclass OOP INHERITANCE of method, signatures, & parent super-class fields for a set of classes
 
@@ -398,7 +507,7 @@ force child subclass OOP INHERITANCE of method, signatures, & parent super-class
 
   - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
 
-OOP INHERITANCE:
+__OOP INHERITANCE__
 
 child subclass inherits public class fields + methods from extending parent super class
 
@@ -454,7 +563,7 @@ improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only t
 
 ```
 ArrayList<Integer> onlyIntegers = new ArrayList<>();
-numbers.add(1);
+onlyIntegers.add(1);
 
 // not using generics
 ArrayList elements = new ArrayList<>();
@@ -511,17 +620,17 @@ class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
         this.tied = 0;
     }
 
-    public boolean addPlayer(T p) {
+    public boolean addPlayer(T player) {
 
-        if(members.contains(p)) {
+        if(this.members.contains(player)) {
 
             // since using GENERICS CLASS extends bound Type parameter, no need to cast dataType
-            System.out.println(p.getName() + ALREADY_ON_TEAM);
+            System.out.println(player.getName() + ALREADY_ON_TEAM);
             return false;
         }
 
-        this.members.add(p);
-        System.out.println(p.getName() + ADDED_TO_TEAM + " " + this.getName());
+        this.members.add(player);
+        System.out.println(player.getName() + ADDED_TO_TEAM + " " + this.getName());
 
         return true;
     }
@@ -555,28 +664,30 @@ class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
 
 software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
 
-CONCURRENCY BENEFITS:
+__CONCURRENCY BENEFITS__
 
 - free up the main thread so that it can continue working and executing, you can report progress or accept user input and perform those other tasks on the screen or in other parts of the program, while another long-running task that we kicked off in another thread continues to execute in the background.
 
 - might want to use threads is because an API requires us to provide one.
 
-PROCESS:
+__PROCESS__
 
 an instance of a computer program with its own memory space that's sequentially executed by a computer system that has the ability to run several computer programs concurrently.
 
+- every process has a memory HEAP 
+
 ```
 java virtual machine instance ->
-        the JVM runs as a process ->
+        the JVM runs as a PROCESS ->
             running a java console application ->
                 we're initiating said PROCESS
 ```
 
-THREAD:
+__THREAD__
 
-a unit of execution within a process, each process can have multiple threads, a method for a program to "split" itself into two or more simultaneously or pseudo-simultaneously running tasks.
+a unit of execution within a process, each process can have multiple threads: a method for a program to "split" itself into two or more simultaneously or pseudo-simultaneously running tasks.
 
-- every process has a heap and every thread has a thread stack.
+- every thread has a memory THREAD STACK.
 
 ```
 // THREADS .start(): only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
@@ -588,11 +699,11 @@ new Thread() {
 }.start();
 ```
 
-MULTITHREADING:
+__MULTITHREADING__
 
 the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
 
-THREAD JOIN:
+__THREAD JOIN__
 
 when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
 
@@ -637,11 +748,11 @@ class MyRunnableThread implements Runnable {
 
 # SYNCHRONIZATION
 
-the process of controlling when threads execute code and therefore when they can access the heap is called synchronization.
+the process of semi-controlling/influencing when threads execute code and therefore when they can access the heap is called synchronization.
 
 - when working with threads, we have to synchronize all areas where we think or where interference can happen.
 
-THREAD SYNCHRONIZATION code blocks:
+__THREAD SYNCHRONIZATION code blocks__
 
 use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
 
@@ -674,11 +785,11 @@ private void synchronizedLoop(String color, String threadName) {
 }
 ```
 
-DEAD LOCKS:
+__DEAD LOCKS__
 
 application freezes during execution due to unreleased INTRINSIC LOCKS - the synchronized shared-resource code executes one at a time and the single running thread is holding the objects INTRINSIC LOCK blocking other threads that WAIT for the lock release via NOTIFY
 
-THREAD SYNCHRONIZATION + DEADLOCKS:
+__THREAD SYNCHRONIZATION + DEADLOCKS__
 
 key to avoiding deadlocks when two or more threads will be competing for two or more locks. You want to make sure that all threads or all the threads will try to obtain the locks in the same order.
 
@@ -702,7 +813,7 @@ private static class Thread1 extends Thread {
 }
 ```
 
-ARRAY BLOCKING QUEUE:
+__ARRAY BLOCKING QUEUE__
 
 a queue is a (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
 
@@ -718,7 +829,7 @@ QueueConsumer consumer1 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI
 QueueConsumer consumer2 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI_CYAN);
 ```
 
-EXECUTOR SERVICE:
+__EXECUTOR SERVICE__
 
 optimize a managed set of threads, thus reducing the overhead of thread creation
 
@@ -731,11 +842,12 @@ executorService.execute(consumer1);
 executorService.execute(consumer2);
 ```
 
-THREAD POOLS + Future: a return value from an executed thread in a thread pool
+__FUTURE__
 
-THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
+a return value from an executed thread in a thread pool
 
 ```
+// THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
 Future<String> future = executorService.submit(new Callable<String>() {
     @Override
     public String call() throws Exception {
@@ -744,7 +856,7 @@ Future<String> future = executorService.submit(new Callable<String>() {
 });
 ```
 
-ATOMIC ACTIONS:
+__ATOMIC ACTIONS__
 
 once a thread starts these actions, they cannot be suspended during execution, and must complete
 
@@ -759,7 +871,7 @@ int atomicAction1 = 1;
 int atomicAction2 = atomicAction1;
 ```
 
-VOLATILE VARIABLES:
+__VOLATILE VARIABLES__
 
 the JVM writes the value back to main memory immediately after a thread updates the value in its CPU cache, and it also guarantees that every time a variable reads from a volatile variable, it will get the latest value.
 
@@ -767,14 +879,14 @@ the JVM writes the value back to main memory immediately after a thread updates 
 public volatile int volatileVariable;
 ```
 
-THREAD STARVATION:
+__THREAD STARVATION__
 
 threads aren't given the opportunity to progress due to threat priority - assigning a high priority to a thread means the OS should try and run the thread before other waiting threads.
 
 
 # Data Structures
 
-### arrays
+# arrays
 
 O(1) CONSTANT time complexity when getting an element in an array with an index because it always take 3 steps
 
@@ -797,6 +909,23 @@ for(int index = 0; index < intArray.length; index++) {
 }
 ```
 
+# vectors
+
+VECTORS are thread-safe ArrayList: if 1 or more threads are writing (CRUD) to an ArrayList there could be thread conflicts
+
+- thread-safe: no conflict when using on different threads with manually having to synchronize the code (synchronization has overhead performance issue)
+
+```
+List<Employee> employeeList = new Vector<>();
+```
+
+Vector.add(value) = SYNCHRONIZED add given value to vector
+
+```
+employeeList.add(new Employee("First 1", "Last 1", 124));
+employeeList.add(new Employee("First 2", "Last 2", 22));
+```
+
 # sets
 
 sets are a computationally fast unordered collection WITHOUT DUPLICATES implemented via a HASHSET class
@@ -806,7 +935,7 @@ Set<Integer> numbers = new HashSet<>();
 numbers.add(1);
 ```
 
-SET UNION:
+__SET UNION__
 
 a set (WITHOUT DUPLICATES) that contains ALL elements of 2 or more hashsets via hashSet.addAll()
 
@@ -821,7 +950,7 @@ set1.addAll(set2);
 
 - HASHSET element/ HASHMAP key custom CLASSES: @Override .equals() & .hashcode() methods - if 2 objects compare equal, then they must have same collection bucket hashcode
 
-VENN DIAGRAM ASYMMETRIC DIFF:
+__VENN DIAGRAM ASYMMETRIC DIFF__
 
 remove all shared elements of 1 set found in another set via bulk operation hashSet.removeAll()
 
@@ -835,11 +964,11 @@ Set<Integer> asymmetric = new HashSet<>(set1);
 asymmetric.removeAll(set2);
 ```
 
-VENN DIAGRAM SYMMETRIC DIFF:
+__VENN DIAGRAM SYMMETRIC DIFF__
 
 remove all shared elements found in both sets & return all non-shared elements of both sets (hashSetUnion - hashSetIntersection)
 
-### Singly LinkedLists
+# Singly LinkedLists
 
 HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodePointer } --> null
 
@@ -882,8 +1011,6 @@ public class EmployeeLinkedList {
     public void printList() {
 
         EmployeeNode currentNode = this.head;
-
-
         System.out.print("HEAD <--> ");
 
         while(currentNode != null) {
@@ -905,10 +1032,10 @@ public class EmployeeLinkedList {
         if(employee == null) return;
 
         // instantiate a new node that will serve as the new head of the linkedList
-        EmployeeNode node = new EmployeeNode(employee);
+        EmployeeNode newNode = new EmployeeNode(employee);
 
         // set the current head as the new node's next value (shift current head down 1 node)
-        node.setNext(this.head);
+        newNode.setNext(this.head);
 
         // set new node as new head
         this.head = node;
@@ -941,7 +1068,7 @@ public class EmployeeLinkedList {
 }
 ```
 
-### Doubly LinkedLists
+# Doubly LinkedLists
 
 null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {previousPointer, currentNodeValue, nextNodePointer } <--> TAIL --> null
 
@@ -1166,7 +1293,7 @@ public class ArrayStack {
 
     public void push() {
 
-        boolean isFullForResize = this.top == this.stack.length;
+        boolean isFullForResize = (this.top == this.stack.length);
 
         if(isFullForResize) {
 
@@ -1189,7 +1316,6 @@ public class ArrayStack {
     public Employee pop() {
 
         if(this.isEmpty()) throw new EmptyStackException();
-
 
         // STACK top: the actual top of stack is the last index of the array
         int indexLIFO = --this.top;
@@ -1818,6 +1944,88 @@ public class BinaryTree {
 }
 ```
 
+# Heaps
+
+```
+public class Heap {
+
+    private static final String HEAP_FULL = "Heap is full";
+    private static final String HEAP_EMPTY = "Heap is empty";
+
+    private int[] heap;
+    private int size;
+
+    public Heap(int capacity) {
+        this.heap = new int[capacity];
+    }
+
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+
+    public boolean isFull() {
+        return this.size == this.heap.length;
+    }
+
+    public int getParent(int index) {
+        return (index - 1) / 2;
+    }
+
+    public int getChild(int parentIndex, boolean isLeftChild) {
+
+        int currentChild = isLeftChild ? 1 : 2;
+        return (2 * parentIndex) + currentChild;
+    }
+
+    public void printHeap() {
+
+        for(int i = 0; i < this.size; i++) {
+            System.out.print(this.heap[i] + ", ");
+        }
+    }
+
+    public void sort() {
+
+        if(this.isEmpty()) return;
+
+        int lastHeapIndex = this.size - 1;
+
+        for(int i = 0; i < lastHeapIndex; i++) {
+
+            // the root = largest value in heap
+            int tempRoot = this.heap[0];
+
+            // swap root for last node in heap
+            this.heap[0] = this.heap[lastHeapIndex - 1];
+            this.heap[lastHeapIndex - i] = tempRoot;
+
+            // heapify() & reduce heap by 1 (exclude swapped value) on every root-last index swap
+            int adjustedLastIndex = (lastHeapIndex - i) - 1;
+            fixHeapBelow(0, adjustedLastIndex);
+        }
+    }
+
+    public int peek() {
+
+        if(this.isEmpty()) throw new IndexOutOfBoundsException(HEAP_EMPTY);
+
+        int root = this.heap[0];
+        return root; 
+    }
+
+    public void insert(int value) {
+
+        if(this.isFull()) throw new IndexOutOfBoundsException(HEAP_FULL);
+
+        this.heap[this.size] = value;
+
+        // pass index where we have placed the newValue
+        fixHeapAbove(this.size);
+        this.size++;
+    }
+}
+```
+
 # Graphs
 
 # Linear Search
@@ -1923,7 +2131,7 @@ public static void swapValues(int[] array, int i, int j) {
 __BUBBLE SORT:__
 
 ```
-[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
+[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]] -> [[][sortedPartition]]
 ```
 
 TIME COMPLEXITY O(n-squared) = worst performing nested loops, each loop corresponds to n in Big-O notation, thus O(n^2)
@@ -1932,7 +2140,7 @@ SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
 
 STABLE ALGORITHM: if there are duplicate elements, the original order of these elements will be preserved
 
-- only swap if index_i > (index_i + 1)
+- only swap if i > (i + 1)
 
 BUBBLE SORT LOGIC:
 
@@ -1945,7 +2153,6 @@ bubble the largest element to the top/unsorted partition that grows with each lo
 - right-to-left sorted partition growth
 
 ```
-
 public static void bubbleSort(int[] array) {
 
     // sorted partition
@@ -1970,7 +2177,7 @@ public static void bubbleSort(int[] array) {
 __SELECTION SORT:__
 
 ```
-[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
+[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]] -> [[][sortedPartition]]
 ```
 
 TIME COMPLEXITY O(n-squared) = worst performing nested loops, each loop corresponds to n in Big-O notation, thus O(n^2)
@@ -1979,7 +2186,7 @@ SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
 
 STABLE ALGORITHM: if there are duplicate elements, the original order of these elements will be preserved
 
-- only swap if index_i > (index_i + 1)
+- only swap if i > (i + 1)
 
 SELECTION SORT LOGIC:
 
@@ -1988,7 +2195,7 @@ selection sort breaks the array into 2 partitions:
 - sorted and unsorted: the arrays starts unsorted & unsorted partition shrinks from left to right
 
 ```
-[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]]
+[[unsortedPartition][]] -> [[unsortedPartition][sortedPartition]] -> [[][sortedPartition]]
 ```
 
 selection sort looks for the largest element in the unsorted partition
@@ -2010,14 +2217,15 @@ public static void selectionSort(int[] array) {
         boolean isTraversingUnsortedArray = (index != lastUnsortedIndex);
         if(isTraversingUnsortedArray) {
 
-            // track index with largest element
-            if(array[currentLargestIndex] < array[index]) {
+            boolean foundLargerUnsortedElement = (array[currentLargestIndex] < array[index]);
+
+            if(foundLargerUnsortedElement) {
                 currentLargestIndex = index;
             }
         } else { // reached unsortedPartition end
 
-            boolean foundLargerElement = (array[currentLargestIndex] < array[lastUnsortedIndex]);
-            if(foundLargerElement) {
+            boolean hasLargerLastUnsorted = (array[currentLargestIndex] < array[lastUnsortedIndex]);
+            if(hasLargerLastUnsorted) {
 
                 // if you find a larger value during unsortedPartition traversal, replace currentValue
                 currentLargestIndex = lastUnsortedIndex;
@@ -2042,7 +2250,7 @@ public static void selectionSort(int[] array) {
 __INSERTION SORT:__
 
 ```
-[[][unsortedPartition]] -> [[sortedPartition][unsortedPartition]]
+[[][unsortedPartition]] -> [[sortedPartition][unsortedPartition]] -> [[sortedPartition][]]
 ```
 
 TIME COMPLEXITY O(n-squared) = worst performing nested loops, each loop corresponds to n in Big-O notation, thus O(n^2)
@@ -2051,7 +2259,7 @@ SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
 
 STABLE ALGORITHM: if there are duplicate elements, the original order of these elements will be preserved
 
-- only swap if index_i > (index_i + 1)
+- only swap if i > (i + 1)
 
 LOGIC:
 
@@ -2120,7 +2328,7 @@ __SHELL SORT:__
 SHELL SORT is a VARIATION of INSERTION SORT
 
 ```
-[[][unsortedPartition]] -> [[sortedPartition][unsortedPartition]]
+[[][unsortedPartition]] -> [[sortedPartition][unsortedPartition]] -> [[sortedPartition][]]
 ```
 
 Big(O) TIME COMPLEXITY: the varying gap value you decide on influences the time complexity for shell sort
