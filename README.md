@@ -1,3 +1,7 @@
+# Econometrics
+
+the application of statistical methods to economic data in order to give empirical content to economic relationships.
+
 # Big O Notation
 
 __TIME COMPLEXITY:__
@@ -1946,8 +1950,48 @@ public class BinaryTree {
 
 # Heaps
 
+a complete binary tree with array-backing, only interested in  min & max at ROOT of tree O(1) time complexity that functions left-to-right
+
+- O(1) CONSTANT time complexity:
+    - insert
+    - remove/poll
+    - peak/getRoot
+
+__HEAPIFY__
+
+the process of converting a binary tree into a heap after inserting or deleting a node
+
+__JAVA PRIORITY QUEUE MIN HEAP__
+
+a MIN HEAP where every parent has to have a value that is less than or equal to its children in a complete binary tree (lower the number, the higher the priority)
+
+- Traveling from the root down to the leaves, all the paths would be in ascending order
+
+- if you start at a leaf and travel up to the root, all the paths would be in descending order
+
+__PRIORITY QUEUES MAX HEAPS__
+
+every parent has to have a value greater than or equal to its children in a complete binary tree
+
+- Traversing down to every leaf, all the values along each path should be in descending order.
+
 ```
-public class Heap {
+MAX HEAP
+                 22
+
+            19       18
+
+    15     3             14     4
+
+12
+```
+
+a MAX HEAP implementation w/ array backing always want the highest priority item first
+
+- for MAX HEAPS, a comparator is required that will look at the two values and whenever you have one value greater than the other you in fact want to return that that value's less.
+
+```
+public class MaxHeap {
 
     private static final String HEAP_FULL = "Heap is full";
     private static final String HEAP_EMPTY = "Heap is empty";
@@ -1955,7 +1999,7 @@ public class Heap {
     private int[] heap;
     private int size;
 
-    public Heap(int capacity) {
+    public MaxHeap(int capacity) {
         this.heap = new int[capacity];
     }
 
@@ -1984,6 +2028,56 @@ public class Heap {
         }
     }
 
+    /*
+        MAX HEAP sort(): 
+
+            step 1: root has the largest value
+
+            step 2: swap root w/ last element in the array
+
+            step 3: heapify(), excluding last node
+
+            step 4: after heapify(), the second largest element is at the root
+
+            step 5: repeat
+
+            ex) max heap sort
+
+                                80
+
+                        75       60
+
+                    68    55          40  52
+
+                67
+                                67
+
+                        75       60
+
+                    68    55          40  52
+
+                80
+
+                must heapify() index 0 - index 6
+
+                                75
+
+                        68       60
+
+                    67    55          40  52
+
+                80
+
+                                52
+
+                        68       60
+
+                    67    55          40  75
+
+                80
+
+                repeat: must heapify() index 0 - index 5 until root index is left after heapify()
+    */
     public void sort() {
 
         if(this.isEmpty()) return;
@@ -2005,6 +2099,9 @@ public class Heap {
         }
     }
 
+    /**
+     * get root with O(1) CONSTANT time complexity
+     */
     public int peek() {
 
         if(this.isEmpty()) throw new IndexOutOfBoundsException(HEAP_EMPTY);
@@ -2013,6 +2110,51 @@ public class Heap {
         return root; 
     }
 
+    /*
+        HEAP insert():
+
+            step 1: always add to end
+
+            step 2: heapify()
+
+                O(logn) LOGARITHMIC time complexity to fix by swap new item up to root
+
+            step 3: compare new item against parent
+
+            step 4: if greater than parent, then swap
+
+            step 5: repeat
+
+                * ex: add 20 as child to 15 parent
+
+                                    22
+
+                            19       18
+
+                    15     3             14     4
+
+                12
+
+                * since 20 is greater than 15 parent, swap
+
+                                    22
+
+                            19       18
+
+                    20     3             14     4
+
+                12   15
+
+                * since 20 is greater than 19 parent, swap, afterwards the complete tree has been heapify()
+
+                                    22
+
+                            20       18
+
+                    19     3             14     4
+
+                12   15
+    */
     public void insert(int value) {
 
         if(this.isFull()) throw new IndexOutOfBoundsException(HEAP_FULL);
@@ -2023,6 +2165,180 @@ public class Heap {
         fixHeapAbove(this.size);
         this.size++;
     }
+
+    /*
+        HEAP delete():
+
+            step 1: find replacementValue
+
+            step 2: always take rightmost value to keep tree complete
+
+            step 3: heapify() 
+            
+                O(logn) logarithmic time complexity to fix by swap replacement item up to root
+
+                only need to 3A or 3B, but not both
+
+                    3a heapify()/fixHeapBelow: if replacementValue lesser than parent, then fixHeapBelow, swap replacementValue w/ larger of two children
+
+                    3b heapify()/fixHeapAbove: if replacementValue greater than parent, then fixHeapAbove, swap replacementValue with parent
+
+            step 4: repeat until replacementValue in correct index
+
+                ex) delete 75; replacementValue 67
+
+                                80
+
+                           75       60
+
+                    68    55          40  52
+
+                67
+
+                deleted 75
+
+                            80
+
+                       67       60
+
+                68    55          40  52
+
+                heapify() = fixHeapBelow
+
+                            80
+
+                       68       60
+
+                67    55          40  52
+
+                ex) delete 40; replacementValue 67
+
+                                80
+
+                           75       60
+
+                    68    55          40  52
+
+                67
+
+                deleted 40
+
+                            80
+
+                       75       60
+
+                68    55          67  52
+
+                heapify() = fixHeapAbove
+
+                            80
+
+                       75       67
+
+                68    55          60  52
+    */
+    public int delete(int index) {
+
+        if(this.isEmpty()) throw new IndexOutOfBoundsException(HEAP_EMPTY);
+
+        // find replacementValue
+        int parentIndex = getParent(index);
+        int deleteValue = this.heap[index];
+
+        // always take rightmost value to keep tree complete
+        this.heap[index] = this.heap[this.size - 1];
+
+        // heapify
+        boolean isRoot = (index == 0);
+        boolean isReplacementLessThanParent =
+            (this.heap[index] < this.heap[parentIndex]);
+        
+        if(isRoot || isReplacementLessThanParent) {
+
+            fixHeapBelow(index, this.size - 1);
+
+        } else {
+
+            fixHeapAbove(index);
+
+        }
+
+        this.size--;
+        return deleteValue;
+    }
+
+    /**
+     * heapify()/fixHeapBelow: if replacementValue lesser than parent, then swap replacementValue w/ larger of two children
+     *
+     * @param index the index of the deleted element
+     * @param lastHeapIndex last position of the heap in the array
+    */
+    private void fixHeapBelow(int index, int lastHeapIndex) {
+
+        int childToSwap;
+
+        while(index >= lastHeapIndex) {
+
+            int leftChild = getChild(index, true);
+            int rightChild = getChild(index, false);
+
+            boolean hasLeftChild =
+                    (leftChild <= lastHeapIndex);
+            boolean hasRightChild =
+                    (rightChild < lastHeapIndex);
+
+            // HEAPS: must be a complete tree (NOT ALLOWED: no left child but has a right child)
+            if(hasLeftChild) {
+
+                if(!hasRightChild) {
+
+                    childToSwap = leftChild;
+
+                } else {
+
+                    int greatestChildValue = (this.heap[leftChild] > this.heap[rightChild]) ? leftChild : rightChild;
+
+                    childToSwap = greatestChildValue;
+                }
+
+                int replacementValue = this.heap[index];
+                boolean hasLargerChild = (replacementValue < this.heap[childToSwap]);
+
+                if(hasLargerChild) {
+
+                    // swap replacementValue with the largest child
+                    this.heap[index] = this.heap[childToSwap];
+                    this.heap[childToSwap] = replacementValue;
+
+                } else {
+                    break;
+                }
+                index = childToSwap;
+
+            } else {
+                break;
+            }
+        }
+    }
+
+    /**
+     * heapify()/fixHeapAbove: if replacementValue greater than parent, then swap replacementValue with parent
+     *
+     * @param index child index
+    */
+    private void fixHeapAbove(int index) {
+
+        int newValue = this.heap[index];
+
+        // HEAPIFY: compare new item against parent, if greater than parent, then shift parent down, repeat
+        while((index > 0 && newValue) > (this.heap[getParent(index)])) {
+            this.heap[index] = this.heap[getParent(index)];
+            index = getParent(index);
+        }
+
+        // on discovering correct index for newValue, then insert
+        this.heap[index] = newValue;
+    } 
 }
 ```
 
