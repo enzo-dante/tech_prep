@@ -2344,6 +2344,11 @@ public class MaxHeap {
 
 # Graphs
 
+# Breadth-first search vs. Depth-first search
+
+Use either search algorithm to recursively traverse a graph which is a collection of nodes where each node might point to other nodes that are connected via edges (one-way or two-way)
+
+
 # Linear Search
 
 traversal beginning to end by incrementing the index by 1 until in the array data structure with O(n) linear time complexity
@@ -2919,9 +2924,7 @@ public class MergeSort {
 
 SQL is a query language, whereas MySQL is a relational database that uses SQL to query a database
 
-<img src="/content/SQLvsNOSQL.png"/>
-
-### RELATIONAL DATABASE:
+__RELATIONAL DATABASE__
 
 an interconnected database that holds data tables, a collection of columns (headers) and rows (data)
 
@@ -2941,7 +2944,7 @@ an interconnected database that holds data tables, a collection of columns (head
 
 - relational db access uses raw SQL
 
-### NON-RELATIONAL DATABASES:
+__NON-RELATIONAL DATABASES__
 
 collected tables, documents, or graphs hold data together but CANNOT be joined together by a relationship, but organized by key-value stores, that is distributed over multiple servers to be built to scale with high performance & low latency
 
@@ -2954,3 +2957,164 @@ collected tables, documents, or graphs hold data together but CANNOT be joined t
 - access: many are no-sql databases that have their own CRUD (create, read, update, delete) functionality that rely on key-value stores
 
   - REST APIs are used to hit a specific endpoint that comes with certain functionality
+
+# MapReduce
+
+A parallel processing technique for processing a big data set which is distributed on a commodity cluster, instead of using serial processing.
+
+- popular packages: Hadoop and MapReduce
+
+__STEP 1: create maps__
+
+the maps are the individual tasks that convert input records into intermediate output records
+
+- connections from input key/value pairs to a set of intermediate key/value pairs
+
+__STEP 2: shuffle map to reducers__ 
+
+send the map output records to the reducers
+
+__STEP 3: assign a reduce task per map__ 
+
+all map same-key output values are assigned to a single reducer together
+
+```json
+/*
+    key = city name
+    list = each element/record that has data & shared key
+    reducerTask = for each team per division, get total annual sales (12 months)
+*/
+
+reducerPacificWest: {
+    suns: [
+            [9,5,2,3,6,4,1,5,9,7,1,3],
+            suns
+        ],
+
+    warriors: [
+            [1,5,5,3,6,4,1,4,1,4,2,9],
+            warriors
+        ],
+
+    clippers: [
+            [3,5,2,9,6,4,1,7,5,9,8,3],
+            clippers
+        ],
+
+    kings: [
+            [6,8,2,8,6,4,1,5,2,7,1,1],
+            kings
+        ]
+}
+```
+
+__STEP 4: reduce to small value set__ 
+
+process the data by adding data as final output result
+
+# Distributed Cache
+
+
+# Internet Fundamentals
+
+__Computer Network__
+
+a set of independent computer systems connected by telecommunications links for the purpose of sharing information & resources.
+
+<img src="/content/computer-network.png">
+
+__Internet__
+
+an independent global system of computer networks connected by a collection of protocols implemented in software and hardware designed to interconnect all types of networks like cell phones, Ethernet, wifi, etc.
+
+<img src="/content/internet.png">
+
+__Protocols__
+
+an agreements on a technical standard that is implemented by software or hardware devices.
+
+__Modem__ 
+
+a hardware device that transforms between physical states (analog) and bits (digital) for the internet
+
+<img src="/content/modem.png">
+
+__IP Address__
+
+An IP address identifies geographic location based on organization that “owns” it.
+
+Groups of addresses are allotted to various organizations by IANA (Internet Assigned Numbers Authority) 
+
+Each computer on the Internet is assigned an IP Address
+consisting of four numbers between 0 and 255 inclusive:
+
+```
+128.2.13.163
+```
+
+__Routing__
+
+There are multiple paths from one node
+(computer) to another
+
+<img src="/content/routing.png">
+
+Two network nodes (e.g. phones) establish a
+dedicated connection via one or more
+switching stations. 
+
+__Packet Switching__
+
+We attach the source and destination IP addresses to the
+message & two network nodes (e.g. computers) communicate by breaking the message up into small packets
+
+Routers forward packets toward the destination
+
+the table stored in a router tells it which neighbor to send the packet to, based on IP address of destination
+
+__Internet Structure__
+
+the Core provides transport services to edges
+
+- the routers forward packets
+- Internet Service Providers (ISPs) provide data transmission media (fiber optic etc.)
+- domain name servers (DNS) provide directory of host
+names (more on this next time)
+
+the Edges provide the services people use
+
+- individual users, “hosts”
+- private networks (corporate, educational, government…)
+- business, government, nonprofit services
+
+<img src="/content/packet-switching.png">
+
+__End-to-End principle__
+
+Routers should only be responsible for getting data quickly from its source to its destination.
+
+- Equality of uses: routers can’t discriminate based on type of communication (net neutrality
+
+Everything else is responsibility of edges
+
+- error detection & recovery
+- confidentiality via encryption
+
+Issues:
+
+- lack of trust because of bad actors on the Internet
+- profit opportunities for ISPs
+- corporate and government monitoring of communications
+
+__Net Neutrality__
+
+All communications are treated equally regardless of source, destination, or type
+
+But some governments already censor or otherwise
+control the Internet within their borders
+
+# Service-Oriented Architectures (SOA)
+
+# Cloud Load Balancing
+
+# Page Memory & Paging
