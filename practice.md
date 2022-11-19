@@ -14,7 +14,25 @@ O(1) constant: in-place algorithm that doesn't require additional memory space
 
 ```json
 
-public int reversed(int x) {
+@Test
+void reversed_positiveInput() {
+    int input = 123;
+
+    int expected = 321;
+    int actual = Q1.reversed(input);
+    assertEquals(expected, actual);
+}
+
+@Test
+void reversed_negativeInput() {
+    int testInput = -123;
+
+    int expected = -321;
+    int actual = Q1.reversed(input);
+    assertEquals(expected, actual);
+}
+
+public static int reversed(int x) {
 
     boolean isNegative = false;
     int result = 0;
@@ -31,7 +49,7 @@ public int reversed(int x) {
     return result;
 }
 
-private int recursion(int x, int result) {
+private static int recursion(int x, int result) {
 
     boolean isBaseCase = (x <= 0);
 
@@ -51,15 +69,83 @@ __Q2__
 write a program that outputs the string representation of a long number from 1 to n
 
 - the method returns an arrayList of GENERIC CLASS strings
- 
+
 for multiples of:
 - 3 it should return "Fizz" instead of the number
 - 5 it should return "Buzz" instead of the number
 - 5 AND 3 it should return "FizzBuzz" instead of the number
 
+TIME COMPLEXITY
+O(n) linear: dependent length of n
+
+SPACE COMPLEXITY
+O(1) constant: in-place algorithm that doesn't require additional memory space
+
 ```json
 
-public ArrayList<String> fizzBuzz(long number) {
+private static final String FIZZ = "Fizz"; 
+private static final String BUZZ = "Buzz"; 
+private static final String FIZZ_BUZZ = "FizzBuzz"; 
+
+@Test
+void fizzBuzz_0() {
+    ArrayList<String> actualValues = Q2.fizzBuzz(-3);
+    assertEquals(null, actualValues);
+}
+
+@Test
+void fizzBuzz_3() {
+    ArrayList<String> actualValues = Q2.fizzBuzz(3);
+    ArrayList<String> expectedValues = new ArrayList<>();
+
+    expectedValues.add("1");
+    expectedValues.add("2");
+    expectedValues.add(FIZZ);
+
+    assertEquals(expectedValues, actualValues);
+}
+
+@Test
+void fizzBuzz_5() {
+    ArrayList<String> actualValues = Q2.fizzBuzz(5);
+    ArrayList<String> expectedValues = new ArrayList<>();
+
+    expectedValues.add("1");
+    expectedValues.add("2");
+    expectedValues.add(FIZZ);
+    expectedValues.add("4");
+    expectedValues.add(BUZZ);
+
+    assertEquals(expectedValues, actualValues);
+}
+
+@Test
+void fizzBuzz_3And5() {
+    ArrayList<String> actualValues = Q2.fizzBuzz(15);
+    ArrayList<String> expectedValues = new ArrayList<>();
+    
+    expectedValues.add("1");
+    expectedValues.add("2");
+    expectedValues.add(FIZZ);
+    expectedValues.add("4");
+    expectedValues.add(BUZZ);
+
+    expectedValues.add(FIZZ);
+    expectedValues.add("7");
+    expectedValues.add("8");
+    expectedValues.add(FIZZ);
+    expectedValues.add(BUZZ);
+
+    expectedValues.add("11");
+    expectedValues.add(FIZZ);
+    expectedValues.add("13");
+    expectedValues.add("14");
+    expectedValues.add(FIZZ_BUZZ);
+
+    assertEquals(expectedValues, actualValues);
+}
+
+public static ArrayList<String> fizzBuzz(long number) {
 
     if(number < 1) return null;
 
@@ -89,8 +175,109 @@ public ArrayList<String> fizzBuzz(long number) {
 
         i++;
     }
+
     return strings;
 }
 ```
 
 __Q3__
+
+Given a square matrix mat, return the sum of the matrix diagonals.
+
+- only include the sum of all the elements on the primary diagonal
+
+- all the elements on the secondary diagonal that are not part of the primary diagonal.
+
+Logic:
+
+     length = width or height
+
+     diagonal_1 = 1 + 5 + 9 = 15 = matrix[i][i]
+
+     diagonal_2 = 3 + 5 + 7 = 15 = matrix[i][length - i - 1]
+
+     matrix = [
+           [1,2,3],
+           [4,5,6],
+           [7,8,9]
+     ]
+
+     remove duplicate 5 that appears in both diagonals from current sum 30
+     diagonal_sum = 25
+
+     step 1a: define index of traversing row
+     step 1b: define index of shifting diagonal
+
+     step 2: add to sum
+
+     step 3: iterate over rows repeating process
+
+     step 4: remove duplicate middle element from sum if matrix length is odd
+
+     step 5: return sum
+
+TIME COMPLEXITY
+O(n) linear: where n is the length of the given array
+
+SPACE COMPLEXITY
+O(1) constant: in-place algorithm that doesn't require additional memory space
+
+```json
+
+@Test
+void matrixDiagonalSum_success() {
+
+    int[][] test = {
+            {1,2,3},
+            {4,5,6},
+            {7,8,9}
+    };
+
+    int expected = 25;
+    int actual = Q3.matrixDiagonalSum(test);
+    assertEquals(expected, actual);
+}
+
+@test
+matrixDiagonalSum_fail_badInput() {
+
+    int[][] input = null;
+
+    int expected = -1;
+    int actual = Q3.matrixDiagonalSum(input);
+    assertEquals(expected, actual);
+}
+
+public static int matrixDiagonalSum(int[][] matrix) {
+
+    if(matrix == null || matrix.length == 0) return -1;
+
+    int sum;
+
+    // traverse rows
+    for(int row = 0; row < matrix.length; row++) {
+
+        // start index of second diagonal
+        int diagonal = (matrix.length - 1) - row;
+
+        int valueD1 = matrix[row][row];
+        int valueD2 = matrix[row][diagonal];
+
+        sum += (valueD1 + valueD2);
+    }
+
+    // remove duplicate middle element
+    boolean isOddMatrixLength = (matrix.length % 2 != 0);
+
+    if(isOddMatrixLength) {
+
+        int middleIndex = matrix.length / 2;
+        int middleValue = matrix[middleIndex][middleIndex];
+
+        return sum - middleValue;
+    }
+
+    return sum;
+}
+```
+
