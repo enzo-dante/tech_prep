@@ -374,7 +374,7 @@ public class MergeSort {
 
         if(isBaseCase) return;
 
-        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices 
+        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices
         int midpoint = (start + end) / 2;
 
         // LEFT partitions
@@ -384,7 +384,7 @@ public class MergeSort {
 
         recursivePartition(array, start, midpoint);
 
-        // RIGHT partitions 
+        // RIGHT partitions
         // [7, 55, 1, -22] ->
         //      [7, 55] [1,-22] ->
         //          [7] [55] [1] [-22]
@@ -497,7 +497,7 @@ class DeskPhone implements ITelephone {
 }
 ```
 
-# Abstract Classes 
+# Abstract Classes
 
 __ABSTRACTION__
 
@@ -553,7 +553,7 @@ class Dog extends AbstractAnimal {
 }
 ```
 
-# Interfaces vs Abstract Classes 
+# Interfaces vs Abstract Classes
 
 - ABSTRACT CLASSES can have class fields/object instance members AND define abstract publicly-shared signatures
 
@@ -678,7 +678,7 @@ __PROCESS__
 
 an instance of a computer program with its own memory space that's sequentially executed by a computer system that has the ability to run several computer programs concurrently.
 
-- every process has a memory HEAP 
+- every process has a memory HEAP
 
 ```
 java virtual machine instance ->
@@ -2029,7 +2029,7 @@ public class MaxHeap {
     }
 
     /*
-        MAX HEAP sort(): 
+        MAX HEAP sort():
 
             step 1: root has the largest value
 
@@ -2107,7 +2107,7 @@ public class MaxHeap {
         if(this.isEmpty()) throw new IndexOutOfBoundsException(HEAP_EMPTY);
 
         int root = this.heap[0];
-        return root; 
+        return root;
     }
 
     /*
@@ -2173,8 +2173,8 @@ public class MaxHeap {
 
             step 2: always take rightmost value to keep tree complete
 
-            step 3: heapify() 
-            
+            step 3: heapify()
+
                 O(logn) logarithmic time complexity to fix by swap replacement item up to root
 
                 only need to 3A or 3B, but not both
@@ -2252,7 +2252,7 @@ public class MaxHeap {
         boolean isRoot = (index == 0);
         boolean isReplacementLessThanParent =
             (this.heap[index] < this.heap[parentIndex]);
-        
+
         if(isRoot || isReplacementLessThanParent) {
 
             fixHeapBelow(index, this.size - 1);
@@ -2338,7 +2338,7 @@ public class MaxHeap {
 
         // on discovering correct index for newValue, then insert
         this.heap[index] = newValue;
-    } 
+    }
 }
 ```
 
@@ -2842,7 +2842,7 @@ public class MergeSort {
 
         if(isBaseCase) return;
 
-        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices 
+        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices
         int midpoint = (start + end) / 2;
 
         // LEFT partitions
@@ -2852,7 +2852,7 @@ public class MergeSort {
 
         recursivePartition(array, start, midpoint);
 
-        // RIGHT partitions 
+        // RIGHT partitions
         // [7, 55, 1, -22] ->
         //      [7, 55] [1,-22] ->
         //          [7] [55] [1] [-22]
@@ -2970,11 +2970,11 @@ the maps are the individual tasks that convert input records into intermediate o
 
 - connections from input key/value pairs to a set of intermediate key/value pairs
 
-__STEP 2: shuffle map to reducers__ 
+__STEP 2: shuffle map to reducers__
 
 send the map output records to the reducers
 
-__STEP 3: assign a reduce task per map__ 
+__STEP 3: assign a reduce task per map__
 
 all map same-key output values are assigned to a single reducer together
 
@@ -3008,7 +3008,7 @@ reducerPacificWest: {
 }
 ```
 
-__STEP 4: reduce to small value set__ 
+__STEP 4: reduce to small value set__
 
 process the data by adding data as final output result
 
@@ -3033,7 +3033,7 @@ __Protocols__
 
 an agreements on a technical standard that is implemented by software or hardware devices.
 
-__Modem__ 
+__Modem__
 
 a hardware device that transforms between physical states (analog) and bits (digital) for the internet
 
@@ -3043,7 +3043,7 @@ __IP Address__
 
 An IP address identifies geographic location based on organization that “owns” it.
 
-Groups of addresses are allotted to various organizations by IANA (Internet Assigned Numbers Authority) 
+Groups of addresses are allotted to various organizations by IANA (Internet Assigned Numbers Authority)
 
 Each computer on the Internet is assigned an IP Address
 consisting of four numbers between 0 and 255 inclusive:
@@ -3061,7 +3061,7 @@ There are multiple paths from one node
 
 Two network nodes (e.g. phones) establish a
 dedicated connection via one or more
-switching stations. 
+switching stations.
 
 __Packet Switching__
 
@@ -3118,3 +3118,127 @@ control the Internet within their borders
 # Cloud Load Balancing
 
 # Page Memory & Paging
+
+# Test Driven Development (TDD)
+
+writing code that tests your other code to ensure a level of performance quality when your app is in production; making refactoring and collaboration safer and bug-free
+
+1. development BEGINS by writing RED failing tests
+
+2. once tests are written, write the MINIMUM amount of GREEN code necessary to make tests pass
+
+3. refactor = clean up the code, while ensuring that tests still pass
+
+4. once tests pass, a feature is considered complete
+
+__TDD STEPS__
+
+JUnit TESTING step 1A: update project structure JUnit library dependency to compile
+
+```
+   File -> project structure -> Modules -> Dependencies Tab ->
+       Export window -> Junit ->
+           open dropdown -> change "Test" to "Compile" -> Ok
+```
+
+JUnit TESTING step 2.1: define class, method signatures, & test suite
+
+JUnit TESTING step 2.2: create JUnit Test class & generate methods to test in root
+
+- click yellow light bulb onHover over independent class name
+
+- FIX if IDE is unable to identify built-in JUnit Test class
+
+- select specific methods to test
+
+JUnit TESTING step 1B: add JUnit Library
+
+- right-click add "JUnit" to class path
+
+- select "Use JUnit from IntelliJ IDEA distribution"
+
+- click Ok
+
+JUnit TESTING step 3: BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
+
+JUnit TESTING step 4: run expected failing tests suite
+
+JUnit TESTING step 5: review run configuration for all tests
+  want to test class in application, NOT the application itself
+
+- right-click outside created Test class & select run Test class
+- right-click outside created Test class & select modify run configuration
+- review configurations & click Ok
+- review right-corner dropdown is respective Test suite
+
+JUnit TESTING step 6: setup tests objects run before & after teardown every test run
+
+- @BeforeAll: STATIC execute only once before all test suit is run
+      example: read data from db for tests
+
+- @AfterAll: STATIC execute only once after all test suit is run
+
+- @BeforeEach: execute code in setup() before each test is run
+
+- @AfterEach: execute code in setup() after each test is run
+
+JUnit TESTING step 7: write test method assertions that test against class functionality
+
+- in testSuite, click on green arrow/red x in gutter next to specific method to test
+
+- review only passing or only failing tests with toggle in top-left of Test window
+
+```
+// JUnit TRY-CATCH: handle expected exceptions handing modify @Test annotation
+
+try {
+    double balance = checkingsAccount.withdraw(600.00, false);
+    assertEquals(400.00, balance, 0);
+} catch(IllegalArgumentException e) {
+    System.out.println(e.getMessage());
+}
+```
+
+BEST PRACTICE:
+
+write easily understood test method names
+
+```json
+
+getBalance_deposit()
+getBalance_withdraw()
+```
+
+write on 1 independent assertion for 1 independent test
+setup any independent class instances that can be reused (without cross-pollination) on each test method
+
+```json
+
+assertEquals(expectedValue, actualTestValue);
+
+assertNotEquals(expectedValue, actualTestValue);
+
+assertTrue(actualTestValue, failMsg);
+
+assertFalse(actualTestValue, failMsg);
+
+// consider two arrays equal if length & every element in order identical
+assertArrayEquals(expectedArray, actualTestArray);
+
+assertNull(actualTestValue);
+
+// easy-to-read check for null values
+assertNotNull(actualTestValue);
+
+assertSame(expectedValue, actualTestValue);
+
+// compares object references, unlike assertEquals that checks if instances are the same
+assertNotSame(expectedValue, actualTestValue);
+
+// compare the actual value against a matcher range of values
+assertThat(expectedValue, actualTestValue);
+```
+
+JUnit TESTING step 8: write method implementation in file
+
+JUnit TESTING step 9: individually run implemented functions until all failing tests resolved in test suite
