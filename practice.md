@@ -281,3 +281,77 @@ public static int matrixDiagonalSum(int[][] matrix) {
 }
 ```
 
+__Q4__
+
+Given an array of non-negative integers arr, you are initially positioned at start index of the array.
+
+- When you are at index i, you can jump to:
+
+```json
+
+(i + arr[i]) || (i - arr[i])
+```
+
+- check if you can reach to any index with value 0.
+
+- Notice that you can not jump outside the array at any time.
+
+Logic:
+
+- use Depth First Search (DFS) by using recursive functions calls for incrementing & decrementing start parameters
+- its DFS because the method will handle one direction first and drill down for a base case
+- before continuing to next recursive direction if necessary
+
+DEPTH FIRST SEARCH: recursively, check if the currentNode has any children (left-to-right) that has the search path for the target node
+
+- hasPath(s, t): recursively, nodeS do you have a path to nodeT?
+- nodeS asks (left-to-right) it's child if it has a path to nodeT, repeat until reached nodeT or null
+
+TIME COMPLEXITY
+O(n) linear: worst-case, traverse the length of the input array size
+
+SPACE COMPLEXITY
+O(1) constant SPACE COMPLEXITY: in-place algorithm that doesn't require additional memory space
+
+```json
+
+@Test
+jumpGame3_true() {
+
+    int[] input = {4,2,3,0,3,1,2};
+    int start = 5;
+    boolean actual = Q4.jumpGame3(input, start);
+    assertTrue(actual);
+}
+
+@Test
+jumpGame3_fail_badInput() {
+
+    int[] array = {};
+    int start = -1;
+
+    boolean actual = Q4.jumpGame3(array, start);
+    assertFalse(actual);
+}
+
+public static boolean jumpGame3(int[] array, int start) {
+
+    if(array.length == 0||
+        start < 0 ||
+        start >= (array.length - 1)
+    ) return false;
+
+    int currentElement = array[start];
+
+    boolean isBaseCase = (currentElement == 0);
+
+    if(isBaseCase) return true;
+
+    int incrementedStart = start + currentElement;
+    int decrementedStart = start - currentElement;
+
+    // depth-first search
+    return jumpGame3(array, incrementedStart) ||
+        jumpGame3(array, decrementedStart);
+}
+```

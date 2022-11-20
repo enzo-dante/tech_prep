@@ -2348,6 +2348,16 @@ public class MaxHeap {
 
 Use either search algorithm to recursively traverse a graph which is a collection of nodes where each node might point to other nodes that are connected via edges (one-way or two-way)
 
+__depth-first search__
+
+- hasPath(s, t): recursively, nodeS do you have a path to nodeT?
+- nodes asks (left-to-right) it's child if it has a path to nodeT, repeat until reached nodeT or null
+
+__breadth-first Search__
+        
+- hasPath(s, t): recursively, does nodeS do you have a path to nodeT?
+
+- nodes checks if any of its children are nodeT, if no edges to first level children, then check next level and repeat
 
 # Linear Search
 
@@ -2919,6 +2929,90 @@ public class MergeSort {
     }
 }
 ```
+
+__QUICK SORT (DFS):__
+
+Big(O) LOGARITHMIC TIME COMPLEXITY = O(logn) = O of log to the base 2 n
+
+- repeatedly dividing array in half during splitting
+
+SPACE COMPLEXITY: in-place algorithm that doesn't use extra memory
+
+UNSTABLE ALGORITHM:
+
+- if there are duplicate elements, no guarantee that their original order will be preserved,
+
+- since quick sort is predicated on moving elements around a pivotIndex for recursive partitions
+
+QUICK SORT LOGIC:
+
+divide & conquer algorithm:
+
+- splitting base problem into several mini-problems, solving mini-problems, and then merging mini-solutions to solve base problem
+
+recursive algorithm:
+
+- calls itself until reaching a base case and then feeds return values to itself to solve backwards
+
+PHASE 1: partitioning step/pivotIndex splitting
+
+1. divide the array into two sub-arrays (left & right partitions)
+
+- identify pivot index for logical splitting (in-place = no new arrays)
+- each element and it's respective index eventually serves as the pivot index
+- CHECK: pivot index serves as boundary for 2 sibling sub-arrays that prevent crossover
+
+2. then recursively divide each subsequent array into two arrays
+
+3. UNTIL you have multiple sorted arrays of 1 length (each containing the pivotIndex element at it's correct position)
+
+- in left sub-array, elements less than pivotIndex element are moved to the left during traversal
+- in right sub-array, elements greater than pivotIndex element are moved to the right during traversal
+
+- AS A RESULT, element at pivotIndex will be in the middle AND in its correct position
+
+```
+               right-to-left first
+               left-to-right second
+                                             [20, 35, -15, 7, 55, 1, -22]
+
+                            [-15, 7, 20, 35]       pivotIndex = 7            [-22, 1, 7, 55]
+
+            [-15, 7]    pivotIndex = 7  [7, 20, 35]            [-22, 1]    pivotIndex = 1      [1, 7, 55]
+
+    [-15] && [7]     [7, 20] pivotIndex = 20 [20, 35]       [-22] && [1]        [1, 7] pivotIndex = 7 [7, 55]
+
+                    [7] && [20] && [35]                                     [1] && [7] && [55]
+
+STEPS:
+
+    STEP 1: identify pivotIndex for 2-or-more element arrays
+        pivotIndex is the correct position in the sorted array
+
+    STEP 2: use recursion to subsequently partition the left & right partitioned arrays into more sub-arrays using the pivotIndex
+        BREAK CASE for recursive calls: handle 1 element arrays
+
+        using the first element respective index in the array as the pivotIndex
+
+        for left partition, search/traverse from left to right
+        for right partition, search/traverse from right to left
+        stop traversal when i and j cross each other to maintain partitions
+
+        FOUND 1st element less than pivot during traversal of LEFT partition: so move elements at index j to index i (move to LEFT of pivotIndex)
+        FOUND 1st element greater than pivot during traversal of RIGHT partition: so move elements at index i to index j (move to RIGHT of pivotIndex)
+
+        after correct index for pivotIndex element has been FOUND after each traversal, re-assign pivotIndex for subsequent sub-arrays/partitions
+```
+
+PHASE 2: merging
+
+- MERGING = sorting elements/pivotIndex in respective 1-element array that are starting from bottom-to-up in-place
+
+- handle left side first, then right side
+
+- merge all sibling arrays on left & right side before proceeding to higher level to recursively merge resulting sibling arrays
+
+- after correct index for pivotIndex element has been FOUND after each traversal, re-assign pivotIndex for subsequent sub-arrays/partitions
 
 # SQL
 
