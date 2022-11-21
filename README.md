@@ -2972,8 +2972,8 @@ PHASE 1: partitioning step/pivotIndex splitting
 - AS A RESULT, element at pivotIndex will be in the middle AND in its correct position
 
 ```
-               right-to-left first
-               left-to-right second
+right-to-left first
+left-to-right second
                                              [20, 35, -15, 7, 55, 1, -22]
 
                             [-15, 7, 20, 35]       pivotIndex = 7            [-22, 1, 7, 55]
@@ -3013,6 +3013,124 @@ PHASE 2: merging
 - merge all sibling arrays on left & right side before proceeding to higher level to recursively merge resulting sibling arrays
 
 - after correct index for pivotIndex element has been FOUND after each traversal, re-assign pivotIndex for subsequent sub-arrays/partitions
+
+```
+@Test
+void quickSort_success() {
+
+    int[] input = {8,4,3,6,1,7,2,9,5};
+    int start = 0;
+    int end = input.length;
+
+    int[] expected = {1,2,3,4,5,6,7,8,9};
+    int[] actual = quickSort(input, start , end);
+
+    assertEquals(
+        Arrays.toString(expected),
+        Arrays.toString(actual)
+    );
+}
+
+@Test
+void quickSort_fail_badInput() {
+
+    int[] input = {};
+    int start = 0;
+    int end = input.length;
+
+    int[] actual = quickSort(end, start , end);
+
+    assertNull(actual);
+}
+
+public static int[] quickSort(int[] array, int start, int end) {
+
+    if(array.length == 0) return null; 
+
+    boolean isBaseCase = ((end - start) < 2);
+
+    if(isBaseCase) return array;
+
+    /*
+        STEP 1: recursively break up array into sub-arrays to identify pivotIndex for 2-or-more element arrays
+
+            use pivotIndex to move smaller elements left & larger elements right
+
+                 EXAMPLE:
+
+                    right-to-left first
+                    left-to-right second
+                                                  [20, 35, -15, 7, 55, 1, -22]
+
+                                 [-15, 7, 20, 35]       pivotIndex = 7            [-22, 1, 7, 55]
+
+                 [-15, 7]    pivotIndex = 7  [7, 20, 35]            [-22, 1]    pivotIndex = 1      [1, 7, 55]
+
+         [-15] && [7]     [7, 20] pivotIndex = 20 [20, 35]       [-22] && [1]        [1, 7] pivotIndex = 7 [7, 55]
+
+                         [7] && [20] && [35]                                     [1] && [7] && [55]
+     */
+
+    int pivotIndex = getPivot(array,start, end);
+
+    /*
+        STEP 2: use recursion to subsequently shift elements left or right in relation to pivot index
+
+        RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, THEN RIGHT side with midpoint via start & end sub-array
+     */
+
+    // left partition
+    array = quickSort(array, start, end);
+
+    // right partition
+    array = quickSort(array, (pivotIndex + 1), end);
+
+    return array;
+}
+
+private static int getPivot(int[] array, int start, int end) {
+
+    // use first element in the inputArray || sub-array as the pivot
+    int pivotIndex = nums[start];
+
+    // QUICK SORT in-place: alternate between traversing right-to-left & left-to-right & shift relative to pivot
+    // traverse left-to-right
+    int i = start;
+
+    // traverse right-to-left
+    int j = end;
+
+    // define partitions by ensuring no crossover between traversing index
+    while(i < j) {
+
+        // LEFT PARTITIONS
+        // decrement j to traverse array right-to-left for an element less than the pivot
+        while(i < j && (nums[--j] >= pivotIndex));
+
+        // stop traversal when i and j cross each other to maintain partitions
+        boolean inPartitionBound = (i < j);
+
+        if(inPartitionBound) {
+            // FOUND 1st element less than pivot during traversal of respective partition: so move element at index j to index i (move to LEFT of pivotIndex)
+            nums[i] = nums[j];
+        }
+
+        // RIGHT PARTITIONS
+        // decrement i before execution to traverse array left-to-right for an element greater than the pivot
+        while(i < j && (nums[++i] <= pivotIndex));
+
+        if(inPartitionBound) {
+
+            // FOUND 1st element greater than pivot during traversal of respective partition: so move element at index i to index j (move to RIGHT of pivotIndex)
+            nums[j] = nums[i];
+        }
+    }
+
+    // index j will become the new pivotIndex for subsequent sub-arrays/partitions
+    nums[j] = pivotIndex;
+    return j;
+}
+```
 
 # SQL
 
@@ -3209,6 +3327,90 @@ control the Internet within their borders
 
 # Service-Oriented Architectures (SOA)
 
+A method of software development that uses software components called services to create business applications.
+
+1. Interoperability
+
+Each service in SOA includes description documents that specify the functionality of the service and the related terms and conditions. Any client system can run a service, regardless of the underlying platform or programming language.
+
+- For instance, business processes can use services written in both C# and Python. Since there are no direct interactions, changes in one service do not affect other components using the service.
+
+2. Loose coupling
+
+Services in SOA should be loosely coupled, having as little dependency as possible on external resources such as data models or information systems. They should also be stateless without retaining any information from past sessions or transactions. This way, if you modify a service, it won’t significantly impact the client applications and other services using the service.
+
+3. Abstraction
+
+Clients or service users in SOA need not know the service's code logic or implementation details. To them, services should appear like a black box. Clients get the required information about what the service does and how to use it through service contracts and other service description documents.
+
+4. Granularity
+
+Services in SOA should have an appropriate size and scope, ideally packing one discrete business function per service. Developers can then use multiple services to create a composite service for performing complex operations.
+
+__Services__
+
+In service-oriented architecture (SOA), services function independently and provide functionality or data exchanges to their consumers. The consumer requests information and sends input data to the service. The service processes the data, performs the task, and sends back a response.
+
+- For example, if an application uses an authorization service, it gives the service the username and password. The service verifies the username and password and returns an appropriate response.
+
+__Communication protocols__
+
+Services communicate using established rules that determine data transmission over a network. These rules are called communication protocols. Some standard protocols to implement SOA include the following:
+
+- Simple Object Access Protocol (SOAP)
+- RESTful HTTP
+- Apache Thrift
+- Apache ActiveMQ
+- Java Message Service (JMS)
+
+__SOA Benefits__
+
+Service-oriented architecture (SOA) has several benefits over the traditional monolithic architectures in which all processes run as a single unit.
+
+1. Faster time to market
+
+Developers reuse services across different business processes to save time and costs. They can assemble applications much faster with SOA than by writing code and performing integrations from scratch.
+
+2. Efficient maintenance
+
+It’s easier to create, update, and debug small services than large code blocks in monolithic applications. Modifying any service in SOA does not impact the overall functionality of the business process.
+
+3. Greater adaptability
+
+SOA is more adaptable to advances in technology. You can modernize your applications efficiently and cost effectively. For example, healthcare organizations can use the functionality of older electronic health record systems in newer cloud-based applications.
+
+__ESB__
+
+An enterprise service bus (ESB) is software that you can use when communicating with a system that has multiple services. It establishes communication between services and service consumers no matter what the technology.  
+
+__SOA Drawbacks__
+
+1. Limited scalability
+
+System scalability is significantly impacted when services share many resources and need to coordinate to perform their functionality. 
+
+2. Increasing interdependencies
+
+Service-oriented architecture (SOA) systems can become more complex over time and develop several interdependencies between services. They can be hard to modify or debug if several services are calling each other in a loop. Shared resources, such as centralized databases, can also slow down the system.
+
+3. Single point of failure
+
+For SOA implementations with an ESB, the ESB creates a single point of failure. It is a centralized service, which goes against the idea of decentralization that SOA advocates. Clients and services cannot communicate with each other at all if the ESB goes down.
+
+__Microservices vs SOA__
+
+Microservices architecture is made up of very small and completely independent software components, called microservices, that specialize and focus on one task only.
+
+Microservices communicate through APIs, which are rules that developers create to let other software systems communicate with their microservice.
+
+Microservices address the shortcomings of SOA to make the software more compatible with modern cloud-based enterprise environments.
+
+- They are fine grained and favor data duplication as opposed to data sharing.
+
+    - This makes them completely independent with their own communication protocols that are exposed through lightweight APIs.
+
+It’s essentially the consumers' job to use the microservice through its API, thus removing the need for a centralized ESB.
+
 # Cloud Load Balancing
 
 # Page Memory & Paging
@@ -3225,9 +3427,9 @@ writing code that tests your other code to ensure a level of performance quality
 
 4. once tests pass, a feature is considered complete
 
-__TDD STEPS__
+__TDD JUNIT__
 
-JUnit TESTING step 1A: update project structure JUnit library dependency to compile
+1. update project structure JUnit library dependency to compile
 
 ```
    File -> project structure -> Modules -> Dependencies Tab ->
@@ -3235,17 +3437,7 @@ JUnit TESTING step 1A: update project structure JUnit library dependency to comp
            open dropdown -> change "Test" to "Compile" -> Ok
 ```
 
-JUnit TESTING step 2.1: define class, method signatures, & test suite
-
-JUnit TESTING step 2.2: create JUnit Test class & generate methods to test in root
-
-- click yellow light bulb onHover over independent class name
-
-- FIX if IDE is unable to identify built-in JUnit Test class
-
-- select specific methods to test
-
-JUnit TESTING step 1B: add JUnit Library
+2. add JUnit Library
 
 - right-click add "JUnit" to class path
 
@@ -3253,11 +3445,21 @@ JUnit TESTING step 1B: add JUnit Library
 
 - click Ok
 
-JUnit TESTING step 3: BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
+3. define class, method signatures, & test suite
 
-JUnit TESTING step 4: run expected failing tests suite
+4. create JUnit Test class & generate methods to test in root
 
-JUnit TESTING step 5: review run configuration for all tests
+- click yellow light bulb onHover over independent class name
+
+- FIX if IDE is unable to identify built-in JUnit Test class
+
+- select specific methods to test
+
+5. BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
+
+6. run expected failing tests suite
+
+7. review run configuration for all tests
   want to test class in application, NOT the application itself
 
 - right-click outside created Test class & select run Test class
@@ -3265,7 +3467,7 @@ JUnit TESTING step 5: review run configuration for all tests
 - review configurations & click Ok
 - review right-corner dropdown is respective Test suite
 
-JUnit TESTING step 6: setup tests objects run before & after teardown every test run
+8. setup tests objects run before & after teardown every test run
 
 - @BeforeAll: STATIC execute only once before all test suit is run
       example: read data from db for tests
@@ -3276,7 +3478,7 @@ JUnit TESTING step 6: setup tests objects run before & after teardown every test
 
 - @AfterEach: execute code in setup() after each test is run
 
-JUnit TESTING step 7: write test method assertions that test against class functionality
+9. write test method assertions that test against class functionality
 
 - in testSuite, click on green arrow/red x in gutter next to specific method to test
 
@@ -3304,6 +3506,7 @@ getBalance_withdraw()
 ```
 
 write on 1 independent assertion for 1 independent test
+
 setup any independent class instances that can be reused (without cross-pollination) on each test method
 
 ```json
@@ -3333,6 +3536,6 @@ assertNotSame(expectedValue, actualTestValue);
 assertThat(expectedValue, actualTestValue);
 ```
 
-JUnit TESTING step 8: write method implementation in file
+10. write method implementation in file
 
-JUnit TESTING step 9: individually run implemented functions until all failing tests resolved in test suite
+11. individually run implemented functions until all failing tests resolved in test suite
