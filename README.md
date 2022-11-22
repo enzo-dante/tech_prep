@@ -703,7 +703,7 @@ new Thread() {
 }.start();
 ```
 
-__MULTITHREADING__
+__MULTI-THREADING__
 
 the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
 
@@ -2983,25 +2983,6 @@ left-to-right second
     [-15] && [7]     [7, 20] pivotIndex = 20 [20, 35]       [-22] && [1]        [1, 7] pivotIndex = 7 [7, 55]
 
                     [7] && [20] && [35]                                     [1] && [7] && [55]
-
-STEPS:
-
-    STEP 1: identify pivotIndex for 2-or-more element arrays
-        pivotIndex is the correct position in the sorted array
-
-    STEP 2: use recursion to subsequently partition the left & right partitioned arrays into more sub-arrays using the pivotIndex
-        BREAK CASE for recursive calls: handle 1 element arrays
-
-        using the first element respective index in the array as the pivotIndex
-
-        for left partition, search/traverse from left to right
-        for right partition, search/traverse from right to left
-        stop traversal when i and j cross each other to maintain partitions
-
-        FOUND 1st element less than pivot during traversal of LEFT partition: so move elements at index j to index i (move to LEFT of pivotIndex)
-        FOUND 1st element greater than pivot during traversal of RIGHT partition: so move elements at index i to index j (move to RIGHT of pivotIndex)
-
-        after correct index for pivotIndex element has been FOUND after each traversal, re-assign pivotIndex for subsequent sub-arrays/partitions
 ```
 
 PHASE 2: merging
@@ -3051,34 +3032,10 @@ public static int[] quickSort(int[] array, int start, int end) {
 
     if(isBaseCase) return array;
 
-    /*
-        STEP 1: recursively break up array into sub-arrays to identify pivotIndex for 2-or-more element arrays
-
-            use pivotIndex to move smaller elements left & larger elements right
-
-                 EXAMPLE:
-
-                    right-to-left first
-                    left-to-right second
-                                                  [20, 35, -15, 7, 55, 1, -22]
-
-                                 [-15, 7, 20, 35]       pivotIndex = 7            [-22, 1, 7, 55]
-
-                 [-15, 7]    pivotIndex = 7  [7, 20, 35]            [-22, 1]    pivotIndex = 1      [1, 7, 55]
-
-         [-15] && [7]     [7, 20] pivotIndex = 20 [20, 35]       [-22] && [1]        [1, 7] pivotIndex = 7 [7, 55]
-
-                         [7] && [20] && [35]                                     [1] && [7] && [55]
-     */
-
+    // use pivotIndex to move smaller elements left & larger elements right for recursive partitions of 2+ length
     int pivotIndex = getPivot(array,start, end);
 
-    /*
-        STEP 2: use recursion to subsequently shift elements left or right in relation to pivot index
-
-        RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, THEN RIGHT side with midpoint via start & end sub-array
-     */
-
+    // use recursion to subsequently shift elements left or right in relation to pivot index
     // left partition
     array = quickSort(array, start, end);
 
@@ -3103,20 +3060,20 @@ private static int getPivot(int[] array, int start, int end) {
     // define partitions by ensuring no crossover between traversing index
     while(i < j) {
 
-        // LEFT PARTITIONS
-        // decrement j to traverse array right-to-left for an element less than the pivot
+        // LEFT PARTITIONS: decrement j to traverse array right-to-left for an element less than the pivot
         while(i < j && (nums[--j] >= pivotIndex));
 
         // stop traversal when i and j cross each other to maintain partitions
         boolean inPartitionBound = (i < j);
 
+        // use recursion to subsequently shift elements left or right in relation to pivot index
         if(inPartitionBound) {
+
             // FOUND 1st element less than pivot during traversal of respective partition: so move element at index j to index i (move to LEFT of pivotIndex)
             nums[i] = nums[j];
         }
 
-        // RIGHT PARTITIONS
-        // decrement i before execution to traverse array left-to-right for an element greater than the pivot
+        // RIGHT PARTITIONS: decrement i before execution to traverse array left-to-right for an element greater than the pivot
         while(i < j && (nums[++i] <= pivotIndex));
 
         if(inPartitionBound) {
@@ -3126,8 +3083,9 @@ private static int getPivot(int[] array, int start, int end) {
         }
     }
 
-    // index j will become the new pivotIndex for subsequent sub-arrays/partitions
+    // index j will become the new pivot index for subsequent sub-arrays/partitions
     nums[j] = pivotIndex;
+
     return j;
 }
 ```
@@ -3226,32 +3184,136 @@ process the data by adding data as final output result
 
 # Distributed Cache
 
+__CACHE__
+
+computer short-term memory & caching means saving frequently accessed data in-memory
+
+It is typically faster then the origin data source.
+
+- You know Accessing data from RAM is always faster than accessing it from the hard drive
+
+__DISTRIBUTED CACHE__
+
+A cache which has its data spread across several nodes in a (a) cluster, (b) across several clusters or (c) across several data centres located around the world
+
+👉 A Distributed cache under the covers is a Distributed Hash Table which has a responsibility of mapping Object Values to Keys spread across multiple nodes.
+
+👉 A hash table manages the addition, deletion, failure of nodes continually as long as the cache service is online. Distributed hash tables were originally used in the peer to peer systems.
+
+👉 routinely check data integrity bia cache invalidation 
+
+👉 caches evict data based on the LRU (Least Recently Used policy) uses a Doubly-Linked-List to manage the data pointers, which is the most important part of the data-structure.
+
+__CACHE INVALIDATION__
+
+If any data is modified in the database, it should be invalidated or modified in the cache also; if it is not so, this can cause inconsistent application behavior.
+
+Read-Through
+
+<img src="/content/distributed-cache-read-through.png">
+
+- The data is written into the cache and the corresponding database at the same time.
+
+- This scheme maintains the complete data consistency between the cache and the main storage. Even this scheme also ensures that nothing will get lost in case of a crash, power failure, or any other system disruptions.
+
+- The disadvantage of this scheme is the Higher Latency, since every write operation is done twice before returning success to the client😔
+
+Write-Through
+
+<img src="/content/distributed-cache-write-through.png">
+
+- In this strategy, every information directly written to the database just bypassing the cache.
+
+- The disadvantage of this scheme is the Higher Latency if in case of a read request for recently written data will create a “cache miss”😯 and then the read request must be made on back-end storage.
+
+Write-Back
+
+<img src="/content/distributed-cache-write-back.png">
+
+- The data is written to cache only and completion is immediately confirmed to the client. The write to the permanent storage is done after specified intervals or under certain conditions. This results in low latency and high throughput for write-intensive applications.
+
+- However, this speed comes with the risk of data loss in case of a crash or other adverse event because the only copy of the written data is in the cache.
+
+__DISTRIBUTED CACHE BENEFITS__
+
+Businesses (like health services, military, stock markets) cannot afford to have their services go offline.
+
+👉 Memcache is most popular cache which is used by Google Cloud Google Cloud🌨  in its Platform As A Service.
+
+👉 Redis NoSQL data store is an open-source in-memory distributed system which supports other data structures too such as distributed lists, queues, strings, sets, sorted sets.
+
+1. Scalability
+
+👉 the capacity of a system to handle a growing amount of work by adding resources to the system
+
+2. High Availability
+
+👉 if availability tends to 100% its called high availability. To do this, it contains backup components to which it automatically switches (fails over) when an active component stops working.
+
+3. Fault-tolerance
+
+the ability of a system (computer, network, cloud cluster, etc.) to continue operating without interruption when one or more of its components fail.
+
+👉 an OS’s ability to recover and tolerate faults without failing can be handled by hardware, software, or a combined solution leveraging load balancers.
+
+👉 fault-tolerant systems use backup components that automatically take the place of failed components, ensuring no loss of service.
+
+__USE CASES__
+
+1. Database Caching
+
+The Cache can be placed between Application Server and Database. Where access the data from cache instead of main datastore which frequently accesses data in-memory to cut down latency & unnecessary load on it. There is no DB bottleneck when the cache is implemented.
+
+2. User Sessions Storing
+
+User sessions are mostly stored in the cache to avoid losing the user information in case any of the instances go down.
+If any of the instance goes down, a new instance spins up, reads the user data from the cache & continues the session without having the user notice anything amiss.
+
+3. In-memory Data Lookup
+
+If you have a mobile / web app front end you might want to cache some information like user profile, some historical data, or some API response according to your use cases. Caching will help in storing such data.
+
+__CACHE EVICTION__
+
+A cache eviction algorithm is a way of deciding which element to evict when the cache is full.
+
+- First In First Out (FIFO): The cache evicts the first block accessed first without any regard to how often or how many times it was accessed before.
+
+- Last In First Out (LIFO): The cache evicts the block accessed most recently first without any regard to how often or how many times it was accessed before.
+
+- Least Recently Used (LRU): Discards the least recently used items first. Best 🙂
+
+- Most Recently Used (MRU): Discards, in contrast to LRU, the most recently used items first.
+
+- Least Frequently Used (LFU): Counts how often an item is needed. Those that are used least often are discarded first.
+
+<img src="/content/distributed-cache.png">
 
 # Internet Fundamentals
 
-__Computer Network__
+__COMPUTER NETWORK__
 
 a set of independent computer systems connected by telecommunications links for the purpose of sharing information & resources.
 
 <img src="/content/computer-network.png">
 
-__Internet__
+__INTERNET__
 
 an independent global system of computer networks connected by a collection of protocols implemented in software and hardware designed to interconnect all types of networks like cell phones, Ethernet, wifi, etc.
 
 <img src="/content/internet.png">
 
-__Protocols__
+__PROTOCOLS__
 
 an agreements on a technical standard that is implemented by software or hardware devices.
 
-__Modem__
+__MODEM__
 
 a hardware device that transforms between physical states (analog) and bits (digital) for the internet
 
 <img src="/content/modem.png">
 
-__IP Address__
+__IP ADDRESS__
 
 An IP address identifies geographic location based on organization that “owns” it.
 
@@ -3264,7 +3326,7 @@ consisting of four numbers between 0 and 255 inclusive:
 128.2.13.163
 ```
 
-__Routing__
+__ROUTING__
 
 There are multiple paths from one node
 (computer) to another
@@ -3275,7 +3337,7 @@ Two network nodes (e.g. phones) establish a
 dedicated connection via one or more
 switching stations.
 
-__Packet Switching__
+__PACKET SWITCHING__
 
 We attach the source and destination IP addresses to the
 message & two network nodes (e.g. computers) communicate by breaking the message up into small packets
@@ -3284,7 +3346,7 @@ Routers forward packets toward the destination
 
 the table stored in a router tells it which neighbor to send the packet to, based on IP address of destination
 
-__Internet Structure__
+__INTERNET STRUCTURE__
 
 the Core provides transport services to edges
 
@@ -3301,7 +3363,7 @@ the Edges provide the services people use
 
 <img src="/content/packet-switching.png">
 
-__End-to-End principle__
+__END-TO-END PRINCIPLE__
 
 Routers should only be responsible for getting data quickly from its source to its destination.
 
@@ -3318,7 +3380,7 @@ Issues:
 - profit opportunities for ISPs
 - corporate and government monitoring of communications
 
-__Net Neutrality__
+__NET NEUTRALITY__
 
 All communications are treated equally regardless of source, destination, or type
 
@@ -3347,13 +3409,13 @@ Clients or service users in SOA need not know the service's code logic or implem
 
 Services in SOA should have an appropriate size and scope, ideally packing one discrete business function per service. Developers can then use multiple services to create a composite service for performing complex operations.
 
-__Services__
+__SERVICES__
 
 In service-oriented architecture (SOA), services function independently and provide functionality or data exchanges to their consumers. The consumer requests information and sends input data to the service. The service processes the data, performs the task, and sends back a response.
 
 - For example, if an application uses an authorization service, it gives the service the username and password. The service verifies the username and password and returns an appropriate response.
 
-__Communication protocols__
+__COMMUNICATION PROTOCOLS__
 
 Services communicate using established rules that determine data transmission over a network. These rules are called communication protocols. Some standard protocols to implement SOA include the following:
 
@@ -3363,7 +3425,7 @@ Services communicate using established rules that determine data transmission ov
 - Apache ActiveMQ
 - Java Message Service (JMS)
 
-__SOA Benefits__
+__SOA BENEFITS__
 
 Service-oriented architecture (SOA) has several benefits over the traditional monolithic architectures in which all processes run as a single unit.
 
@@ -3383,7 +3445,7 @@ __ESB__
 
 An enterprise service bus (ESB) is software that you can use when communicating with a system that has multiple services. It establishes communication between services and service consumers no matter what the technology.  
 
-__SOA Drawbacks__
+__SOA DRAWBACKS__
 
 1. Limited scalability
 
@@ -3397,7 +3459,7 @@ Service-oriented architecture (SOA) systems can become more complex over time an
 
 For SOA implementations with an ESB, the ESB creates a single point of failure. It is a centralized service, which goes against the idea of decentralization that SOA advocates. Clients and services cannot communicate with each other at all if the ESB goes down.
 
-__Microservices vs SOA__
+__MICROSERVICES vs SOA__
 
 Microservices architecture is made up of very small and completely independent software components, called microservices, that specialize and focus on one task only.
 
