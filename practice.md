@@ -357,3 +357,100 @@ public static boolean jumpGame3(int[] array, int start) {
 ```
 
 __Q5__
+
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+Logic:
+
+- BACKTRACKING recursive algorithm
+
+- RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+
+choice:
+- we can choose open "(" or close bracket ")"
+
+constraint: we can choose close bracket if left <= right
+- left = num open brackets
+- right = num close brackets
+
+goal:
+- find (2 * max) valid parenthesis
+
+TIME COMPLEXITY
+O(n) linear: depending on longest string of two arguments
+
+SPACE COMPLEXITY
+O(1) constant: using an array
+
+```
+@Test
+void generateParenthesis_success(){
+    int test = 2;
+
+    List<String> expected = new ArrayList<>();
+    expected.add("(())");
+    expected.add("()()");
+
+    List<String> actual = Q5.generateParenthesis(test);
+    assertEquals(expected, actual);
+}
+
+@Test
+void generateParenthesis_fail(){
+    int test = 1;
+
+    List<String> expected = new ArrayList<>();
+    expected.add("()");
+
+    List<String> actual = Q5.generateParenthesis(test);
+    assertEquals(expected, actual);
+}
+
+public static List<String> generateParenthesis(int number) {
+
+    if(n <= 0) return null;
+
+    List<String> maxValidParenthesis = new ArrayList<>();
+    String currentParenthesis = "";
+
+    int numLeftP = 0;
+    int numRightP = 0;
+
+    recursiveBacktracking(maxValidParenthesis, currentParenthesis, numLeftP, numRightP, number);
+
+    return maxValidParenthesis;
+}
+
+private static void recursiveBacktracking(List<String> result, String currentParenthesis, int numOpenP, int numClosedP, int max) {
+
+    int pSet = 2;
+    int maxCombo = pSet * max;
+
+    boolean isBaseCase = (currentParenthesis.length() == maxCombo);
+
+    String pOpen = "(";
+    String pClosed = ")";
+
+    if(isBaseCase) {
+        result.add(currentParenthesis);
+        return;
+    }
+
+    // left-to-right
+    if(numOpenP < max) {
+
+        String addedOpenParenthesis = currentParenthesis + pOpen;
+        int incrementedNumOpenP = numOpenP + 1;
+
+        recursiveBacktracking(result, addedOpenParenthesis, incrementedNumOpenP, numClosedP, max);
+    }
+
+    if(numClosedP < numOpenedP) {
+
+        String addedClosedParenthesis = currentParenthesis + pClosed;
+        int incrementedNumClosedP = numClosedP + 1;
+
+        recursiveBacktracking(result, addedClosedParenthesis, numOpenP, incrementedNumClosedP, max);
+    }
+}
+```

@@ -111,7 +111,6 @@ public class Person {
         return "This is protected speech";
     }
 }
-
 ```
 
 __OOP ENCAPSULATION__
@@ -196,7 +195,7 @@ public class PC {
         this.motherboard = new MotherBoard(ramSlots);
     }
 
-    public Monitor getMonitor() {
+    public Motherboard getMotherboard() {
         return this.motherboard;
     }
 
@@ -228,22 +227,25 @@ easier to ask for forgiveness than permission: use try-catch block to handle err
 ```
 try {
     System.out.println(future.get());
-} catch(ExecutionException e) {
-    System.out.println(e.getMessage());
-} catch(ExecutionException e) {
+} catch(ExecutionException e1) {
+    System.out.println(e1.getMessage());
+} catch(InterruptedException  e2) {
     System.out.println("Thread running the task was interrupted");
 }
 ```
 
 # Serialization
 
-the conversion of a Java object into a static stream (sequence) of bytes, which we can then be saved to a database or transfer over a network.
+the process of converting a data object—a combination of code and data represented within a region of data storage—into a series of bytes that saves the state of the object in an easily transmittable form.
 
-```
+<img src="/content/serialization.png">
+
+```json
+
     /**
      * Call the ObjectOutputStream() which takes a serializable object and converts it into a sequence (stream) of bytes.
      */
-    public static void serialize(Book book) throws Exception {
+    public static void serialize(Book book, String filename, ) throws Exception {
 
         FileOutputStream file = new FileOutputStream(fileName);
         ObjectOutputStream out = new ObjectOutputStream(file);
@@ -258,7 +260,7 @@ the conversion of a Java object into a static stream (sequence) of bytes, which 
      * Call the ObjectInputStream() reads a stream of bytes and converts it back into a Java object.
      * It can then be cast back to the original object.
      */
-    public static Book deserialize() throws Exception {
+    public static Book deserialize(String fileName) throws Exception {
 
         FileInputStream file = new FileInputStream(fileName);
         ObjectInputStream in = new ObjectInputStream(file);
@@ -272,13 +274,14 @@ the conversion of a Java object into a static stream (sequence) of bytes, which 
     }
 ```
 
-The serialization process is instance-independent: classes that are eligible for serialization need to implement Serializable interface.
+The serialization process is dependent on implementing instances: classes that are eligible for serialization need to implement Serializable interface.
 
 __TRANSIENT__
 
 use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
 
-```
+```json
+
 public class Book implements Serializable {
 
     private static final long serialVersionUID = -2936687026040726549L;
@@ -291,7 +294,8 @@ public class Book implements Serializable {
 }
 ```
 
-```
+``` json
+
     @Test
     void bookSerialization() {
 
@@ -310,11 +314,12 @@ public class Book implements Serializable {
     }
 ```
 
-# Recursion
+# Recursive Functions
 
-RECURSIVE FUNCTIONS: a continuously self-calling algorithm & each call on the call-stack waits for the algorithm to reach a base case/breaking condition for a return value.
+a continuously self-calling algorithm & each call on the call-stack waits for the algorithm to reach a base case/breaking condition for a return value.
 
-```
+```json
+
 recursive factorial method
 
     !3 = 1*2*3 = 6
@@ -332,9 +337,12 @@ recursive factorial method
                 returns 1
 ```
 
-RECURSIVE BASE CASE: the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
+__RECURSIVE BASE CASE__
 
-```
+the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
+
+```json
+
 private static int recursiveFactorial(int number) {
 
     boolean isBaseCase = (number == 0);
@@ -347,7 +355,7 @@ private static int recursiveFactorial(int number) {
 }
 ```
 
-# DIVIDE & CONQUER
+# Divide & Conquer
 
 recursively divide the original problem into 2 or more sub-problems & repeat until the sub-problems become small enough to solve a base case
 
@@ -355,7 +363,8 @@ recursively divide the original problem into 2 or more sub-problems & repeat unt
 
 divide & conquer algorithms are great for parallel processing because each sub-problem can be run on a different processor simultaneously (extremely performant on modern systems with large core counts)
 
-```
+```json
+
 public class MergeSort {
 
     private static int[] array = {20, 35, -15, 7, 55, 1, -22};
@@ -365,7 +374,7 @@ public class MergeSort {
         return array;
     }
 
-    // RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+    // RECURSION: a continuously self-calling algorithm & each call on the call-stack waits for the algorithm to reach a base case/breaking condition for a return value.
     private static void recursivePartition(int[] array, int start, int end) {
 
         // RECURSIVE BASE CASE: the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
@@ -374,17 +383,16 @@ public class MergeSort {
 
         if(isBaseCase) return;
 
-        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices
         int midpoint = (start + end) / 2;
 
-        // LEFT partitions
+        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST w/ midpoint via start & end indices
         // [20, 35, -15] ->
         //      [20] [35, -15] ->
         //          [20] [35] [-15]
 
         recursivePartition(array, start, midpoint);
 
-        // RIGHT partitions
+        // RECURSION + DIVIDE & CONQUER: then RIGHT side with midpoint via start & end indices
         // [7, 55, 1, -22] ->
         //      [7, 55] [1,-22] ->
         //          [7] [55] [1] [-22]
@@ -423,7 +431,7 @@ public class MergeSort {
             // MERGE SORT: write smaller of 2 comparison elements to temp array for left-to-right sorted order
             // STABLE ALGORITHM: if equal, write left first to preserve original order
 
-            tempArray[tempIndex++] = (currentLeftElement <= currentRightElement) ? inputArray[i++] : inputArray[j++];
+            tempArray[tempIndex++] = (currentLeftElement <= currentRightElement) ? array[i++] : array[j++];
         }
 
         /*
@@ -462,7 +470,8 @@ make sure to avoid redundant recursive calls (solved via MEMOIZATION)
 
 an abstract collection of publicly-shared method signatures & public CONSTANTS that MUST ALL be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
 
-```
+```json
+
 interface ITelephone {
 
     // define the public 'signature' (only method names & parameters) of the shared behavior & public CONSTANTS used by the set of class
@@ -515,7 +524,8 @@ __OOP INHERITANCE__
 
 child subclass inherits public class fields + methods from extending parent super class
 
-```
+```json
+
 // abstract keyword = no logic, only define the class or method signature shared across adhering classes
 abstract class AbstractAnimal {
 
@@ -565,7 +575,8 @@ class Dog extends AbstractAnimal {
 
 improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
 
-```
+```json
+
 ArrayList<Integer> onlyIntegers = new ArrayList<>();
 onlyIntegers.add(1);
 
@@ -658,9 +669,7 @@ class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
         return sameRank;
     }
 
-    public String getName() {
-        return name;
-    }
+    // Getters & Setters
 }
 ```
 
@@ -680,7 +689,8 @@ an instance of a computer program with its own memory space that's sequentially 
 
 - every process has a memory HEAP
 
-```
+```json
+
 java virtual machine instance ->
         the JVM runs as a PROCESS ->
             running a java console application ->
@@ -693,8 +703,12 @@ a unit of execution within a process, each process can have multiple threads: a 
 
 - every thread has a memory THREAD STACK.
 
-```
-// THREADS .start(): only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
+__THREADS .start()__
+
+only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
+
+```json
+
 new Thread() {
     @Override
     public void run() {
@@ -711,7 +725,8 @@ __THREAD JOIN__
 
 when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
 
-```
+```json
+
 public static void main(String[] args) {
 
     // THREADS + GENERIC CLASSES/LAMBDAS: Thread.instance w/ parameter class instance that implements Runnable INTERFACE & immediately .start() no-name instance on it's own thread in the HEAP
@@ -750,7 +765,7 @@ class MyRunnableThread implements Runnable {
 }
 ```
 
-# SYNCHRONIZATION
+# Synchronization
 
 the process of semi-controlling/influencing when threads execute code and therefore when they can access the heap is called synchronization.
 
@@ -760,7 +775,8 @@ __THREAD SYNCHRONIZATION code blocks__
 
 use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
 
-```
+```json
+
 public synchronized void doCountdown() {
     String color = ThreadColor.ANSI_CYAN;
     String threadName = Thread.currentThread().getName();
@@ -821,7 +837,8 @@ __ARRAY BLOCKING QUEUE__
 
 a queue is a (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
 
-```
+```json
+
 // ArrayBlockingQueue: we have to pass in the number of elements the array should be able to hold
 int numElements = 6;
 
@@ -837,7 +854,8 @@ __EXECUTOR SERVICE__
 
 optimize a managed set of threads, thus reducing the overhead of thread creation
 
-```
+```json
+
 int numThreads = 3;
 ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
 
@@ -850,7 +868,8 @@ __FUTURE__
 
 a return value from an executed thread in a thread pool
 
-```
+```json
+
 // THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
 Future<String> future = executorService.submit(new Callable<String>() {
     @Override
@@ -870,7 +889,8 @@ once a thread starts these actions, they cannot be suspended during execution, a
 
 - reading and writing volatile variables
 
-```
+```json
+
 int atomicAction1 = 1;
 int atomicAction2 = atomicAction1;
 ```
@@ -879,7 +899,8 @@ __VOLATILE VARIABLES__
 
 the JVM writes the value back to main memory immediately after a thread updates the value in its CPU cache, and it also guarantees that every time a variable reads from a volatile variable, it will get the latest value.
 
-```
+```json
+
 public volatile int volatileVariable;
 ```
 
@@ -890,7 +911,7 @@ threads aren't given the opportunity to progress due to threat priority - assign
 
 # Data Structures
 
-# arrays
+# Arrays
 
 O(1) CONSTANT time complexity when getting an element in an array with an index because it always take 3 steps
 
@@ -898,13 +919,15 @@ O(1) CONSTANT time complexity when getting an element in an array with an index 
 - step 2: get the start address of the array
 - step 3: add the start address to the result of the multiplication
 
-```
+```json
+
 int result = intArray[index];
 ```
 
 O(n) LINEAR time complexity when getting an element in an array WITHOUT an index
 
-```
+```json
+
 for(int index = 0; index < intArray.length; index++) {
 
     int randomValue = 10;
@@ -913,7 +936,7 @@ for(int index = 0; index < intArray.length; index++) {
 }
 ```
 
-# vectors
+# Vectors
 
 VECTORS are thread-safe ArrayList: if 1 or more threads are writing (CRUD) to an ArrayList there could be thread conflicts
 
@@ -934,7 +957,8 @@ employeeList.add(new Employee("First 2", "Last 2", 22));
 
 sets are a computationally fast unordered collection WITHOUT DUPLICATES implemented via a HASHSET class
 
-```
+```json
+
 Set<Integer> numbers = new HashSet<>();
 numbers.add(1);
 ```
@@ -943,7 +967,8 @@ __SET UNION__
 
 a set (WITHOUT DUPLICATES) that contains ALL elements of 2 or more hashsets via hashSet.addAll()
 
-```
+```json
+
 Set<Integer> set1 = new HashSet<>();
 Set<Integer> set2 = new HashSet<>();
 
@@ -958,7 +983,8 @@ __VENN DIAGRAM ASYMMETRIC DIFF__
 
 remove all shared elements of 1 set found in another set via bulk operation hashSet.removeAll()
 
-```
+```json
+
 Set<Integer> set1 = new HashSet<>();
 Set<Integer> set2 = new HashSet<>();
 
@@ -978,7 +1004,8 @@ HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodeP
 
 Singly LinkedLists w/ an array backing
 
-```
+```json
+
 public class EmployeeNode {
 
     private Employee employee;
@@ -1078,7 +1105,8 @@ null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {p
 
 Doubly LinkedLists w/ an array backing
 
-```
+```json
+
 public class EmployeeNode {
 
     private Employee employee;
@@ -1100,7 +1128,8 @@ public class EmployeeNode {
 }
 ```
 
-```
+```json
+
 public class DoublyLinkedList {
 
     private Employee head;
@@ -1268,7 +1297,8 @@ LIFO STACKS: an abstract class that only accesses variables from the top/front o
 
 - ARRAY STACK O(n) linear TIME COMPLEXITY: due to LIFO (only accessed from the top/front), for push(), pop(), peek()
 
-```
+```json
+
 public class ArrayStack {
 
     // STACK top: always null because it's a placeholder for next potential item; actual top of stack is the last index of the array
@@ -1347,7 +1377,8 @@ an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASH
 
 - O(1) CONSTANT time complexity: getting a map value with a key will always take the same number of steps (3)
 
-```
+```json
+
 // GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
 Map<String, String> languages = new HashMap<>();
 
@@ -1357,7 +1388,8 @@ String value = "Primary language in the United States";
 
 add unique_key-value generics class pair into map collection
 
-```
+```json
+
 // re-adding the map key will override the old value
 languages.put(key, value)
 ```
@@ -1390,7 +1422,8 @@ FIFO QUEUES: an abstract class that only accesses variables from the top/front o
 
 CIRCULAR QUEUE: wrap queue back-to-front, where back field is always pointing to next available queue position
 
-```
+```json
+
 public class CircularQueue {
 
     private Employee[] queue;
@@ -1518,7 +1551,8 @@ BINARY TREE:
 
 a collection of 1 parent node to respective 2 children nodes with parent child connection edges and left-to-right node movement depends on child value comparisons
 
-```
+```json
+
 public static BinaryTree buildTree() {
 
     BinaryTree binaryTree = new BinaryTree();
@@ -1593,7 +1627,8 @@ visit the left-child, then root, then right-child, and repeat
 
                                    29 32
 
-```
+```json
+
 public class BinaryTree {
 
     private static final String EMPTY_TREE = "This binary tree is empty";
@@ -1779,6 +1814,7 @@ public class BinaryTree {
     }
 
     public int getMin() {
+
         if(this.isEmpty()) {
             System.out.println(EMPTY_TREE);
             return Integer.MIN_VALUE;
@@ -1788,6 +1824,7 @@ public class BinaryTree {
     }
 
     public int getMax() {
+
         if(this.isEmpty()) {
             System.out.println(EMPTY_TREE);
             return Integer.MIN_VALUE;
@@ -1990,7 +2027,8 @@ a MAX HEAP implementation w/ array backing always want the highest priority item
 
 - for MAX HEAPS, a comparator is required that will look at the two values and whenever you have one value greater than the other you in fact want to return that that value's less.
 
-```
+```json
+
 public class MaxHeap {
 
     private static final String HEAP_FULL = "Heap is full";
@@ -2354,7 +2392,7 @@ __depth-first search__
 - nodes asks (left-to-right) it's child if it has a path to nodeT, repeat until reached nodeT or null
 
 __breadth-first Search__
-        
+
 - hasPath(s, t): recursively, does nodeS do you have a path to nodeT?
 
 - nodes checks if any of its children are nodeT, if no edges to first level children, then check next level and repeat
@@ -2363,7 +2401,8 @@ __breadth-first Search__
 
 traversal beginning to end by incrementing the index by 1 until in the array data structure with O(n) linear time complexity
 
-```
+```json
+
 public static int linearSearch(int[] nums, int value) {
 
     for(int index = 0; index < nums.length; index++) {
@@ -2378,7 +2417,8 @@ public static int linearSearch(int[] nums, int value) {
 
 # Binary Search
 
-```
+```json
+
 searchValue = 55
 
     [-22, -15, 1, 7, 20, 35, 55] where midpoint: 7
@@ -2447,7 +2487,8 @@ private static int recursivePartition(int[] nums, int start, int end, int search
 
 # Algorithm Sort
 
-```
+```json
+
 public static void swapValues(int[] array, int i, int j) {
 
     if(i == j) return;
@@ -2483,7 +2524,8 @@ bubble the largest element to the top/unsorted partition that grows with each lo
 
 - right-to-left sorted partition growth
 
-```
+```json
+
 public static void bubbleSort(int[] array) {
 
     // sorted partition
@@ -2533,7 +2575,8 @@ selection sort looks for the largest element in the unsorted partition
 - swap the largest element found with last element in the unsorted partition via respective index
 - then decrement the lastUnsortedIndex var by 1 and repeat the process
 
-```
+```json
+
 public static void selectionSort(int[] array) {
 
     // last index in the given iteration of the unsorted partition (array starts as unsorted)
@@ -2623,7 +2666,8 @@ STEP 3) after the comparison(s) & inserting of the unsorted inserting value
 
 STEP 4) repeat this process until the entire array is sorted
 
-```
+```json
+
 public static void insertionSort(int[] array) {
 
     int insertValue;
@@ -2839,11 +2883,15 @@ public class MergeSort {
     private static int[] array = {20, 35, -15, 7, 55, 1, -22};
 
     public static int[] execute() {
-        recursivePartition(array, 0, array.length);
+
+        int start = 0;
+        int end = array.length;
+
+        recursivePartition(array, start, end);
         return array;
     }
 
-    // RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
+    // RECURSION: a continuously self-calling algorithm & each call on the call-stack waits for the algorithm to reach a base case/breaking condition for a return value.
     private static void recursivePartition(int[] array, int start, int end) {
 
         // RECURSIVE BASE CASE: the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
@@ -2852,17 +2900,16 @@ public class MergeSort {
 
         if(isBaseCase) return;
 
-        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST, then RIGHT side with midpoint via start & end indices
         int midpoint = (start + end) / 2;
 
-        // LEFT partitions
+        // RECURSION + DIVIDE & CONQUER: partition LEFT side FIRST w/ midpoint via start & end indices
         // [20, 35, -15] ->
         //      [20] [35, -15] ->
         //          [20] [35] [-15]
 
         recursivePartition(array, start, midpoint);
 
-        // RIGHT partitions
+        // RECURSION + DIVIDE & CONQUER: then RIGHT side with midpoint via start & end indices
         // [7, 55, 1, -22] ->
         //      [7, 55] [1,-22] ->
         //          [7] [55] [1] [-22]
@@ -2901,7 +2948,7 @@ public class MergeSort {
             // MERGE SORT: write smaller of 2 comparison elements to temp array for left-to-right sorted order
             // STABLE ALGORITHM: if equal, write left first to preserve original order
 
-            tempArray[tempIndex++] = (currentLeftElement <= currentRightElement) ? inputArray[i++] : inputArray[j++];
+            tempArray[tempIndex++] = (currentLeftElement <= currentRightElement) ? array[i++] : array[j++];
         }
 
         /*
@@ -3026,7 +3073,7 @@ void quickSort_fail_badInput() {
 
 public static int[] quickSort(int[] array, int start, int end) {
 
-    if(array.length == 0) return null; 
+    if(array.length == 0) return null;
 
     boolean isBaseCase = ((end - start) < 2);
 
@@ -3200,7 +3247,7 @@ A cache which has its data spread across several nodes in a (a) cluster, (b) acr
 
 👉 A hash table manages the addition, deletion, failure of nodes continually as long as the cache service is online. Distributed hash tables were originally used in the peer to peer systems.
 
-👉 routinely check data integrity bia cache invalidation 
+👉 routinely check data integrity bia cache invalidation
 
 👉 caches evict data based on the LRU (Least Recently Used policy) uses a Doubly-Linked-List to manage the data pointers, which is the most important part of the data-structure.
 
@@ -3389,7 +3436,9 @@ control the Internet within their borders
 
 # Service-Oriented Architectures (SOA)
 
-A method of software development that uses software components called services to create business applications.
+<img src="/content/soa.png">
+
+A method of software development that uses easily switchable software components called services to create business applications.
 
 1. Interoperability
 
@@ -3443,13 +3492,13 @@ SOA is more adaptable to advances in technology. You can modernize your applicat
 
 __ESB__
 
-An enterprise service bus (ESB) is software that you can use when communicating with a system that has multiple services. It establishes communication between services and service consumers no matter what the technology.  
+An enterprise service bus (ESB) is software that you can use when communicating with a system that has multiple services. It establishes communication between services and service consumers no matter what the technology.
 
 __SOA DRAWBACKS__
 
 1. Limited scalability
 
-System scalability is significantly impacted when services share many resources and need to coordinate to perform their functionality. 
+System scalability is significantly impacted when services share many resources and need to coordinate to perform their functionality.
 
 2. Increasing interdependencies
 
@@ -3474,6 +3523,84 @@ Microservices address the shortcomings of SOA to make the software more compatib
 It’s essentially the consumers' job to use the microservice through its API, thus removing the need for a centralized ESB.
 
 # Cloud Load Balancing
+
+__HORIZONTAL SCALE LOAD BALANCING__
+
+The distribution of loads across as many servers as necessary to handle the workload.
+
+- In this case, you can scale infinitely by adding more physical machines to an existing pool of resources.
+
+<img src="/content/cloud-load-balancers.png">
+
+Load balancers can either be hardware-based or software-based that prevents servers from breaking down or getting overloaded.
+
+- When faced with a sudden surge in requests, your application will load slowly, the network will time out, and your server will creak.
+
+__CLOUD LOAD BALANCING__
+
+Cloud load balancing takes a software-based approach to distributing network traffic across resources, as opposed to hardware-based load balancing, which is more common in enterprise data centers.
+
+- software-based is not an instance-based or device-based solution, so you won't be locked into a physical load-balancing infrastructure or face the HA, scale, and management challenges inherent in instance-based load balancers.
+
+<img src="/content/cloud-load.png">
+
+A load balancer receives incoming traffic and routes those requests to active targets based on a configured policy.
+
+A load balancing service also monitors the health of the individual targets to ensure that those resources  are fully operational.
+
+__BENEFITS__
+
+Prevents Network Server Overload
+
+- When using load balancers in the cloud, you can distribute your workload among several servers, network units, data centers, and cloud providers.
+
+- This lets you effectively prevent network server overload during traffic surges.
+
+High Availability
+
+- The concept of high availability means that your entire system won’t be shut down whenever a system component goes down or fails.
+
+- You can use load balancers to simply redirect requests to healthy nodes in the event that one fails.
+
+Better Resource Utilization
+
+- Load balancing is centered around the principle of efficiently distributing workloads across data centers and through multiple resources, such as disks, servers, clusters, or computers.
+
+- It maximizes throughput, optimizes the use of available resources, avoids overload of any single resource, and minimizes response time.
+
+Prevent a Single Source of Failure
+
+- Load balancers are able to detect unhealthy nodes in your cluster through various algorithmic and health-checking techniques.
+
+- In the event of failure, loads can be transferred to a different node without affecting your users, affording you the time to address the problem rather than treating it as an emergency.
+
+__FEATURES__
+
+Single anycast IP address
+
+- With Cloud Load Balancing, a single anycast IP address is the frontend for all of your backend instances in regions around the world.
+
+- It provides cross-region load balancing, including automatic multi-region failover, which moves traffic to failover backends if your primary backends become unhealthy.
+
+- Cloud Load Balancing reacts instantaneously to changes in users, traffic, network, backend health, and other related conditions.
+
+Seamless Autoscaling
+
+- Cloud Load Balancing can scale as your users and traffic grow, including easily handling huge, unexpected, and instantaneous spikes by diverting traffic to other regions in the world that can take traffic.
+
+- Autoscaling does not require pre-warming: you can scale from zero to full traffic in a matter of seconds.
+
+Layer 4 and Layer 7 load balancing
+
+- Use Layer 4-based load balancing to direct traffic based on data from network and transport layer protocols such as TCP, UDP, ESP, GRE, ICMP, and ICMPv6 .
+
+- Use Layer 7-based load balancing to add request routing decisions based on attributes, such as the HTTP header and the uniform resource identifier.
+
+External and internal load balancing
+
+- You can use external load balancing when your users reach your applications from the internet and internal load balancing when your clients are inside of Google Cloud.
+
+- Global and regional load balancing. Distribute your load-balanced resources in single or multiple regions, to terminate connections close to your users, and to meet your high availability requirements.
 
 # Page Memory & Paging
 

@@ -6,56 +6,6 @@ __SOA example: ticket payment system__
 
 ![soa example](/content/soa_example.gif)
 
-## COMPETENCY: cloud load balancing
-
-backend optimization technique to reduce cost & latency and improve performance & security
-
-![cloud load balancing architecture](/content/cloudLoadBalancing_architecture.gif)
-
-benefits:
-
-- cross-regional failover
-
-- fast autoscaling
-
-- scales to millions of queries/requests per second
-
-__PROBLEM TO SOLVE__
-
-How do you scale, optimize, & secure a global app while maintaining low-latency for positive user experiences?
-
-![local load balancing](/content/cloudLoadBalancing_localLoadBalancing.gif)
-
-__cloud load balancing architecture__
-
-layer 7 external/global load balancing
-
-![layer 7 global load balancing](/content/cloudLoadBalancing_globalLoadBalancing.gif)
-
-layer 4 internal load balancing
-
-![layer 4 internal load balancing](/content/cloudLoadBalancing_internalLayer4.gif)
-
-__data modeling__ 
-
-layer 7 external/global load balancing
-
-![data model layer 7](/content/cloudLoadBalancing_dataModelLayer7.gif)
-
-layer 4 internal load balancing
-
-![data model layer 4](/content/cloudLoadBalancing_dataModelLayer4.gif)
-
-__security__
-
-SSL Certificates
-
-![certs](/content/cloudLoadBalancing_certificatesSecurity.gif)
-
-prevent any layer attacks
-
-![attack prevention](/content/cloudLoadBalancing_attackSecurity.gif)
-
 ## COMPETENCY: memory management
 
 ![cpu memory](/content/cpu_memory.gif)
@@ -120,7 +70,7 @@ segmentation can lead to fragmentation of free space
 
 with segmented memory, large processes may not get access to the memory very often
 
-paged memroy can lead to fragmented processes which run more slowly
+paged memory can lead to fragmented processes which run more slowly
 
 paged memory makes better use of free space
 
