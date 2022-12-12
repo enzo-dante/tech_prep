@@ -56,6 +56,7 @@ __STATIC INITIALIZATION BLOCKS__
 one-time on-initialization execution of 'static {}' and their assigned STATIC FINAL variables
 
 ```
+
 private static final String OWNER;
 private static final String FIRST_STATIC_MSG;
 
@@ -79,6 +80,7 @@ __METHOD OVERLOADING__
 use same name, but with unique parameters, for related methods to reduce tech debt and optimize readability & scalability
 
 ```
+
 public int add() {
     return 1 + 1;
 }
@@ -96,6 +98,7 @@ public int add(int n, String msg) {
 __ACCESS-MODIFIERS__
 
 ```
+
 public class Person {
 
     // PRIVATE: access to the variable or method is limited to the scope of the defining class
@@ -118,6 +121,7 @@ __OOP ENCAPSULATION__
 use access modifiers to guard the class fields & methods methods from inappropriate external access
 
 ```
+
 public class Toy {
 
     private String name;
@@ -141,6 +145,7 @@ __OOP INHERITANCE__
 child subclass inherits public class fields + methods from extending parent super class
 
 ```
+
 public class Animal {
 
     private String name;
@@ -163,8 +168,12 @@ __OOP POLYMORPHISM + INTERFACES__
 must implement ALL publicly-shared method signatures via @Override
 
 ```
+
 interface ISports {
+
     void play();
+
+    final String PLAY_DECLARATION = "I play sports";
 }
 
 public class Player implements ISports {
@@ -177,9 +186,65 @@ public class Player implements ISports {
 
     @Override
     public void play() {
-        System.out.println("I play sports");
+        System.out.println(PLAY_DECLARATION);
     }
 }
+```
+
+__OOP CLASSES__
+
+In object-oriented programming, a class is a blueprint for creating objects (a particular data structure), providing initial values for state (member variables or attributes), and implementations of behavior (member functions or methods).
+
+```
+
+public class Animal {
+
+    private String name;
+    private int numLegs;
+
+    // OOP CONSTRUCTOR that initializes the class fields & INTRINSIC LOCK on class/object blueprint instantiation
+    public Animal(String name, int numLegs) {
+
+        this.numLegs = numLegs;
+        this.name = "unnamed".toUpperCase();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getNumLegs() {
+        return this.numLegs;
+    }
+}
+```
+
+An instance is a specific object created from a particular class. Classes are used to create and manage new objects and support inheritance (a key ingredient in object-oriented programming and a mechanism of reusing code).
+
+```
+// The user-defined objects are created using the class keyword. 
+public static void main(String[] args) {
+
+    Animal animal = new Animal(4);
+
+    animal.setName("Toby the Dog");
+    System.out.println(animal.getName());
+
+    Scanner scanner = new Scanner(System.in);
+    scanner.close();
+}
+```
+
+__WRAPPER CLASS__
+
+class variables with greater functionality for respective primitive dataType
+
+```
+int currentValue = Integer.parseInt(numberSubstring);
 ```
 
 __OOP COMPOSITION + INNER CLASS__
@@ -187,6 +252,7 @@ __OOP COMPOSITION + INNER CLASS__
 logically grouped class components within an extending parent super class
 
 ```
+
 public class PC {
 
     private Motherboard motherboard;
@@ -225,11 +291,17 @@ if(n == 0) return false;
 easier to ask for forgiveness than permission: use try-catch block to handle errors
 
 ```
+
 try {
+
     System.out.println(future.get());
+
 } catch(ExecutionException e1) {
+
     System.out.println(e1.getMessage());
+
 } catch(InterruptedException  e2) {
+
     System.out.println("Thread running the task was interrupted");
 }
 ```
@@ -240,38 +312,38 @@ the process of converting a data object—a combination of code and data represe
 
 <img src="/content/serialization.png">
 
-```json
+```
 
-    /**
-     * Call the ObjectOutputStream() which takes a serializable object and converts it into a sequence (stream) of bytes.
-     */
-    public static void serialize(Book book, String filename, ) throws Exception {
+/**
+ * Call the ObjectOutputStream() which takes a serializable object and converts it into a sequence (stream) of bytes.
+ */
+public static void serialize(Book book, String filename) throws Exception {
 
-        FileOutputStream file = new FileOutputStream(fileName);
-        ObjectOutputStream out = new ObjectOutputStream(file);
+    FileOutputStream file = new FileOutputStream(fileName);
+    ObjectOutputStream out = new ObjectOutputStream(file);
 
-        out.writeObject(book);
+    out.writeObject(book);
 
-        out.close();
-        file.close();
-    }
+    out.close();
+    file.close();
+}
 
-    /**
-     * Call the ObjectInputStream() reads a stream of bytes and converts it back into a Java object.
-     * It can then be cast back to the original object.
-     */
-    public static Book deserialize(String fileName) throws Exception {
+/**
+ * Call the ObjectInputStream() reads a stream of bytes and converts it back into a Java object.
+ * It can then be cast back to the original object.
+ */
+public static Book deserialize(String fileName) throws Exception {
 
-        FileInputStream file = new FileInputStream(fileName);
-        ObjectInputStream in = new ObjectInputStream(file);
+    FileInputStream file = new FileInputStream(fileName);
+    ObjectInputStream in = new ObjectInputStream(file);
 
-        Book book = (Book) in.readObject();
+    Book book = (Book) in.readObject();
 
-        in.close();
-        file.close();
+    in.close();
+    file.close();
 
-        return book;
-    }
+    return book;
+}
 ```
 
 The serialization process is dependent on implementing instances: classes that are eligible for serialization need to implement Serializable interface.
@@ -280,7 +352,7 @@ __TRANSIENT__
 
 use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
 
-```json
+```
 
 public class Book implements Serializable {
 
@@ -294,31 +366,31 @@ public class Book implements Serializable {
 }
 ```
 
-``` json
+``` 
 
-    @Test
-    void bookSerialization() {
+@Test
+void bookSerialization() {
 
-        Book book = new Book();
+    Book book = new Book();
 
-        book.setBookName("Java Reference");
-        book.setDescription("will not be saved");
-        book.setCopies(25);
+    book.setBookName("Java Reference");
+    book.setDescription("will not be saved");
+    book.setCopies(25);
 
-        // the bookName has been properly persisted.
-        assertEquals("Java Reference", book.getBookName());
+    // the bookName has been properly persisted.
+    assertEquals("Java Reference", book.getBookName());
 
-        // the copies field has value 0 and the description is null instead of the original values.
-        assertEquals(0, book.getCopies());
-        assertNull(book.getDescription());
-    }
+    // the copies field has value 0 and the description is null instead of the original values.
+    assertEquals(0, book.getCopies());
+    assertNull(book.getDescription());
+}
 ```
 
 # Recursive Functions
 
 a continuously self-calling algorithm & each call on the call-stack waits for the algorithm to reach a base case/breaking condition for a return value.
 
-```json
+```
 
 recursive factorial method
 
@@ -341,7 +413,7 @@ __RECURSIVE BASE CASE__
 
 the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
 
-```json
+```
 
 private static int recursiveFactorial(int number) {
 
@@ -363,7 +435,7 @@ recursively divide the original problem into 2 or more sub-problems & repeat unt
 
 divide & conquer algorithms are great for parallel processing because each sub-problem can be run on a different processor simultaneously (extremely performant on modern systems with large core counts)
 
-```json
+```
 
 public class MergeSort {
 
@@ -470,7 +542,7 @@ make sure to avoid redundant recursive calls (solved via MEMOIZATION)
 
 an abstract collection of publicly-shared method signatures & public CONSTANTS that MUST ALL be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
 
-```json
+```
 
 interface ITelephone {
 
@@ -524,7 +596,7 @@ __OOP INHERITANCE__
 
 child subclass inherits public class fields + methods from extending parent super class
 
-```json
+```
 
 // abstract keyword = no logic, only define the class or method signature shared across adhering classes
 abstract class AbstractAnimal {
@@ -575,7 +647,7 @@ class Dog extends AbstractAnimal {
 
 improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
 
-```json
+```
 
 ArrayList<Integer> onlyIntegers = new ArrayList<>();
 onlyIntegers.add(1);
@@ -689,7 +761,7 @@ an instance of a computer program with its own memory space that's sequentially 
 
 - every process has a memory HEAP
 
-```json
+```
 
 java virtual machine instance ->
         the JVM runs as a PROCESS ->
@@ -707,7 +779,7 @@ __THREADS .start()__
 
 only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
 
-```json
+```
 
 new Thread() {
     @Override
@@ -725,7 +797,7 @@ __THREAD JOIN__
 
 when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
 
-```json
+```
 
 public static void main(String[] args) {
 
@@ -753,6 +825,7 @@ public static void main(String[] args) {
             }
         }
     });
+
     anonymousRunnableThread.start();
     System.out.println("Again, hello from the main Thread");
 }
@@ -775,7 +848,7 @@ __THREAD SYNCHRONIZATION code blocks__
 
 use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
 
-```json
+```
 
 public synchronized void doCountdown() {
     String color = ThreadColor.ANSI_CYAN;
@@ -837,7 +910,7 @@ __ARRAY BLOCKING QUEUE__
 
 a queue is a (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
 
-```json
+```
 
 // ArrayBlockingQueue: we have to pass in the number of elements the array should be able to hold
 int numElements = 6;
@@ -854,7 +927,7 @@ __EXECUTOR SERVICE__
 
 optimize a managed set of threads, thus reducing the overhead of thread creation
 
-```json
+```
 
 int numThreads = 3;
 ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
@@ -868,7 +941,7 @@ __FUTURE__
 
 a return value from an executed thread in a thread pool
 
-```json
+```
 
 // THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
 Future<String> future = executorService.submit(new Callable<String>() {
@@ -889,7 +962,7 @@ once a thread starts these actions, they cannot be suspended during execution, a
 
 - reading and writing volatile variables
 
-```json
+```
 
 int atomicAction1 = 1;
 int atomicAction2 = atomicAction1;
@@ -899,7 +972,7 @@ __VOLATILE VARIABLES__
 
 the JVM writes the value back to main memory immediately after a thread updates the value in its CPU cache, and it also guarantees that every time a variable reads from a volatile variable, it will get the latest value.
 
-```json
+```
 
 public volatile int volatileVariable;
 ```
@@ -913,20 +986,22 @@ threads aren't given the opportunity to progress due to threat priority - assign
 
 # Arrays
 
+<img src="/content/ds_arrays.png">
+
 O(1) CONSTANT time complexity when getting an element in an array with an index because it always take 3 steps
 
 - step 1: multiply size of the element by its index
 - step 2: get the start address of the array
 - step 3: add the start address to the result of the multiplication
 
-```json
+```
 
 int result = intArray[index];
 ```
 
 O(n) LINEAR time complexity when getting an element in an array WITHOUT an index
 
-```json
+```
 
 for(int index = 0; index < intArray.length; index++) {
 
@@ -937,6 +1012,8 @@ for(int index = 0; index < intArray.length; index++) {
 ```
 
 # Vectors
+
+<img src="/content/ds_vectors.png">
 
 VECTORS are thread-safe ArrayList: if 1 or more threads are writing (CRUD) to an ArrayList there could be thread conflicts
 
@@ -957,7 +1034,7 @@ employeeList.add(new Employee("First 2", "Last 2", 22));
 
 sets are a computationally fast unordered collection WITHOUT DUPLICATES implemented via a HASHSET class
 
-```json
+```
 
 Set<Integer> numbers = new HashSet<>();
 numbers.add(1);
@@ -967,7 +1044,7 @@ __SET UNION__
 
 a set (WITHOUT DUPLICATES) that contains ALL elements of 2 or more hashsets via hashSet.addAll()
 
-```json
+```
 
 Set<Integer> set1 = new HashSet<>();
 Set<Integer> set2 = new HashSet<>();
@@ -983,7 +1060,7 @@ __VENN DIAGRAM ASYMMETRIC DIFF__
 
 remove all shared elements of 1 set found in another set via bulk operation hashSet.removeAll()
 
-```json
+```
 
 Set<Integer> set1 = new HashSet<>();
 Set<Integer> set2 = new HashSet<>();
@@ -1004,7 +1081,7 @@ HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodeP
 
 Singly LinkedLists w/ an array backing
 
-```json
+```
 
 public class EmployeeNode {
 
@@ -1069,7 +1146,7 @@ public class EmployeeLinkedList {
         newNode.setNext(this.head);
 
         // set new node as new head
-        this.head = node;
+        this.head = newNode;
 
         // increment length of linkedList
         this.size++;
@@ -1105,7 +1182,7 @@ null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {p
 
 Doubly LinkedLists w/ an array backing
 
-```json
+```
 
 public class EmployeeNode {
 
@@ -1128,7 +1205,7 @@ public class EmployeeNode {
 }
 ```
 
-```json
+```
 
 public class DoublyLinkedList {
 
@@ -1297,7 +1374,7 @@ LIFO STACKS: an abstract class that only accesses variables from the top/front o
 
 - ARRAY STACK O(n) linear TIME COMPLEXITY: due to LIFO (only accessed from the top/front), for push(), pop(), peek()
 
-```json
+```
 
 public class ArrayStack {
 
@@ -1377,7 +1454,7 @@ an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASH
 
 - O(1) CONSTANT time complexity: getting a map value with a key will always take the same number of steps (3)
 
-```json
+```
 
 // GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
 Map<String, String> languages = new HashMap<>();
@@ -1388,7 +1465,7 @@ String value = "Primary language in the United States";
 
 add unique_key-value generics class pair into map collection
 
-```json
+```
 
 // re-adding the map key will override the old value
 languages.put(key, value)
@@ -1422,7 +1499,7 @@ FIFO QUEUES: an abstract class that only accesses variables from the top/front o
 
 CIRCULAR QUEUE: wrap queue back-to-front, where back field is always pointing to next available queue position
 
-```json
+```
 
 public class CircularQueue {
 
@@ -1551,7 +1628,7 @@ BINARY TREE:
 
 a collection of 1 parent node to respective 2 children nodes with parent child connection edges and left-to-right node movement depends on child value comparisons
 
-```json
+```
 
 public static BinaryTree buildTree() {
 
@@ -1627,7 +1704,7 @@ visit the left-child, then root, then right-child, and repeat
 
                                    29 32
 
-```json
+```
 
 public class BinaryTree {
 
@@ -2027,7 +2104,7 @@ a MAX HEAP implementation w/ array backing always want the highest priority item
 
 - for MAX HEAPS, a comparator is required that will look at the two values and whenever you have one value greater than the other you in fact want to return that that value's less.
 
-```json
+```
 
 public class MaxHeap {
 
@@ -2401,7 +2478,7 @@ __breadth-first Search__
 
 traversal beginning to end by incrementing the index by 1 until in the array data structure with O(n) linear time complexity
 
-```json
+```
 
 public static int linearSearch(int[] nums, int value) {
 
@@ -2417,7 +2494,7 @@ public static int linearSearch(int[] nums, int value) {
 
 # Binary Search
 
-```json
+```
 
 searchValue = 55
 
@@ -2487,7 +2564,7 @@ private static int recursivePartition(int[] nums, int start, int end, int search
 
 # Algorithm Sort
 
-```json
+```
 
 public static void swapValues(int[] array, int i, int j) {
 
@@ -2524,7 +2601,7 @@ bubble the largest element to the top/unsorted partition that grows with each lo
 
 - right-to-left sorted partition growth
 
-```json
+```
 
 public static void bubbleSort(int[] array) {
 
@@ -2575,7 +2652,7 @@ selection sort looks for the largest element in the unsorted partition
 - swap the largest element found with last element in the unsorted partition via respective index
 - then decrement the lastUnsortedIndex var by 1 and repeat the process
 
-```json
+```
 
 public static void selectionSort(int[] array) {
 
@@ -2666,7 +2743,7 @@ STEP 3) after the comparison(s) & inserting of the unsorted inserting value
 
 STEP 4) repeat this process until the entire array is sorted
 
-```json
+```
 
 public static void insertionSort(int[] array) {
 
@@ -3195,7 +3272,7 @@ __STEP 3: assign a reduce task per map__
 
 all map same-key output values are assigned to a single reducer together
 
-```json
+```
 /*
     key = city name
     list = each element/record that has data & shared key
@@ -3348,7 +3425,7 @@ __INTERNET__
 
 an independent global system of computer networks connected by a collection of protocols implemented in software and hardware designed to interconnect all types of networks like cell phones, Ethernet, wifi, etc.
 
-<img src="/content/internet.png">
+<img src="/content/internet.jpeg">
 
 __PROTOCOLS__
 
@@ -3542,13 +3619,15 @@ Cloud load balancing takes a software-based approach to distributing network tra
 
 - software-based is not an instance-based or device-based solution, so you won't be locked into a physical load-balancing infrastructure or face the HA, scale, and management challenges inherent in instance-based load balancers.
 
-<img src="/content/cloud-load.png">
+<img src="/content/cloud-load-balancer-functions-2.png">
 
 A load balancer receives incoming traffic and routes those requests to active targets based on a configured policy.
 
 A load balancing service also monitors the health of the individual targets to ensure that those resources  are fully operational.
 
 __BENEFITS__
+
+<img src="/content/cloud-load-balancer-functions-1.jpeg">
 
 Prevents Network Server Overload
 
@@ -3603,6 +3682,158 @@ External and internal load balancing
 - Global and regional load balancing. Distribute your load-balanced resources in single or multiple regions, to terminate connections close to your users, and to meet your high availability requirements.
 
 # Page Memory & Paging
+
+# REGULAR EXPRESSIONS (REGEX)
+
+case-sensitive search Strings for a specific pattern or validate user input matches a specific pattern
+
+REGEX potential use cases
+
+  1. email validation
+
+  2. credit card number validation
+
+  3. phone number validation
+
+  4. advanced find/replace in text
+
+  5. formatting text/output
+
+  6. syntax highlighting
+
+__match quick check__
+
+selecting REGULAR EXPRESSION string literal will enable a "yellow bulb" pop-up that has a "check RegExp" option
+
+EXAMPLE: US phone number REGEX
+
+```json
+
+String usPhoneRegex = "^[\(]{1}[0-9]{3}[\)]{1}[ ]{1}[0-9]{3}[0-9][\-]{1}[0-9]{4})$";
+Pattern usPhonePattern = Pattern.compile(usPhoneRegex);
+
+String test = "(1) 123-123-1234";
+Matcher foundMatch = usPhonePattern.matcher(test);
+
+System.out.println("found match: " + foundMatch);
+```
+
+EXAMPLE: email regex
+
+- starts with 1 or more letter, number, plus sign, dash, underscore, or period
+
+- a single @ sign
+
+- 1 or more letter, number, or dash
+
+- a single dot
+
+- ends with 1 or more letter, number, dash or period
+
+```json
+
+String emailRegex = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
+
+/*
+    pattern explanation:
+
+        ^ = search string has to start with any of the defined characters in the bracket
+
+        [a-zA-Z0-9_.+-] = allow lower case a-z, upper case a-z, 0-9, underscore, period, plus sign, or dash
+
+        + = allow one or more of the specified characters in the defined bracket
+
+        @ = a single 'commercial at' sign
+
+        [a-zA-Z0-9-] = allow lower case a-z, upper case a-z, 0-9 or dash
+
+        + = allow one or more of the specified characters in the defined bracket
+
+        \. = a single dot that (must use escape backslash to specify)
+
+        [a-zA-Z0-9-.] = allow lower case a-z, upper case a-z, 0-9, underscore, dash or period
+
+        + = allow one or more of the specified characters in the defined bracket
+
+        $ = search string has to end with any of the defined characters in the bracket
+*/
+```
+
+__REGEX character class__
+
+- character classes allow us to specify characters to filter in a pattern
+
+```
+    \ = escape special meaning of a character
+
+    . = matches everything
+
+    \. = string value of a period
+
+    \d = digit 0-9
+
+    \w = letter, digit, or underscore
+
+    \s = whitespace character
+
+    \D = not a digit
+
+    \W = not a word character
+
+    \S = not a whitespace character
+```
+
+__REGEX boundary matcher__
+
+- character classes allow us to specify characters in a GROUP/RANGE to filter in a pattern
+
+```
+    [] = character classes allow us to specify groups/ranges of characters
+
+    [^] = anything that is NOT the specified characters in the brackets with the carrot symbol
+
+        [^k] = anything but the lowercase letter k
+
+    ^ = carrot anchor species the search string has to start with defined regular expression
+
+        ^\d{3}
+
+    '$' = dollar sign boundary denotes the end of string or line
+
+    \b = word boundary
+
+        ex: \b\w+\b = select only and every word
+
+            'hello world I am typing'
+
+    | = the pipe character in regex denotes logical or
+
+        "Mr|Mrs|Ms"
+
+    () = parenthesis represent whole group
+
+        (\(\d{3}\)|\d{3}) \d{3} \d{4}
+```
+
+__REGEX quantifiers__
+
+- specify how many times a specific character should occur in a pattern
+
+```
+    + = one or more
+
+    {x} = exactly x times.
+
+        {3} = 3 times
+
+    {3,5} = 3 to 5 times
+
+    {4,} = four or more times
+
+    * = zero or more times
+
+    ? = once or none (optional)
+```
 
 # Test Driven Development (TDD)
 
@@ -3688,7 +3919,7 @@ BEST PRACTICE:
 
 write easily understood test method names
 
-```json
+```
 
 getBalance_deposit()
 getBalance_withdraw()
@@ -3698,7 +3929,7 @@ write on 1 independent assertion for 1 independent test
 
 setup any independent class instances that can be reused (without cross-pollination) on each test method
 
-```json
+```
 
 assertEquals(expectedValue, actualTestValue);
 

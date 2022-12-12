@@ -454,3 +454,57 @@ private static void recursiveBacktracking(List<String> result, String currentPar
     }
 }
 ```
+
+__Q6__
+
+read 10 numbers from the console entered by the user and print the sum of those 10 numbers
+
+use input validation, if the input is not a number print the message 'Invalid Number'
+    continue reading until you have read 10 numbers
+
+```json
+
+public class Q6 {
+
+    public static final String INVALID_NUMBER = "Invalid Number";
+    public static final String FINAL_SUM = "\nfinal sum: ".toUpperCase();
+    public static final String ENTER_NUMBER = "\nEnter number: ";
+    public static final String COMPLETED_TASK = "Completed Task";
+    public static final String RUNNING_SUM = "running sum: ";
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(sumUserInput(scanner, 0, 0));
+    }
+
+    private static String sumUserInput(Scanner scanner, int count, int sum) {
+
+        // ! RECURSIVE BASE CASE: breaking condition that initiates an upward propagation of return values for waiting stack calls
+        boolean isBaseCase = (count == 3);
+
+        if(isBaseCase) {
+
+            scanner.close();
+            System.out.println(FINAL_SUM + sum);
+            return COMPLETED_TASK;
+        }
+
+        System.out.println(ENTER_NUMBER);
+
+        if(scanner.hasNextInt()) {
+
+            sum += scanner.nextInt();
+
+            System.out.println(RUNNING_SUM + sum);
+            count++;
+
+        } else {
+            System.out.println(INVALID_NUMBER);
+        }
+
+        return sumUserInput(new Scanner(System.in), count, sum);
+    }
+}
+```
+
