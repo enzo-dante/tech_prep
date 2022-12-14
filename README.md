@@ -1,6 +1,6 @@
 # Econometrics
 
-the application of statistical methods to economic data in order to give empirical content to economic relationships.
+The application of statistical methods to economic data in order to give empirical content to economic relationships.
 
 # Big O Notation
 
@@ -33,6 +33,131 @@ O(nlogn) LOGLINEAR time complexity
 O(n-squared) QUADRATIC time complexity: the absolute worst-case, the number of steps exponentially increases due to nested loops.
 
 - pronounced: O of n-squared
+
+# Test Driven Development (TDD)
+
+writing code that tests your other code to ensure a level of performance quality when your app is in production; making refactoring and collaboration safer and bug-free
+
+1. development BEGINS by writing RED failing tests
+
+2. once tests are written, write the MINIMUM amount of GREEN code necessary to make tests pass
+
+3. refactor = clean up the code, while ensuring that tests still pass
+
+4. once tests pass, a feature is considered complete
+
+__TDD JUNIT__
+
+1. update project structure JUnit library dependency to compile
+
+```
+   File -> project structure -> Modules -> Dependencies Tab ->
+       Export window -> Junit ->
+           open dropdown -> change "Test" to "Compile" -> Ok
+```
+
+2. add JUnit Library
+
+- right-click add "JUnit" to class path
+
+- select "Use JUnit from IntelliJ IDEA distribution"
+
+- click Ok
+
+3. define class, method signatures, & test suite
+
+4. create JUnit Test class & generate methods to test in root
+
+- click yellow light bulb onHover over independent class name
+
+- FIX if IDE is unable to identify built-in JUnit Test class
+
+- select specific methods to test
+
+5. BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
+
+6. run expected failing tests suite
+
+7. review run configuration for all tests
+  want to test class in application, NOT the application itself
+
+- right-click outside created Test class & select run Test class
+- right-click outside created Test class & select modify run configuration
+- review configurations & click Ok
+- review right-corner dropdown is respective Test suite
+
+8. setup tests objects run before & after teardown every test run
+
+- @BeforeAll: STATIC execute only once before all test suit is run
+      example: read data from db for tests
+
+- @AfterAll: STATIC execute only once after all test suit is run
+
+- @BeforeEach: execute code in setup() before each test is run
+
+- @AfterEach: execute code in setup() after each test is run
+
+9. write test method assertions that test against class functionality
+
+- in testSuite, click on green arrow/red x in gutter next to specific method to test
+
+- review only passing or only failing tests with toggle in top-left of Test window
+
+```
+// JUnit TRY-CATCH: handle expected exceptions handing modify @Test annotation
+
+try {
+    double balance = checkingsAccount.withdraw(600.00, false);
+    assertEquals(400.00, balance, 0);
+} catch(IllegalArgumentException e) {
+    System.out.println(e.getMessage());
+}
+```
+
+BEST PRACTICE:
+
+write easily understood test method names
+
+```
+
+getBalance_deposit()
+getBalance_withdraw()
+```
+
+write on 1 independent assertion for 1 independent test
+
+setup any independent class instances that can be reused (without cross-pollination) on each test method
+
+```
+
+assertEquals(expectedValue, actualTestValue);
+
+assertNotEquals(expectedValue, actualTestValue);
+
+assertTrue(actualTestValue, failMsg);
+
+assertFalse(actualTestValue, failMsg);
+
+// consider two arrays equal if length & every element in order identical
+assertArrayEquals(expectedArray, actualTestArray);
+
+assertNull(actualTestValue);
+
+// easy-to-read check for null values
+assertNotNull(actualTestValue);
+
+assertSame(expectedValue, actualTestValue);
+
+// compares object references, unlike assertEquals that checks if instances are the same
+assertNotSame(expectedValue, actualTestValue);
+
+// compare the actual value against a matcher range of values
+assertThat(expectedValue, actualTestValue);
+```
+
+10. write method implementation in file
+
+11. individually run implemented functions until all failing tests resolved in test suite
 
 # Keywords
 
@@ -1500,7 +1625,6 @@ FIFO QUEUES: an abstract class that only accesses variables from the top/front o
 CIRCULAR QUEUE: wrap queue back-to-front, where back field is always pointing to next available queue position
 
 ```
-
 public class CircularQueue {
 
     private Employee[] queue;
@@ -1629,7 +1753,6 @@ BINARY TREE:
 a collection of 1 parent node to respective 2 children nodes with parent child connection edges and left-to-right node movement depends on child value comparisons
 
 ```
-
 public static BinaryTree buildTree() {
 
     BinaryTree binaryTree = new BinaryTree();
@@ -1705,7 +1828,6 @@ visit the left-child, then root, then right-child, and repeat
                                    29 32
 
 ```
-
 public class BinaryTree {
 
     private static final String EMPTY_TREE = "This binary tree is empty";
@@ -2105,7 +2227,6 @@ a MAX HEAP implementation w/ array backing always want the highest priority item
 - for MAX HEAPS, a comparator is required that will look at the two values and whenever you have one value greater than the other you in fact want to return that that value's less.
 
 ```
-
 public class MaxHeap {
 
     private static final String HEAP_FULL = "Heap is full";
@@ -2459,20 +2580,233 @@ public class MaxHeap {
 
 # Graphs
 
-# Breadth-first search vs. Depth-first search
+```
+//class to store edges of the weighted graph
+class Edge {
+    int src, dest, weight;
+    Edge(int src, int dest, int weight) {
+            this.src = src;
+            this.dest = dest;
+            this.weight = weight;
+        }
+}
+// Graph class
+class Graph {
+    // node of adjacency list 
+    static class Node {
+        int value, weight;
+        Node(int value, int weight)  {
+            this.value = value;
+            this.weight = weight;
+        }
+    };
+ 
+// define adjacency list
+ 
+List<List<Node>> adj_list = new ArrayList<>();
+ 
+    //Graph Constructor
+    public Graph(List<Edge> edges)
+    {
+        // adjacency list memory allocation
+        for (int i = 0; i < edges.size(); i++)
+            adj_list.add(i, new ArrayList<>());
+ 
+        // add edges to the graph
+        for (Edge e : edges)
+        {
+            // allocate new node in adjacency List from src to dest
+            adj_list.get(e.src).add(new Node(e.dest, e.weight));
+        }
+    }
+// print adjacency list for the graph
+    public static void printGraph(Graph graph)  {
+        int src_vertex = 0;
+        int list_size = graph.adj_list.size();
+ 
+        System.out.println("The contents of the graph:");
+        while (src_vertex < list_size) {
+            //traverse through the adjacency list and print the edges
+            for (Node edge : graph.adj_list.get(src_vertex)) {
+                System.out.print("Vertex:" + src_vertex + " ==> " + edge.value + 
+                                " (" + edge.weight + ")\t");
+            }
+ 
+            System.out.println();
+            src_vertex++;
+        }
+    }
+}
+```
+
+__Graph Traversal: Breadth-first search vs. Depth-first search__
 
 Use either search algorithm to recursively traverse a graph which is a collection of nodes where each node might point to other nodes that are connected via edges (one-way or two-way)
 
 __depth-first search__
 
+DFS technique starts with a root node and then traverses the adjacent nodes of the root node by going deeper into the graph. In the DFS technique, the nodes are traversed depth-wise until there are no more children to explore.
+
+Once we reach the leaf node (no more child nodes), the DFS backtracks and starts with other nodes and carries out traversal in a similar manner. DFS technique uses a stack data structure to store the nodes that are being traversed.
+
 - hasPath(s, t): recursively, nodeS do you have a path to nodeT?
 - nodes asks (left-to-right) it's child if it has a path to nodeT, repeat until reached nodeT or null
 
+Detect a cycle in a graph: DFS facilitates to detect a cycle in a graph when we can backtrack to an edge.
+
+Pathfinding: As we have already seen in the DFS illustration, given any two vertices we can find the path between these two vertices.
+
+Minimum spanning tree and shortest path: If we run the DFS technique on the non-weighted graph, it gives us the minimum spanning tree and the shorted path.
+
+Topological sorting: Topological sorting is used when we have to schedule the jobs. We have dependencies among various jobs. We can also use topological sorting for resolving dependencies among linkers, instruction schedulers, data serialization, etc.
+
+```
+//DFS Technique for undirected graph
+class Graph { 
+    private int Vertices;   // No. of vertices 
+   
+    // adjacency list declaration
+    private LinkedList<Integer> adj_list[]; 
+   
+    // graph Constructor: to initialize adjacency lists as per no of vertices 
+    Graph(int v) { 
+        Vertices = v; 
+        adj_list = new LinkedList[v]; 
+        for (int i=0; i<v; ++i) 
+            adj_list[i] = new LinkedList(); 
+    } 
+   
+    //add an edge to the graph 
+    void addEdge(int v, int w) { 
+        adj_list[v].add(w);  // Add w to v's list. 
+    } 
+   
+    // helper function for DFS technique
+    void DFS_helper(int v,boolean visited[]) { 
+        // current node is visited 
+        visited[v] = true; 
+        System.out.print(v+" "); 
+   
+        // process all adjacent vertices 
+        Iterator<Integer> i = adj_list[v].listIterator(); 
+        while (i.hasNext()) 
+        { 
+            int n = i.next(); 
+            if (!visited[n]) 
+                DFS_helper(n, visited); 
+        } 
+    } 
+   
+    
+void DFS(int v) { 
+        //initially none of the vertices are visited 
+        boolean visited[] = new boolean[Vertices]; 
+   
+        // call recursive DFS_helper function for DFS technique 
+        DFS_helper(v, visited); 
+    } 
+}
+  class Main{
+    public static void main(String args[]) 
+    { 
+        //create a graph object and add edges to it
+        Graph g = new Graph(5); 
+        g.addEdge(0, 1); 
+        g.addEdge(0, 2); 
+        g.addEdge(0, 3); 
+        g.addEdge(1, 2); 
+        g.addEdge(2, 4); 
+        //print the DFS Traversal sequence
+        System.out.println("Depth First Traversal for given graph"+ 
+                           "(with 0 as starting vertex)"); 
+        g.DFS(0); 
+    } 
+}
+```
+
 __breadth-first Search__
+
+This means we traverse the graph level wise. When we explore all the vertices or nodes at one level we proceed to the next level.
 
 - hasPath(s, t): recursively, does nodeS do you have a path to nodeT?
 
 - nodes checks if any of its children are nodeT, if no edges to first level children, then check next level and repeat
+
+Garbage collection: One of the algorithms used by the garbage collection technique to copy Garbage collection is “Cheney’s algorithm”. This algorithm uses a breadth-first traversal technique.
+
+Broadcasting in networks: Broadcasting of packets from one point to another in a network is done using the BFS technique.
+
+GPS navigation: We can use the BFS technique to find adjacent nodes while navigating using GPS.
+
+Social networking websites: BFS technique is also used in social networking websites to find the network of people surrounding a particular person.
+
+Shortest path and minimum spanning tree in un-weighted graph: In the unweighted graph, the BFS technique can be used to find a minimum spanning tree and the shortest
+
+```
+//undirected graph represented using adjacency list.  
+class Graph { 
+    private int Vertices;   // No. of vertices 
+    private LinkedList<Integer> adj_list[]; //Adjacency Lists 
+   
+    // graph Constructor:number of vertices in graph are passed 
+    Graph(int v) { 
+        Vertices = v; 
+        adj_list = new LinkedList[v]; 
+        for (int i=0; i<v; ++i)         //create adjacency lists
+            adj_list[i] = new LinkedList(); 
+    } 
+   
+    // add an edge to the graph 
+    void addEdge(int v,int w) { 
+        adj_list[v].add(w); 
+    } 
+   
+    // BFS traversal from the root_node 
+    void BFS(int root_node)   { 
+        // initially all vertices are not visited 
+        boolean visited[] = new boolean[Vertices]; 
+   
+        // BFS queue 
+        LinkedList<Integer> queue = new LinkedList<Integer>(); 
+   
+        // current node = visited, insert into queue 
+        visited[root_node]=true; 
+        queue.add(root_node); 
+   
+        while (queue.size() != 0)  { 
+            // deque an entry from queue and process it  
+            root_node = queue.poll(); 
+            System.out.print(root_node+" "); 
+   
+            // get all adjacent nodes of current node and process
+            Iterator<Integer> i = adj_list[root_node].listIterator(); 
+            while (i.hasNext()){ 
+                int n = i.next(); 
+                if (!visited[n]) { 
+                    visited[n] = true; 
+                    queue.add(n); 
+                } 
+            } 
+        } 
+    } 
+  }
+  class Main{ 
+    public static void main(String args[]) 
+    { 
+        //create a graph with 5 vertices
+        Graph g = new Graph(5); 
+        //add edges to the graph  
+        g.addEdge(0, 1); 
+        g.addEdge(0, 2); 
+        g.addEdge(0, 3); 
+        g.addEdge(1, 2); 
+        g.addEdge(2, 4); 
+        //print BFS sequence
+        System.out.println("Breadth-first traversal of graph with 0 as starting vertex:"); 
+        g.BFS(0); 
+    } 
+}
+```
 
 # Linear Search
 
@@ -2495,7 +2829,6 @@ public static int linearSearch(int[] nums, int value) {
 # Binary Search
 
 ```
-
 searchValue = 55
 
     [-22, -15, 1, 7, 20, 35, 55] where midpoint: 7
@@ -3683,6 +4016,38 @@ External and internal load balancing
 
 # Page Memory & Paging
 
+Paging is a method of writing and reading data from a secondary storage(Drive) for use in primary storage(RAM).
+
+When a computer runs out of RAM, the operating system (OS) will move pages of memory over to the computer’s hard disk to free up RAM for other processes. This ensures that the operating system will never run out of memory and crash.
+
+<img src="/content/paging.png">
+
+When a program tries to access a page that is not stored in RAM, the processor treats this action as a page fault. When this occurs the operating system must:
+
+- Determine the location of the data on disk.
+
+- Obtain an empty page frame in RAM to use as a container for the data.
+
+- Load the requested data into the available page frame.
+
+- Update the page table to refer to the new page frame.
+
+- Return control to the program, transparently retrying the instruction that caused the page fault.
+
+__Translation Lookaside Buffer(TLB)__
+
+The TLB is a memory cache that stores recent translations of virtual memory to physical addresses for faster retrieval.
+
+Every time the OS is translating from logical to physical, it requires a look up in the page table, which is stored in RAM. Meaning every process request would require two physical memory accesses. This issue greatly reduces the overall performance of our equipment.
+
+__Pros:__
+
+By diving the memory into fix blocks, it eliminates the issue of External Fragmentation. It also supports Multiprogramming. Overheads that come with compaction during relocation are eliminated. Easy to swap since everything is the same size, which is usually the same size as disk blocks to and from which pages are swapped.
+
+__Cons:__
+
+Paging increases the price of computer hardware, as page addresses are mapped to hardware. Memory is forced to store variables like page tables. Some memory space stays unused when available blocks are not sufficient for address space for jobs to run. Since the physical memory is split into equal sizes, it allows for internal fragmentation.
+
 # REGULAR EXPRESSIONS (REGEX)
 
 case-sensitive search Strings for a specific pattern or validate user input matches a specific pattern
@@ -3834,128 +4199,3 @@ __REGEX quantifiers__
 
     ? = once or none (optional)
 ```
-
-# Test Driven Development (TDD)
-
-writing code that tests your other code to ensure a level of performance quality when your app is in production; making refactoring and collaboration safer and bug-free
-
-1. development BEGINS by writing RED failing tests
-
-2. once tests are written, write the MINIMUM amount of GREEN code necessary to make tests pass
-
-3. refactor = clean up the code, while ensuring that tests still pass
-
-4. once tests pass, a feature is considered complete
-
-__TDD JUNIT__
-
-1. update project structure JUnit library dependency to compile
-
-```
-   File -> project structure -> Modules -> Dependencies Tab ->
-       Export window -> Junit ->
-           open dropdown -> change "Test" to "Compile" -> Ok
-```
-
-2. add JUnit Library
-
-- right-click add "JUnit" to class path
-
-- select "Use JUnit from IntelliJ IDEA distribution"
-
-- click Ok
-
-3. define class, method signatures, & test suite
-
-4. create JUnit Test class & generate methods to test in root
-
-- click yellow light bulb onHover over independent class name
-
-- FIX if IDE is unable to identify built-in JUnit Test class
-
-- select specific methods to test
-
-5. BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
-
-6. run expected failing tests suite
-
-7. review run configuration for all tests
-  want to test class in application, NOT the application itself
-
-- right-click outside created Test class & select run Test class
-- right-click outside created Test class & select modify run configuration
-- review configurations & click Ok
-- review right-corner dropdown is respective Test suite
-
-8. setup tests objects run before & after teardown every test run
-
-- @BeforeAll: STATIC execute only once before all test suit is run
-      example: read data from db for tests
-
-- @AfterAll: STATIC execute only once after all test suit is run
-
-- @BeforeEach: execute code in setup() before each test is run
-
-- @AfterEach: execute code in setup() after each test is run
-
-9. write test method assertions that test against class functionality
-
-- in testSuite, click on green arrow/red x in gutter next to specific method to test
-
-- review only passing or only failing tests with toggle in top-left of Test window
-
-```
-// JUnit TRY-CATCH: handle expected exceptions handing modify @Test annotation
-
-try {
-    double balance = checkingsAccount.withdraw(600.00, false);
-    assertEquals(400.00, balance, 0);
-} catch(IllegalArgumentException e) {
-    System.out.println(e.getMessage());
-}
-```
-
-BEST PRACTICE:
-
-write easily understood test method names
-
-```
-
-getBalance_deposit()
-getBalance_withdraw()
-```
-
-write on 1 independent assertion for 1 independent test
-
-setup any independent class instances that can be reused (without cross-pollination) on each test method
-
-```
-
-assertEquals(expectedValue, actualTestValue);
-
-assertNotEquals(expectedValue, actualTestValue);
-
-assertTrue(actualTestValue, failMsg);
-
-assertFalse(actualTestValue, failMsg);
-
-// consider two arrays equal if length & every element in order identical
-assertArrayEquals(expectedArray, actualTestArray);
-
-assertNull(actualTestValue);
-
-// easy-to-read check for null values
-assertNotNull(actualTestValue);
-
-assertSame(expectedValue, actualTestValue);
-
-// compares object references, unlike assertEquals that checks if instances are the same
-assertNotSame(expectedValue, actualTestValue);
-
-// compare the actual value against a matcher range of values
-assertThat(expectedValue, actualTestValue);
-```
-
-10. write method implementation in file
-
-11. individually run implemented functions until all failing tests resolved in test suite
