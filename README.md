@@ -372,6 +372,41 @@ class variables with greater functionality for respective primitive dataType
 int currentValue = Integer.parseInt(numberSubstring);
 ```
 
+__AUTOBOXING/UNBOXING__
+
+AUTOBOXING: converting primitive dataType -> Wrapper class dataType w/ greater functionality
+
+```json
+
+// given an integer n, return the number of trailing zeroes in n!
+
+public static Integer trailingZeroFactorial(int n) {
+
+    if(n < 0) return -1;
+
+    Integer nFactorial = n; // AUTOBOXING
+    int everyFiveCount = 0
+
+    while(nFactorial % 5 == 0) {
+
+        nFactorial /= 5;
+
+        // ex) 15 / 5 = there are 3 fives in 15
+        everyFiveCount += nFactorial;
+    }
+
+    return everyFiveCount; // AUTOBOXING
+}
+```
+
+UNBOXING: casting greater functionality Wrapper class dataType -> primitive dataType
+
+```
+private static double calculateInterest(Double amount, Double interestRate) {
+    return amount * (interestRate/100);
+}
+```
+
 __OOP COMPOSITION + INNER CLASS__
 
 logically grouped class components within an extending parent super class
@@ -874,6 +909,8 @@ class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
 
 software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
 
+<img src="/content/concurrency.jpeg">
+
 __CONCURRENCY BENEFITS__
 
 - free up the main thread so that it can continue working and executing, you can report progress or accept user input and perform those other tasks on the screen or in other parts of the program, while another long-running task that we kicked off in another thread continues to execute in the background.
@@ -971,6 +1008,8 @@ the process of semi-controlling/influencing when threads execute code and theref
 
 __THREAD SYNCHRONIZATION code blocks__
 
+<img src="/content/thread_synchronization.png">
+
 use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
 
 ```
@@ -1006,6 +1045,8 @@ private void synchronizedLoop(String color, String threadName) {
 __DEAD LOCKS__
 
 application freezes during execution due to unreleased INTRINSIC LOCKS - the synchronized shared-resource code executes one at a time and the single running thread is holding the objects INTRINSIC LOCK blocking other threads that WAIT for the lock release via NOTIFY
+
+<img src="/content/thread_synchronization_locks.png">
 
 __THREAD SYNCHRONIZATION + DEADLOCKS__
 
@@ -3902,6 +3943,8 @@ SOA is more adaptable to advances in technology. You can modernize your applicat
 
 __ESB__
 
+<img src="/content/esb.png">
+
 An enterprise service bus (ESB) is software that you can use when communicating with a system that has multiple services. It establishes communication between services and service consumers no matter what the technology.
 
 __SOA DRAWBACKS__
@@ -3919,6 +3962,8 @@ Service-oriented architecture (SOA) systems can become more complex over time an
 For SOA implementations with an ESB, the ESB creates a single point of failure. It is a centralized service, which goes against the idea of decentralization that SOA advocates. Clients and services cannot communicate with each other at all if the ESB goes down.
 
 __MICROSERVICES vs SOA__
+
+<img src="/content/microservices.png">
 
 Microservices architecture is made up of very small and completely independent software components, called microservices, that specialize and focus on one task only.
 
@@ -4020,6 +4065,8 @@ Memory management is all about making sure there is as much available memory spa
 
 __The Memory Management Unit (MMU)__
 
+<img src="/content/computer_system.png">
+
 Within a computing system is the core hardware component that translates virtual logical address space to physical addresses. The MMU is typically a physical piece of hardware and is sometimes referred to as a Paged Memory Management Unit (PMMU).
 
 - Physical addresses: The physical address is the memory location within system RAM and is identified as a set of digits.
@@ -4040,7 +4087,6 @@ When memory is allocated in a system, not all of the available is always consume
 
 - External Fragmentation – As memory is allocated and then deallocated, there can be small spaces of memory leftover, leaving memory holes or “fragments” that aren’t suitable for other processes.
 
-
 __Programming Languages__
 
 The C programming language requires developers to directly manage memory utilization, while other languages like Java and C#, for example, provide automatic memory management.
@@ -4057,9 +4103,13 @@ __Storage Memory Management__
 
 With new NVME storage drives, operating systems can benefit from faster storage drives to help expand and enable more persistent forms of memory management.
 
+<img src="/content/cpu.jpeg">
+
 __cpu (central processing unit)__
 
 circuitry in a computer that controls the manipulation of data that powers a computer via a small flat square called the motherboard
+
+<img src="/content/cpu_components.png">
 
 __cpu component: ALU (arithmetic logic unit)__
 

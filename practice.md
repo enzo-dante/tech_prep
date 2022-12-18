@@ -508,3 +508,296 @@ public class Q6 {
 }
 ```
 
+__Q7__
+
+Demonstrate OOP by defining a Song, Album, and Playlist class that work in concert with each other.
+
+Song(String title, Double duration)
+
+Album(String name, String artist, ArrayList<Song> songs)
+
+- addSong(String title, double duration)
+- addToPlaylist(int trackNumber, LinkedList<Song> playlist)
+- addToPlaylist(String title, LinkedList<Song> playlist)
+- findSong(String title)
+
+Playlist = Doubly LinkedList class
+
+```json
+
+public static void main(String[] args) {
+
+}
+
+public class Playlist {
+
+}
+
+public class Song {
+
+    // OOP ENCAPSULATION private class fields/object instance members
+    private String title;  
+    private Double duration;
+
+    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
+    public Song(String title, Double duration) {
+        this.title = title;
+        this.duration = duration;
+    }
+
+    // OOP POLYMORPHISM: unique implementation of method for this object despite same signature shared by multiple objects via @Override
+    @Override
+    public String toString() {
+        return this.title + ":" + this.duration;
+    }
+
+    // OOP GETTERS & SETTERS
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Double getDuration() {
+        return this.duration;
+    }
+
+    public void setDuration(double duration) {
+
+        // AUTOBOXING: cast primitive dataType to greater functional wrapper class dataType
+        this.duration = duration;
+    }
+}
+
+public class AlbumTest {
+
+    private static final String BEFORE_EACH = "before each".toUpperCase();
+    private static final String OUI = "Oui";
+
+    private Album album;
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println("before all".toUpperCase());
+    }
+
+    @BeforeEach
+    void setup() {
+        album = new Album("Live at Yankee Stadium", "Fania All-Stars");
+        System.out.println(BEFORE_EACH);
+    }
+
+    @AfterEach
+    void teardown() {
+        System.out.println("after each".toUpperCase());
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println("after all".toUpperCase());
+    }
+
+    @Test
+    void album_findSong_success() {
+
+        String testTitle = OUI; 
+
+        Song expected = new Song(testTitle, 239);
+        Song actual = Album.findSong(testTitle);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void album_findSong_null() {
+
+        String testTitle = "Non-existent song";
+
+        Song actual = Album.findSong(testTitle);
+
+        assertNull(actual);
+    }
+
+    @Test
+    void album_findSong_badInput() {
+
+        String testTitle = "";
+
+        Song actual = Album.findSong(testTitle);
+
+        assertNull(actual);
+    }
+
+    @Test
+    void album_addSong_true() {
+
+        String testTitle = OUI;
+        double testDuration = 239;
+
+        boolean actual = Album.addSong(testTitle, testDuration);
+
+        assertTrue(actual);
+    }
+
+    @Test
+    void album_addSong_false() {
+
+        String testTitle = "";
+        double testDuration = 239;
+        boolean actual = Album.addSong(testTitle, testDuration);
+
+        assertFalse(actual);
+
+        testTitle = OUI;
+        testDuration = 0;
+        actual = Album.addSong(testTitle, testDuration);
+
+        assertFalse(actual);
+    }
+
+    @Test
+    void album_addToPlayList1_true() {
+
+        String testTitle = OUI; 
+        LinkedList<Song> testPlaylist = new LinkedList<>();
+
+        boolean actual = Album.addToPlaylist(testTitle, testPlaylist);
+        assertTrue(actual);
+    }
+
+    @Test
+    void album_addToPlayList1_false() {
+
+        String testTitle = "";
+        LinkedList<Song> testPlaylist = new LinkedList<>();
+
+        boolean actual = Album.addToPlaylist(testTitle, testPlaylist);
+        assertFalse(actual);
+    }
+
+    @Test
+    void album_addToPlayList2_true() {
+
+        int testTrack = 0; 
+        LinkedList<Song> testPlaylist = new LinkedList<>();
+
+        boolean actual = Album.addToPlaylist(testTrack, testPlaylist);
+        assertTrue(actual);
+    }
+
+    @Test
+    void album_addToPlayList2_false() {
+
+        int testTrack = -1;
+        LinkedList<Song> testPlaylist = new LinkedList<>();
+
+        boolean actual = Album.addToPlaylist(testTrack, testPlaylist);
+        assertFalse(actual);
+    }
+}
+
+
+public class Album {
+
+    // CONSTANTS static class variables assigned FINAL value before compilation/instantiation
+    private static final String NO_ALBUM_TITLE = " album does not have the title ";
+    private static final String NO_ALBUM_TRACK = " album does not have track ";
+
+    // OOP ENCAPSULATION private class fields/object instance members
+    private String name;
+    private String artist;
+
+    // GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
+    private ArrayList<Song> songs;
+
+    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
+    public Album(String name, String artist) {
+        this.name = name;
+        this.artist = artist;
+
+        this.songs = new ArrayList<>();
+    }
+
+    // CLASS METHODS
+    private Song findSong(String title) {
+
+        if(title.length() == 0) return null;
+
+        // for each song in Songs
+        for(Song song: this.songs) {
+            boolean hasSong = song.getTitle().equals(title);
+            if(hasSong) return song;
+        }
+        return null;
+    }
+
+    public boolean addSong(String title, double duration) {
+
+        if((title.length() == 0) || (duration <= 0) || (this.songs == null)) return false;
+
+        if(findSong(title) == null) {
+
+            Song newSong = new Song(title, duration);
+
+            this.songs.add(newSong);
+            return true;
+        }
+        return false;
+    }
+
+    // METHOD OVERLOADING: write multiple methods with the same name, but each have different parameters to optimize readability & scalability of the codebase
+    public boolean addToPlaylist(String title, LinkedList<Song> playlist) {
+
+        if(title.length() == 0 || playlist == null) return false;
+
+        Song song = findSong(title);
+
+        if(song != null) {
+            playlist.add(song);
+            return true;
+        }
+
+        System.out.println(this.getName() + NO_ALBUM_TITLE + track);
+        return false;
+    }
+
+    public boolean addToPlaylist(int track, LinkedList<Song> playlist) {
+
+        if(track < 0 || playlist == null) return false;
+
+        int index = track - 1;
+
+        boolean inAlbum = (index >= 0) && (index <= this.songs.size());
+
+        if(inAlbum) {
+            Song song = this.songs.get(index);
+            playlist.add(song);
+            return true;
+        }
+
+        System.out.println(this.getName() + NO_ALBUM_TRACK + track);
+        return false;
+    }
+
+    // OOP GETTERS & SETTERS
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getArtist() {
+        return this.artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public ArrayList<Song> getSongs() {
+        return this.songs;
+    }
+}
+```
+
+
