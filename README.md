@@ -4014,6 +4014,75 @@ External and internal load balancing
 
 - Global and regional load balancing. Distribute your load-balanced resources in single or multiple regions, to terminate connections close to your users, and to meet your high availability requirements.
 
+# Memory Management
+
+Memory management is all about making sure there is as much available memory space as possible for new programs, data and processes to execute.
+
+__The Memory Management Unit (MMU)__
+
+Within a computing system is the core hardware component that translates virtual logical address space to physical addresses. The MMU is typically a physical piece of hardware and is sometimes referred to as a Paged Memory Management Unit (PMMU).
+
+- Physical addresses: The physical address is the memory location within system RAM and is identified as a set of digits.
+
+- Logical addresses: Also sometimes referred to as virtual memory, a logical address is what operating systems and applications access to execute code, as an abstraction of physical address space.
+
+As memory is used by multiple parts of a modern system, memory allocation and memory management can take on different forms.
+
+<img src="/content/memory_management.png">
+
+__Operating System__
+
+Operating systems like Microsoft Windows and Linux, can make use of physical RAM as well as hard drive swap space to manage a total pool of available memory.
+
+When memory is allocated in a system, not all of the available is always consumed in a linear manner, which can lead to fragmentation. 
+
+- Internal Fragmentation – Memory is allocated to a process or application and isn’t used, leaving un-allocated or fragmented memory.
+
+- External Fragmentation – As memory is allocated and then deallocated, there can be small spaces of memory leftover, leaving memory holes or “fragments” that aren’t suitable for other processes.
+
+
+__Programming Languages__
+
+The C programming language requires developers to directly manage memory utilization, while other languages like Java and C#, for example, provide automatic memory management.
+
+- Static Loading – Code is loaded into memory, before it is executed. Used in structured programming languages including C.
+
+- Dynamic Loading – Code is loaded into memory as needed. Used in object oriented programming languages, such as Java.
+
+__Applications__
+
+Applications consume and manage memory, but are often limited in memory management capabilities as defined by the underlying language and operating system.
+
+__Storage Memory Management__
+
+With new NVME storage drives, operating systems can benefit from faster storage drives to help expand and enable more persistent forms of memory management.
+
+__cpu (central processing unit)__
+
+circuitry in a computer that controls the manipulation of data that powers a computer via a small flat square called the motherboard
+
+__cpu component: ALU (arithmetic logic unit)__
+
+circuitry that performs operations like addition & subtraction on data
+
+__cpu component: control unit__
+
+controls the ciruitry for coordinating all of the computer's activities
+
+__cpu component: register unit__
+
+which contains temporary memory for data
+
+__volatile main memory/RAM (random access memory)__
+
+temporary holding of software programs and apps and their associated data until the power is turned off
+
+__non-volatile storage memory__
+
+long-term holding of software programs and apps and their associated data even if the power is turned off
+
+ex) memory sticks, hard disk drive, solid state drives(SSD)
+
 # Page Memory & Paging
 
 Paging is a method of writing and reading data from a secondary storage(Drive) for use in primary storage(RAM).
@@ -4048,11 +4117,11 @@ __Cons:__
 
 Paging increases the price of computer hardware, as page addresses are mapped to hardware. Memory is forced to store variables like page tables. Some memory space stays unused when available blocks are not sufficient for address space for jobs to run. Since the physical memory is split into equal sizes, it allows for internal fragmentation.
 
-# REGULAR EXPRESSIONS (REGEX)
+# Regular Expressions (REGEX)
 
-case-sensitive search Strings for a specific pattern or validate user input matches a specific pattern
+a case-sensitive search Strings for a specific pattern or validate user input matches a specific pattern
 
-REGEX potential use cases
+__REGEX potential use cases__
 
   1. email validation
 
