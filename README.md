@@ -88,14 +88,56 @@ __TDD JUNIT__
 
 8. setup tests objects run before & after teardown every test run
 
-- @BeforeAll: STATIC execute only once before all test suit is run
-      example: read data from db for tests
+```
+public class AnimalTest {
 
-- @AfterAll: STATIC execute only once after all test suit is run
+    private static final String BEFORE_ALL = "STATIC execute only once before all test suit is run, read data fro mdb for tests";
+    private static final String BEFORE_EACH = "execute code in setup() before each test is run";
+    private static final String AFTER_EACH = "execute code in setup() after each test is run";
+    private static final String AFTER_ALL = "STATIC execute only once after all test suit is run";
 
-- @BeforeEach: execute code in setup() before each test is run
+    private Animal animal;
 
-- @AfterEach: execute code in setup() after each test is run
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println(BEFORE_ALL);
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        System.out.println(BEFORE_EACH);
+        animal = new Animal("Teddy", "Bear");
+    }
+
+    @AfterEach
+    void afterEach() {
+        System.out.println(AFTER_EACH);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println(AFTER_ALL);
+    }
+
+    @Test
+    void hasEaten_true() {
+
+        int testHunger = 80;
+
+        boolean actual = animal.hasEaten(testHunger);
+        assertTrue(actual);
+    }
+
+    @Test
+    void hasEaten_false() {
+
+        int testHunger = 80;
+
+        boolean actual = animal.hasEaten(testHunger);
+        assertFalse(actual);
+    }
+}
+```
 
 9. write test method assertions that test against class functionality
 
@@ -376,7 +418,7 @@ __AUTOBOXING/UNBOXING__
 
 AUTOBOXING: converting primitive dataType -> Wrapper class dataType w/ greater functionality
 
-```json
+```
 
 // given an integer n, return the number of trailing zeroes in n!
 
@@ -4191,7 +4233,7 @@ selecting REGULAR EXPRESSION string literal will enable a "yellow bulb" pop-up t
 
 EXAMPLE: US phone number REGEX
 
-```json
+```
 
 String usPhoneRegex = "^[\(]{1}[0-9]{3}[\)]{1}[ ]{1}[0-9]{3}[0-9][\-]{1}[0-9]{4})$";
 Pattern usPhonePattern = Pattern.compile(usPhoneRegex);
@@ -4214,7 +4256,7 @@ EXAMPLE: email regex
 
 - ends with 1 or more letter, number, dash or period
 
-```json
+```
 
 String emailRegex = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
 

@@ -523,6 +523,10 @@ Album(String name, String artist, ArrayList<Song> songs)
 
 Playlist = Doubly LinkedList class
 
+- play();
+- printList();
+- printMenu()
+
 ```json
 
 public static void main(String[] args) {
@@ -531,6 +535,62 @@ public static void main(String[] args) {
 
 public class Playlist {
 
+    // CONSTANTS: static class variables assigned FINAL value before compilation/instantiation
+    private static final String MENU =
+        "\n\tPlaylist Menu\n".toUpperCase() +
+        "0 - quit\n" + 
+        "1 - next song\n" + 
+        "2 - previous song\n" + 
+        "3 - replay current song\n" + 
+        "4 - list playlist songs\n" + 
+        "5 - print available actions\n" + 
+        "6 - delete current song from playlist\n";
+
+    private static final String CURRENTLY_PLAYING = "Currently playing: "; 
+    private static final String NO_SONGS = "No songs in playlist";
+    private static final String PLAYLIST_BEGINNING = "Playlist beginning"; 
+    private static final String PLAYLIST_COMPLETE = "Playlist complete"; 
+    private static final String REPLAYING = "Now replaying: "; 
+    private static final String SELECTION = "\nSelection: "; 
+    private static final String SONG_REMOVED = " - song in playlist has been removed";
+
+    // OOP ENCAPSULATION private class fields
+    private String name;
+    
+    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
+    public Playlist(String name) {
+        this.name = name;
+    }
+
+    // CLASS METHODS
+    private static void printMenu() {
+        System.out.println(MENU);
+    }
+
+    // STATIC: methods or variables associated with the class blueprint and not any individual instance and saved in a single place in memory
+    private static void printList(LinkedList<Song> playlist) {
+
+        // GENERIC CLASS: improve ENCAPSULATION by enforcing specific dataType parameters
+        ListIterator<Song> songIterator = playlist.listIterator();
+
+        while(songIterator.hasNext()) {
+            System.out.println(songIterator.next().toString());
+        }
+    }
+
+    public static void play(LinkedList<Song> playlist) {
+
+    }
+
+
+    // OOP GETTERS & SETTERS
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 
 public class Song {
