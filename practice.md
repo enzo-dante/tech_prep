@@ -510,7 +510,7 @@ public class Q6 {
 
 __Q7__
 
-Demonstrate OOP by defining a Song, Album, and Playlist class that work in concert with each other.
+Demonstrate Object-Oriented Programming (OOP) by defining a Song, Album, and Playlist class that work in concert with each other.
 
 Song(String title, Double duration)
 
@@ -547,6 +547,7 @@ public class Playlist {
         "6 - delete current song from playlist\n";
 
     private static final String CURRENTLY_PLAYING = "Currently playing: "; 
+    private static final String INVALID_INPUT = "Invalid input";
     private static final String NO_SONGS = "No songs in playlist";
     private static final String PLAYLIST_BEGINNING = "Playlist beginning"; 
     private static final String PLAYLIST_COMPLETE = "Playlist complete"; 
@@ -580,8 +581,103 @@ public class Playlist {
 
     public static void play(LinkedList<Song> playlist) {
 
-    }
+        Scanner scanner = new Scanner(System.in);
+        boolean quit = false;
+        boolean isForwardProgression = true;
 
+        // define listIterator for navigational linkedList
+        ListItarator<Song> songListIterator = play.listIterator();
+
+        if(playlist.size() <= 0) {
+
+            System.out.println(NO_SONGS);
+            return;
+
+        } else {
+
+            // iterate.next() to first node (Song, nextPointer)
+            System.out.println(
+                CURRENTLY_PLAYING +
+                songListIterator.next().toString()
+            );
+        }
+
+        printMenu();
+
+        while(!quit) {
+
+            System.out.println(SELECTION);
+
+            if(scanner.hasNextInt()) {
+
+                int choice = scanner.nextInt();
+
+                // handle 'enter' keydown to capture user input
+                scanner.nextLine();
+
+                switch(choice) {
+                    case 0:
+                        System.out.println(PLAYLIST_COMPLETE);
+                        quit = true;
+                        break;
+
+                    case 1: // move forward
+
+                        // handle direction: if !foward, prepare direction as forward to next node
+                        if(!isForwardProgression) {
+
+                            // validate current pointer not null
+                            if(songListIterator.hasNext()) {
+                                songListIterator.next();
+                            }
+
+                            isForward = true;
+                        }
+
+                        // move to next node
+                        if(songListIterator.hasNext) {
+
+                            System.out.println(
+                                CURRENTLY_PLAYING +
+                                songListIterator.next().toString()
+                            );
+
+                        } else {
+                            System.out.println(PLAYLIST_COMPLETE);
+                            isForward = false;
+                        }
+
+                        break;
+
+                    case 2: // move backward
+
+                        break;
+
+                    case 3: // repeat
+
+                        break;
+
+                    case 4:
+                        printList(playlist);
+                        break;
+
+                    case 5:
+                        printMenu();
+                        break;
+
+                    case 6: // delete song
+
+                        break;
+                }
+
+            } else {
+                scanner = new Scanner(System.in);
+                System.out.println(INVALID_INPUT);
+                printMenu();
+            }
+
+        }
+    }
 
     // OOP GETTERS & SETTERS
     public String getName() {
@@ -754,7 +850,6 @@ public class AlbumTest {
     }
 }
 
-
 public class Album {
 
     // CONSTANTS static class variables assigned FINAL value before compilation/instantiation
@@ -860,4 +955,113 @@ public class Album {
 }
 ```
 
+__Q8__
 
+```
+/**
+* ! instagram challenges
+*
+* * db schema:
+*
+* *   users:
+*       id,
+*       username (mandatory & one-of-a-kind),
+*       created_at (current date & time)
+* *   photos:
+*       id,
+*       image_url mandatory,
+*       created_at,
+*       user_id (mandatory & foreign key)
+* *   comments:
+*       id,
+*       comment_text mandatory,
+*       photo_id (foreign key),
+*       created_at (current date & time),
+*       user_id (foreign key),
+* *   likes:
+*       created_at (current date & time),
+*       user_id (foreign key),
+*       photo_id (foreign key),
+*       primary key order: user_id & photo_id
+* *   follows:
+*       created_at (current date & time),
+*       follow_id *foreign key,
+*       followee_id *foreign key,
+*       primary key order: user_id & photo_id
+* *   tags:
+*       id,
+*       tag_name unique,
+*       created_at (current date time)
+* *   photo_tags:
+*       photo_id (foreign key),
+*       tag_id (foreign key),
+*       primary key order: user_id & photo_id
+*/
+```
+
+we want to reward our users who have been around the longest
+find the 5 oldest users
+
+```
+SHOW DATABASES;
+SELECT database();
+
+USE ig_db;
+SHOW TABLES;
+
+DESC users;
+
+SELECT
+    *
+FROM users
+ORDER BY created_at DESC
+LIMIT 5;
+```
+
+we need to figure out when to schedule an ad campaign
+what day of the week do most users register on (labeled: most popular registration day)
+get count and day name
+
+```
+SHOW DATABASES;
+SELECT database();
+USE ig_db;
+
+SHOW TABLES;
+DESC users;
+
+SELECT
+    *
+FROM users
+GROUP BY DAYNAME(created_at)
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+
+SELECT
+    DAYNAME(created_at) AS "most popular registration day",
+    COUNT(*) AS total
+FROM users
+GROUP BY DAYNAME(created_at)
+ORDER BY total DESC
+LIMIT 1;
+```
+
+we want to target our inactive users with an email campaign
+find the users who have never posted a photo
+
+```
+SHOW DATABASES
+SELECT database();
+USE ig_db;
+
+SHOW TABLES;
+DESC users;
+DESC photos;
+
+SELECT
+    users.username AS "inactive user"
+FROM users
+LEFT JOIN photos
+    ON users.id = photos.user_id
+WHERE photos.id IS NULL;
+```

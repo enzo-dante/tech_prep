@@ -414,12 +414,11 @@ class variables with greater functionality for respective primitive dataType
 int currentValue = Integer.parseInt(numberSubstring);
 ```
 
-__AUTOBOXING/UNBOXING__
+__AUTOBOXING__
 
-AUTOBOXING: converting primitive dataType -> Wrapper class dataType w/ greater functionality
+converting primitive dataType -> Wrapper class dataType w/ greater functionality
 
 ```
-
 // given an integer n, return the number of trailing zeroes in n!
 
 public static Integer trailingZeroFactorial(int n) {
@@ -441,7 +440,9 @@ public static Integer trailingZeroFactorial(int n) {
 }
 ```
 
-UNBOXING: casting greater functionality Wrapper class dataType -> primitive dataType
+__UNBOXING__
+
+casting greater functionality Wrapper class dataType -> primitive dataType
 
 ```
 private static double calculateInterest(Double amount, Double interestRate) {
@@ -454,7 +455,6 @@ __OOP COMPOSITION + INNER CLASS__
 logically grouped class components within an extending parent super class
 
 ```
-
 public class PC {
 
     private Motherboard motherboard;
@@ -1189,12 +1189,11 @@ __THREAD STARVATION__
 
 threads aren't given the opportunity to progress due to threat priority - assigning a high priority to a thread means the OS should try and run the thread before other waiting threads.
 
-
 # Data Structures
 
 # Arrays
 
-<img src="/content/ds_arrays.png">
+<img src="/content/ds_array.png">
 
 O(1) CONSTANT time complexity when getting an element in an array with an index because it always take 3 steps
 
@@ -1219,11 +1218,14 @@ for(int index = 0; index < intArray.length; index++) {
 }
 ```
 
+# 2D Arrays / Matrix
+
+<img src="/content/ds_matrix.png" alt="data structure 2-dimensional array">
+
+
 # Vectors
 
-<img src="/content/ds_vectors.png">
-
-VECTORS are thread-safe ArrayList: if 1 or more threads are writing (CRUD) to an ArrayList there could be thread conflicts
+VECTORS are thread-safe ArrayLists: if 1 or more threads are writing (CRUD: CREATE, READ, UPDATE, DELETE) to an ArrayList there could be thread conflicts
 
 - thread-safe: no conflict when using on different threads with manually having to synchronize the code (synchronization has overhead performance issue)
 
@@ -1239,6 +1241,8 @@ employeeList.add(new Employee("First 2", "Last 2", 22));
 ```
 
 # sets
+
+<img src="/content/ds_hashtable.png" alt="data structure set">
 
 sets are a computationally fast unordered collection WITHOUT DUPLICATES implemented via a HASHSET class
 
@@ -1284,6 +1288,8 @@ __VENN DIAGRAM SYMMETRIC DIFF__
 remove all shared elements found in both sets & return all non-shared elements of both sets (hashSetUnion - hashSetIntersection)
 
 # Singly LinkedLists
+
+<img src="/content/ds_singly_linked_list.png" alt="data structure singly linked list">
 
 HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodePointer } --> null
 
@@ -1385,6 +1391,7 @@ public class EmployeeLinkedList {
 ```
 
 # Doubly LinkedLists
+
 
 null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {previousPointer, currentNodeValue, nextNodePointer } <--> TAIL --> null
 
@@ -1576,6 +1583,8 @@ public class DoublyLinkedList {
 
 # Stacks
 
+<img src="/content/ds_stack.png" alt="data structure stack">
+
 LIFO STACKS: an abstract class that only accesses variables from the top/front on a stack because it's a last-in, first-out (LIFO) data structure implemented by a LINKED_LIST or ARRAY
 
 - LINKED_LIST STACK O(1) constant TIME COMPLEXITY: due to LIFO (only accessed from the top/front), for push(), pop(), peek()
@@ -1658,6 +1667,8 @@ public class ArrayStack {
 
 # Maps
 
+<img src="/content/ds_hashtable.png" alt="data structure maps">
+
 an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASHMAP classes with 2 GENERIC parameters
 
 - O(1) CONSTANT time complexity: getting a map value with a key will always take the same number of steps (3)
@@ -1698,6 +1709,8 @@ languages.containsKey(key)
 ```
 
 # Queues
+
+<img src="/content/ds_queue.png" alt="data structure queue">
 
 FIFO QUEUES: an abstract class that only accesses variables from the top/front on the queue because it's a first-in, first-out (FIFO) data structure implemented by a LINKED_LIST or ARRAY
 
@@ -1830,6 +1843,8 @@ public class CircularQueue {
 ```
 
 # Binary Trees
+
+<img src="/content/ds_tree.png" alt="data structure tree">
 
 BINARY TREE:
 
@@ -2272,8 +2287,11 @@ public class BinaryTree {
 a complete binary tree with array-backing, only interested in  min & max at ROOT of tree O(1) time complexity that functions left-to-right
 
 - O(1) CONSTANT time complexity:
+
     - insert
+
     - remove/poll
+
     - peak/getRoot
 
 __HEAPIFY__
@@ -2662,6 +2680,8 @@ public class MaxHeap {
 ```
 
 # Graphs
+
+<img src="/content/ds_graph.png" alt="data structure graph">
 
 ```
 //class to store edges of the weighted graph
@@ -3667,6 +3687,42 @@ collected tables, documents, or graphs hold data together but CANNOT be joined t
 - access: many are no-sql databases that have their own CRUD (create, read, update, delete) functionality that rely on key-value stores
 
   - REST APIs are used to hit a specific endpoint that comes with certain functionality
+
+__RELATIONSHIPS__
+
+always compartmentalize dataset into separate tables
+then join if necessary by shared relationship
+
+Relationships = the different ways two or multiple tables (entities) are related
+
+    1. one-to-one relationship (not very common)
+
+        ex: 1 customer-to-1 customer details relationship
+
+    2. one-to-many relationship (most common)
+
+        ex: 1 book-to-many reviews relationship
+
+    3. many-to-many relationship (relatively common)
+
+        ex: many authors-to-many books relationship (a book can have mulitple authors)
+
+__PRIMARY KEY AUTO_INCREMENT__
+    
+when creating a table, ensures one column that is always unique for joined relationships
+
+__FOREIGN KEY__
+    
+when creating a table, references to another table within a given table
+explicitely using a FOREIGN KEY protects from bad data input
+
+__JOIN__
+
+when you SELECT data, take data from multiple tables and temporarily consolidate them in a meaningful way
+
+an INNER JOIN only shows data that overlap (the middle of a venn diagram)
+
+a LEFT or RIGHT join will ALSO show data overlap PLUS null data pairs (left/right + middle of a venn diagram)
 
 # MapReduce
 
