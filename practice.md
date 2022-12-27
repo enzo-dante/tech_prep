@@ -612,7 +612,7 @@ public class Playlist {
 
                 int choice = scanner.nextInt();
 
-                // handle 'enter' keydown to capture user input
+                // handle 'enter' key-down to capture user input
                 scanner.nextLine();
 
                 switch(choice) {
@@ -623,7 +623,7 @@ public class Playlist {
 
                     case 1: // move forward
 
-                        // handle direction: if !foward, prepare direction as forward to next node
+                        // handle direction: if !forward, prepare direction as forward to next node
                         if(!isForwardProgression) {
 
                             // validate current pointer not null
@@ -651,9 +651,32 @@ public class Playlist {
 
                     case 2: // move backward
 
+                        // handle direction: if !forward, prepare direction as backward to next node
+                        if(isForwardProgression) {
+
+                            // validate current pointer not null
+                            if(songListIterator.hasPrevious()) {
+                                songListIterator.previous();
+                            }
+
+                            isForwardProgression = false;
+                        }
+
+                        // move to previous node in linkedList
+                        if(songListIterator.hasPrevious()) {
+                            System.out.println(
+                                CURRENTLY_PLAYING + songListIterator.previous().toString()
+                            );
+
+                        } else {
+                            System.out.println(PLAYLIST_BEGINNING);
+                            isForwardProgression = true;
+                        }
                         break;
 
                     case 3: // repeat
+
+                        // handle direction: if forward, validate previous node & show 
 
                         break;
 
@@ -1064,4 +1087,291 @@ FROM users
 LEFT JOIN photos
     ON users.id = photos.user_id
 WHERE photos.id IS NULL;
+```
+
+we're running a new contest to see
+who can get the most likes on a single photo,
+which user, photo, and like count won?
+
+```
+SHOW DATABASES;
+SELECT database();
+USE ig_db;
+
+DESC users;
+DESC photos;
+DESC likes;
+
+SELECT
+    users.username,
+    photos.image_url,
+    COUNT(*) AS total
+FROM users
+INNER JOIN photots
+    ON users.id = photos.user_id
+INNER JOIN likes
+    ON photos.id = likes.photo_id
+GROUP BY photos.id
+ORDER BY total DESC
+LIMIT 1;
+```
+
+our investors want to know,
+how many times does the average user post?
+labeled as 'average number of posts'
+
+```
+SHOW DATABASES;
+SELECT database();
+
+USE ig_db;
+SHOW TABLES;
+
+DESC users;
+DESC photos;
+
+SELECT (
+    SELECT COUNT(*) FROM photos / SELECT COUNT(*) FROM users
+) AS "average number of posts";
+```
+
+our brand advertisers want to know which hashtags to use in a post,
+what are the top 5 most commonly used hashtags
+and the 5 highest count label as 'total'
+
+```
+SHOW DATABASES;
+SELECT database();
+
+USE ig_db;
+SHOW TABLES;
+
+DESC tags;
+DESC photo_tags;
+
+SELECT
+    tags.tag_name,
+    COUNT(*) AS total
+FROM tags
+INNER JOIN photo_tags
+    ON tags.id = photo_tags.tag_id
+GROUP BY tags.id
+ORDER BY total DESC
+LIMIT 5;
+```
+
+we have a small problem with bots on our site,
+find users who have liked every single photo on the site
+
+```
+SHOW DATABASES;
+SELECT database();
+
+USE ig_db;
+SHOW TABLES;
+
+DESC users;
+DESC photos;
+DESC likes;
+
+SELECT
+    users.id
+    users.username,
+    COUNT(*) AS "max likes"
+FROM users
+INNER JOIN likes
+    ON users.id = likes.user_id
+GROUP BY users.id
+HAVING "max likes" = (
+    SELECT
+        COUNT(*) AS "total_likes"
+    FROM likes
+    ORDER BY "total_likes" DESC
+    LIMIT 1
+);
+```
+
+__Q9__
+
+```
+/**
+* ! query many-to-many table from created reviewers, series, review tables 
+*
+* * reviewers schema:
+* *    id,
+* *    first_name (default 'MISSING' max 20 chars),
+* *    last_name (default 'MISSING' max 20 chars)
+*
+* * series schema:
+* *    id,
+* *    title (default "MISSING" max 20 chars),
+* *    released_year (4-digit mandatory),
+* *    genre (max 100 chars)
+*
+* * reviews schema:
+* *    id,
+* *    rating (MIN 0.0 to MAX 9.9),
+* *    series_id,
+* *    reviewer_id
+*
+* * on delete cascade many-to-many relationships
+*/
+```
+
+challenge 1: reproduce the table below (no nulls):
+
+```
+title | rating
+
+   archer | 8.0
+   archer | 7.5
+   arrested development | 8.9
+   arrested development | 9.9
+```
+
+```
+SHOW DATABASES;
+SELECT database();
+USE imdb;
+
+SHOW TABLES;
+DESC series;
+DESC reviews;
+
+SELECT
+    series.title,
+    reviews.rating
+FROM series
+INNER JOIN reviews
+    ON series.id = reviews.series_id
+ORDER BY series.title ASC
+LIMIT 4;
+```
+
+challenge 2: reproduce the table below (no nulls):
+
+```
+title | avg_rating
+
+    General Hospital | 5.38
+    Fargo | 9.40
+    Halt and Catch Fire | 9.90
+```
+
+```
+SHOW DATABASES;
+SELECT database();
+USE imdb;
+
+SHOW TABLES;
+DESC series;
+DESC reviews;
+
+SELECT
+    series.title,
+    ROUND(
+        AVG(reviews.rating),
+        2
+    ) AS avg_rating
+FROM series
+INNER JOIN reviews
+    ON series.id = reviews.series_id
+GROUP BY series.id
+ORDER BY AVG(reviews.rating) ASC
+LIMIT 3;
+```
+
+challenge 3: reproduce the table below (no nulls):
+
+```
+first_name | last_name | rating
+
+    Thomas | Stoneman | 8.0
+    Wyat | Skaggs | 8.5
+    Wyat | Skaggs | 7.5
+    Wyat | Skaggs | 9.3
+    Kimbra | Masters | 7.1
+```
+
+```
+SHOW DATABASES;
+SELECT database();
+USE imdb;
+
+SHOW tables;
+DESC reviewers;
+DESC reviews;
+
+SELECT
+    reviewers.first_name,
+    reviewers.last_name,
+    reviews.rating
+FROM reviewers
+INNER JOIN reviews
+    ON reviewers.id = reviews.reviewer_id
+ORDER BY reviewers.last_name DESC
+LIMIT 5;
+```
+
+challenge 4: reproduce the table below (there will be nulls):
+
+```
+unreviewed_series
+
+    Malcolm in the Middle
+    Pushing Daisies
+```
+
+```
+SHOW databases;
+SELECT database();
+USE imdb;
+
+SHOW TABLES;
+DESC series;
+DESC reviews;
+
+SELECT
+    series.title AS "unreviewed_series"
+FROM series
+LEFT JOIN reviews
+    ON series.id = reviews.series_id
+WHERE reviews.rating IS NULL
+LIMIT 2;
+```
+
+challenge 5: reproduce the table below (there will be nulls):
+
+```
+genre | avg_rating
+
+     Animation | 7.86
+     Comedy | 8.16
+     Drama | 8.04
+```
+
+```
+SHOW DATABASES;
+SELECT database();
+USE imdb;
+
+SHOW TABLES;
+DESC series;
+DESC reviews;
+
+SELECT
+    series.genre,
+    IFNULL(
+        ROUND(
+            AVG(reviews.rating),
+            2
+        ),
+        0 
+    ) AS "avg_rating"
+FROM series
+LEFT JOIN reviews
+    ON series.id = reviews.series_id
+GROUP BY series.genre
+ORDER BY series.genre ASC
+LIMIT 3; 
 ```

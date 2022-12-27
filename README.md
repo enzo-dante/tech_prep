@@ -161,7 +161,6 @@ BEST PRACTICE:
 write easily understood test method names
 
 ```
-
 getBalance_deposit()
 getBalance_withdraw()
 ```
@@ -171,7 +170,6 @@ write on 1 independent assertion for 1 independent test
 setup any independent class instances that can be reused (without cross-pollination) on each test method
 
 ```
-
 assertEquals(expectedValue, actualTestValue);
 
 assertNotEquals(expectedValue, actualTestValue);
@@ -223,7 +221,6 @@ __STATIC INITIALIZATION BLOCKS__
 one-time on-initialization execution of 'static {}' and their assigned STATIC FINAL variables
 
 ```
-
 private static final String OWNER;
 private static final String FIRST_STATIC_MSG;
 
@@ -265,7 +262,6 @@ public int add(int n, String msg) {
 __ACCESS-MODIFIERS__
 
 ```
-
 public class Person {
 
     // PRIVATE: access to the variable or method is limited to the scope of the defining class
@@ -335,7 +331,6 @@ __OOP POLYMORPHISM + INTERFACES__
 must implement ALL publicly-shared method signatures via @Override
 
 ```
-
 interface ISports {
 
     void play();
@@ -363,7 +358,6 @@ __OOP CLASSES__
 In object-oriented programming, a class is a blueprint for creating objects (a particular data structure), providing initial values for state (member variables or attributes), and implementations of behavior (member functions or methods).
 
 ```
-
 public class Animal {
 
     private String name;
@@ -393,7 +387,7 @@ public class Animal {
 An instance is a specific object created from a particular class. Classes are used to create and manage new objects and support inheritance (a key ingredient in object-oriented programming and a mechanism of reusing code).
 
 ```
-// The user-defined objects are created using the class keyword. 
+// The user-defined objects are created using the class keyword.
 public static void main(String[] args) {
 
     Animal animal = new Animal(4);
@@ -493,7 +487,6 @@ if(n == 0) return false;
 easier to ask for forgiveness than permission: use try-catch block to handle errors
 
 ```
-
 try {
 
     System.out.println(future.get());
@@ -515,7 +508,6 @@ the process of converting a data object—a combination of code and data represe
 <img src="/content/serialization.png">
 
 ```
-
 /**
  * Call the ObjectOutputStream() which takes a serializable object and converts it into a sequence (stream) of bytes.
  */
@@ -555,7 +547,6 @@ __TRANSIENT__
 use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
 
 ```
-
 public class Book implements Serializable {
 
     private static final long serialVersionUID = -2936687026040726549L;
@@ -568,8 +559,7 @@ public class Book implements Serializable {
 }
 ```
 
-``` 
-
+```
 @Test
 void bookSerialization() {
 
@@ -593,7 +583,6 @@ void bookSerialization() {
 a continuously self-calling algorithm & each call on the call-stack waits for the algorithm to reach a base case/breaking condition for a return value.
 
 ```
-
 recursive factorial method
 
     !3 = 1*2*3 = 6
@@ -616,7 +605,6 @@ __RECURSIVE BASE CASE__
 the breaking condition that initiates an upward propagation of return of values for the waiting calls that results in a call-stack resolution or overflow
 
 ```
-
 private static int recursiveFactorial(int number) {
 
     boolean isBaseCase = (number == 0);
@@ -638,7 +626,6 @@ recursively divide the original problem into 2 or more sub-problems & repeat unt
 divide & conquer algorithms are great for parallel processing because each sub-problem can be run on a different processor simultaneously (extremely performant on modern systems with large core counts)
 
 ```
-
 public class MergeSort {
 
     private static int[] array = {20, 35, -15, 7, 55, 1, -22};
@@ -738,14 +725,13 @@ __POTENTIAL PROBLEMS__
 
 make sure to avoid redundant recursive calls (solved via MEMOIZATION)
 
-- MEMOIZATION: is a technique that can be used to improve the efficiency of divide & conquer algorithms by storing the solutions to earlier problems & eliminating redundant calls
+- MEMOIZATION is a technique that can be used to improve the efficiency of divide & conquer algorithms by storing the solutions to earlier problems & eliminating redundant calls
 
 # Interfaces
 
 an abstract collection of publicly-shared method signatures & public CONSTANTS that MUST ALL be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
 
 ```
-
 interface ITelephone {
 
     // define the public 'signature' (only method names & parameters) of the shared behavior & public CONSTANTS used by the set of class
@@ -799,7 +785,6 @@ __OOP INHERITANCE__
 child subclass inherits public class fields + methods from extending parent super class
 
 ```
-
 // abstract keyword = no logic, only define the class or method signature shared across adhering classes
 abstract class AbstractAnimal {
 
@@ -839,18 +824,17 @@ class Dog extends AbstractAnimal {
 
 # Interfaces vs Abstract Classes
 
-- ABSTRACT CLASSES can have class fields/object instance members AND define abstract publicly-shared signatures
+ABSTRACT CLASSES can have class fields/object instance members AND define abstract publicly-shared signatures
 
-  - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
+- you CANNOT instantiate an ABSTRACT CLASS, you must use a normal class that inherits from an ABSTRACT CLASS for instantiation
 
-- INTERFACES can ONLY define publicly-shared signatures
+INTERFACES can ONLY define publicly-shared signatures & public CONSTANTS
 
 # Generics
 
 improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
 
 ```
-
 ArrayList<Integer> onlyIntegers = new ArrayList<>();
 onlyIntegers.add(1);
 
@@ -862,7 +846,6 @@ elements.add(1);
 GENERICS make identifying bugs/code breaks faster throughout lifecycle (preferably before prod runtime & in compile time) and subsequently cheaper to fix due to less resources being exhausted
 
 ```
-
 interface ISports {
     String getName();
 }
@@ -949,7 +932,7 @@ class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
 
 # Concurrency
 
-software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
+Software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
 
 <img src="/content/concurrency.jpeg">
 
@@ -966,7 +949,6 @@ an instance of a computer program with its own memory space that's sequentially 
 - every process has a memory HEAP
 
 ```
-
 java virtual machine instance ->
         the JVM runs as a PROCESS ->
             running a java console application ->
@@ -984,7 +966,6 @@ __THREADS .start()__
 only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
 
 ```
-
 new Thread() {
     @Override
     public void run() {
@@ -1002,7 +983,6 @@ __THREAD JOIN__
 when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
 
 ```
-
 public static void main(String[] args) {
 
     // THREADS + GENERIC CLASSES/LAMBDAS: Thread.instance w/ parameter class instance that implements Runnable INTERFACE & immediately .start() no-name instance on it's own thread in the HEAP
@@ -1055,7 +1035,6 @@ __THREAD SYNCHRONIZATION code blocks__
 use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
 
 ```
-
 public synchronized void doCountdown() {
     String color = ThreadColor.ANSI_CYAN;
     String threadName = Thread.currentThread().getName();
@@ -1119,7 +1098,6 @@ __ARRAY BLOCKING QUEUE__
 a queue is a (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
 
 ```
-
 // ArrayBlockingQueue: we have to pass in the number of elements the array should be able to hold
 int numElements = 6;
 
@@ -1136,7 +1114,6 @@ __EXECUTOR SERVICE__
 optimize a managed set of threads, thus reducing the overhead of thread creation
 
 ```
-
 int numThreads = 3;
 ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
 
@@ -1150,7 +1127,6 @@ __FUTURE__
 a return value from an executed thread in a thread pool
 
 ```
-
 // THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
 Future<String> future = executorService.submit(new Callable<String>() {
     @Override
@@ -1171,7 +1147,6 @@ once a thread starts these actions, they cannot be suspended during execution, a
 - reading and writing volatile variables
 
 ```
-
 int atomicAction1 = 1;
 int atomicAction2 = atomicAction1;
 ```
@@ -1181,7 +1156,6 @@ __VOLATILE VARIABLES__
 the JVM writes the value back to main memory immediately after a thread updates the value in its CPU cache, and it also guarantees that every time a variable reads from a volatile variable, it will get the latest value.
 
 ```
-
 public volatile int volatileVariable;
 ```
 
@@ -1202,14 +1176,12 @@ O(1) CONSTANT time complexity when getting an element in an array with an index 
 - step 3: add the start address to the result of the multiplication
 
 ```
-
 int result = intArray[index];
 ```
 
 O(n) LINEAR time complexity when getting an element in an array WITHOUT an index
 
 ```
-
 for(int index = 0; index < intArray.length; index++) {
 
     int randomValue = 10;
@@ -1221,6 +1193,106 @@ for(int index = 0; index < intArray.length; index++) {
 # 2D Arrays / Matrix
 
 <img src="/content/ds_matrix.png" alt="data structure 2-dimensional array">
+
+Two Dimensional arrays are needed when data is formatted as TABLE or SPREADSHEET
+
+```
+Example:
+    movie ratings by multiple reviewers
+        Each row is a different reviewer
+        Each column is a different movie
+
+        ratings = [
+            [4,6,2,5],
+            [7,9,4,8],
+            [6,9,3,7]
+        ];
+
+        ratings[1][3] = 8
+            [1] = row
+            [3] = column
+```
+
+```
+public class AmazonProblem {
+
+    public static void main(String[] args) {
+
+        // the minefield is a 2D array
+        int[][] mineField = {
+                {0,1,0,1},
+                {0,1,1,1},
+                {0,0,0,0},
+                {0,1,0,0}
+        };
+
+        int numMineClusters1 = getMineClusterCount(mineField);
+        System.out.println("\nNESTED FOR LOOPS total: " + numMineClusters1 + " mine clusters.");
+
+        int[][] mineField2 = {
+                {0,1,0,1},
+                {0,1,1,1},
+                {0,0,0,0},
+                {0,1,0,0}
+        };
+    }
+
+    private static int getMineClusterCount(int[][] array2D) {
+        /*
+            identify 2 separate mine clusters in a 4x4 grid below
+                that uses nested loops and the divide and conquer method
+                the method should return 2 since there are 2 separate clusters
+                identify the time complexity
+
+            the 4x4 mine grid:
+                0 - no mine
+                1 - mine
+                    [[0,1,0,1],
+                    [0,1,1,1],
+                    [0,0,0,0],
+                    [0,1,0,0]]
+         */
+
+        System.out.println("\n\tgetMineClusterCount()\n");
+        int numClusters = 0;
+
+        // time complexity of O(n^2) quadratic time complexity given nested for loops
+        for(int i = 0; i < array2D.length; i++) {
+
+            for(int column = 0; column < array2D[i].length; column++) {
+
+                int[] row = array2D[i];
+                int columnValue = row[column];
+
+                // as soon as you find the first cluster of mines
+                if(columnValue == 1) {
+
+                    numClusters++;
+                    System.out.println("found a cluster".toUpperCase());
+                    array2D = zeroOutMineCluster(array2D, i);
+                }
+            }
+        }
+    }
+
+    private static int[][] zeroOutMineCluster(int[][] array2D, int rowIndex) {
+
+        int[] zeroRow = {0,0,0,0};
+
+        int adjacentRowIndex = rowIndex + 1;
+        array2D[rowIndex] = zeroRow;
+
+        // validate against out-of-bounds exception
+        if(adjacentRowIndex < array2D.length) {
+
+            // since clusters are separate you can zero out the adjacent row without fear of removing an unaccounted cluster
+            array2D[adjacentRowIndex] = zeroRow;
+        }
+
+        return array2D;
+    }
+}
+```
 
 
 # Vectors
@@ -1247,7 +1319,6 @@ employeeList.add(new Employee("First 2", "Last 2", 22));
 sets are a computationally fast unordered collection WITHOUT DUPLICATES implemented via a HASHSET class
 
 ```
-
 Set<Integer> numbers = new HashSet<>();
 numbers.add(1);
 ```
@@ -1257,7 +1328,6 @@ __SET UNION__
 a set (WITHOUT DUPLICATES) that contains ALL elements of 2 or more hashsets via hashSet.addAll()
 
 ```
-
 Set<Integer> set1 = new HashSet<>();
 Set<Integer> set2 = new HashSet<>();
 
@@ -1273,7 +1343,6 @@ __VENN DIAGRAM ASYMMETRIC DIFF__
 remove all shared elements of 1 set found in another set via bulk operation hashSet.removeAll()
 
 ```
-
 Set<Integer> set1 = new HashSet<>();
 Set<Integer> set2 = new HashSet<>();
 
@@ -1296,7 +1365,6 @@ HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodeP
 Singly LinkedLists w/ an array backing
 
 ```
-
 public class EmployeeNode {
 
     private Employee employee;
@@ -1392,13 +1460,11 @@ public class EmployeeLinkedList {
 
 # Doubly LinkedLists
 
-
-null --> HEAD <--> {previousPointer, currentNodeValue, nextNodePointer } <--> {previousPointer, currentNodeValue, nextNodePointer } <--> TAIL --> null
+<img src="/content/ds_doubly_linked_list.png" alt="data structure doubly linked-list">
 
 Doubly LinkedLists w/ an array backing
 
 ```
-
 public class EmployeeNode {
 
     private Employee employee;
@@ -1421,7 +1487,6 @@ public class EmployeeNode {
 ```
 
 ```
-
 public class DoublyLinkedList {
 
     private Employee head;
@@ -1592,7 +1657,6 @@ LIFO STACKS: an abstract class that only accesses variables from the top/front o
 - ARRAY STACK O(n) linear TIME COMPLEXITY: due to LIFO (only accessed from the top/front), for push(), pop(), peek()
 
 ```
-
 public class ArrayStack {
 
     // STACK top: always null because it's a placeholder for next potential item; actual top of stack is the last index of the array
@@ -1674,7 +1738,6 @@ an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASH
 - O(1) CONSTANT time complexity: getting a map value with a key will always take the same number of steps (3)
 
 ```
-
 // GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter;
 Map<String, String> languages = new HashMap<>();
 
@@ -1685,7 +1748,6 @@ String value = "Primary language in the United States";
 add unique_key-value generics class pair into map collection
 
 ```
-
 // re-adding the map key will override the old value
 languages.put(key, value)
 ```
@@ -2284,6 +2346,8 @@ public class BinaryTree {
 
 # Heaps
 
+<img src="/content/ds_heaps.png" alt="data structure heaps">
+
 a complete binary tree with array-backing, only interested in  min & max at ROOT of tree O(1) time complexity that functions left-to-right
 
 - O(1) CONSTANT time complexity:
@@ -2685,56 +2749,72 @@ public class MaxHeap {
 
 ```
 //class to store edges of the weighted graph
-class Edge {
-    int src, dest, weight;
-    Edge(int src, int dest, int weight) {
+public class Edge {
+
+    private int src, dest, weight;
+
+    public Edge(int src, int dest, int weight) {
             this.src = src;
             this.dest = dest;
             this.weight = weight;
-        }
+    }
+
+    // OOP GETTERS & SETTERS
 }
+
 // Graph class
-class Graph {
-    // node of adjacency list 
+public class Graph {
+
+    // node of adjacency list
     static class Node {
-        int value, weight;
-        Node(int value, int weight)  {
+
+        private int value, weight;
+
+        public Node(int value, int weight) {
             this.value = value;
             this.weight = weight;
         }
+
+        // OOP GETTERS & SETTERS
     };
- 
-// define adjacency list
- 
-List<List<Node>> adj_list = new ArrayList<>();
- 
+
+    // define adjacency list
+    private List<List<Node>> adj_list = new ArrayList<>();
+
     //Graph Constructor
-    public Graph(List<Edge> edges)
-    {
+    public Graph(List<Edge> edges) {
+
         // adjacency list memory allocation
-        for (int i = 0; i < edges.size(); i++)
-            adj_list.add(i, new ArrayList<>());
- 
+        for (int i = 0; i < edges.size(); i++) {
+            this.adj_list.add(i, new ArrayList<>());
+        }
+
         // add edges to the graph
-        for (Edge e : edges)
-        {
+        for (Edge edge : edges) {
+
             // allocate new node in adjacency List from src to dest
-            adj_list.get(e.src).add(new Node(e.dest, e.weight));
+            this.adj_list.get(edge.getSrc())
+                .add(new Node(edge.getDest(), edge.getWeight()));
         }
     }
-// print adjacency list for the graph
-    public static void printGraph(Graph graph)  {
+
+    // print adjacency list for the graph
+    public static void printGraph(Graph graph) {
+
         int src_vertex = 0;
         int list_size = graph.adj_list.size();
- 
+
         System.out.println("The contents of the graph:");
+
         while (src_vertex < list_size) {
+
             //traverse through the adjacency list and print the edges
             for (Node edge : graph.adj_list.get(src_vertex)) {
-                System.out.print("Vertex:" + src_vertex + " ==> " + edge.value + 
+
+                System.out.print("Vertex: " + src_vertex + " ==> " + edge.value +
                                 " (" + edge.weight + ")\t");
             }
- 
+
             System.out.println();
             src_vertex++;
         }
@@ -2748,16 +2828,20 @@ Use either search algorithm to recursively traverse a graph which is a collectio
 
 __depth-first search__
 
-DFS technique starts with a root node and then traverses the adjacent nodes of the root node by going deeper into the graph. In the DFS technique, the nodes are traversed depth-wise until there are no more children to explore.
+DFS technique starts with a root node and then traverses the adjacent nodes of the root node by going deeper into the graph.
 
-Once we reach the leaf node (no more child nodes), the DFS backtracks and starts with other nodes and carries out traversal in a similar manner. DFS technique uses a stack data structure to store the nodes that are being traversed.
+In the DFS technique, the nodes are traversed depth-wise until there are no more children to explore.
+
+Once we reach the leaf node (no more child nodes), the DFS backtracks and starts with other nodes and carries out traversal in a similar manner.
+
+DFS technique uses a stack data structure to store the nodes that are being traversed.
 
 - hasPath(s, t): recursively, nodeS do you have a path to nodeT?
 - nodes asks (left-to-right) it's child if it has a path to nodeT, repeat until reached nodeT or null
 
 Detect a cycle in a graph: DFS facilitates to detect a cycle in a graph when we can backtrack to an edge.
 
-Pathfinding: As we have already seen in the DFS illustration, given any two vertices we can find the path between these two vertices.
+Path-finding: As we have already seen in the DFS illustration, given any two vertices we can find the path between these two vertices.
 
 Minimum spanning tree and shortest path: If we run the DFS technique on the non-weighted graph, it gives us the minimum spanning tree and the shorted path.
 
@@ -2765,65 +2849,79 @@ Topological sorting: Topological sorting is used when we have to schedule the jo
 
 ```
 //DFS Technique for undirected graph
-class Graph { 
-    private int Vertices;   // No. of vertices 
-   
+public class Graph {
+
+    private int vertices;   // No. of vertices
+
     // adjacency list declaration
-    private LinkedList<Integer> adj_list[]; 
-   
-    // graph Constructor: to initialize adjacency lists as per no of vertices 
-    Graph(int v) { 
-        Vertices = v; 
-        adj_list = new LinkedList[v]; 
-        for (int i=0; i<v; ++i) 
-            adj_list[i] = new LinkedList(); 
-    } 
-   
-    //add an edge to the graph 
-    void addEdge(int v, int w) { 
-        adj_list[v].add(w);  // Add w to v's list. 
-    } 
-   
+    private LinkedList<Integer> adj_list[];
+
+    // graph Constructor: to initialize adjacency lists as per no of vertices
+    public Graph(int vertices) {
+        this.vertices = vertices;
+        this.adj_list = new LinkedList[vertices];
+
+        for (int i = 0; i < vertices; ++i) {
+            adj_list[i] = new LinkedList();
+        }
+    }
+
+    //add an edge to the graph
+    public void addEdge(int v, int w) {
+        this.adj_list[v].add(w);  // Add w to v's list.
+    }
+
     // helper function for DFS technique
-    void DFS_helper(int v,boolean visited[]) { 
-        // current node is visited 
-        visited[v] = true; 
-        System.out.print(v+" "); 
-   
-        // process all adjacent vertices 
-        Iterator<Integer> i = adj_list[v].listIterator(); 
-        while (i.hasNext()) 
-        { 
-            int n = i.next(); 
-            if (!visited[n]) 
-                DFS_helper(n, visited); 
-        } 
-    } 
-   
-    
-void DFS(int v) { 
-        //initially none of the vertices are visited 
-        boolean visited[] = new boolean[Vertices]; 
-   
-        // call recursive DFS_helper function for DFS technique 
-        DFS_helper(v, visited); 
-    } 
+    public void DFS_helper(int v,boolean visited[]) {
+
+        // current node is visited
+        visited[v] = true;
+        System.out.print(v + " ");
+
+        // process all adjacent vertices
+        Iterator<Integer> iterator = this.adj_list[v].listIterator();
+
+        while(iterator.hasNext()) {
+
+            int node = iterator.next();
+
+            if (!visited[node]) {
+
+                DFS_helper(node, visited);
+            }
+        }
+    }
+
+    public void DFS(int v) {
+
+        //initially none of the vertices are visited
+        boolean visited[] = new boolean[this.vertices];
+
+        // call recursive DFS_helper function for DFS technique
+        DFS_helper(v, visited);
+    }
 }
-  class Main{
-    public static void main(String args[]) 
-    { 
+
+public class Main{
+
+    public static void main(String args[]) {
+
         //create a graph object and add edges to it
-        Graph g = new Graph(5); 
-        g.addEdge(0, 1); 
-        g.addEdge(0, 2); 
-        g.addEdge(0, 3); 
-        g.addEdge(1, 2); 
-        g.addEdge(2, 4); 
+        Graph graph = new Graph(5);
+
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(0, 3);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 4);
+
         //print the DFS Traversal sequence
-        System.out.println("Depth First Traversal for given graph"+ 
-                           "(with 0 as starting vertex)"); 
-        g.DFS(0); 
-    } 
+        System.out.println(
+            "Depth First Traversal for given graph with 0 as starting vertex: "
+        );
+
+        graph.DFS(0);
+    }
 }
 ```
 
@@ -2846,68 +2944,83 @@ Social networking websites: BFS technique is also used in social networking webs
 Shortest path and minimum spanning tree in un-weighted graph: In the unweighted graph, the BFS technique can be used to find a minimum spanning tree and the shortest
 
 ```
-//undirected graph represented using adjacency list.  
-class Graph { 
-    private int Vertices;   // No. of vertices 
-    private LinkedList<Integer> adj_list[]; //Adjacency Lists 
-   
-    // graph Constructor:number of vertices in graph are passed 
-    Graph(int v) { 
-        Vertices = v; 
-        adj_list = new LinkedList[v]; 
-        for (int i=0; i<v; ++i)         //create adjacency lists
-            adj_list[i] = new LinkedList(); 
-    } 
-   
-    // add an edge to the graph 
-    void addEdge(int v,int w) { 
-        adj_list[v].add(w); 
-    } 
-   
-    // BFS traversal from the root_node 
-    void BFS(int root_node)   { 
-        // initially all vertices are not visited 
-        boolean visited[] = new boolean[Vertices]; 
-   
-        // BFS queue 
-        LinkedList<Integer> queue = new LinkedList<Integer>(); 
-   
-        // current node = visited, insert into queue 
-        visited[root_node]=true; 
-        queue.add(root_node); 
-   
-        while (queue.size() != 0)  { 
-            // deque an entry from queue and process it  
-            root_node = queue.poll(); 
-            System.out.print(root_node+" "); 
-   
+//undirected graph represented using adjacency list.
+public class Graph {
+
+    private int vertices;   // No. of vertices
+    private LinkedList<Integer> adj_list[]; //Adjacency Lists
+
+    // graph Constructor:number of vertices in graph are passed
+    public Graph(int vertices) {
+        this.vertices = vertices;
+        this.adj_list = new LinkedList[v];
+
+        // create adjacency lists
+        for (int i=0; i < vertices; ++i) {
+            this.adj_list[i] = new LinkedList();
+        }
+    }
+
+    // add an edge to the graph
+    public void addEdge(int v,int w) {
+        this.adj_list[v].add(w);
+    }
+
+    // BFS traversal from the root_node
+    public void BFS(int root_node) {
+
+        // initially all vertices are not visited
+        boolean visited[] = new boolean[this.vertices];
+
+        // BFS queue
+        LinkedList<Integer> queue = new LinkedList<>();
+
+        // current node = visited, insert into queue
+        visited[root_node] = true;
+
+        queue.add(root_node);
+
+        while (queue.size() != 0) {
+
+            // deque an entry from queue and process it
+            root_node = queue.poll();
+            System.out.print(root_node + " ");
+
             // get all adjacent nodes of current node and process
-            Iterator<Integer> i = adj_list[root_node].listIterator(); 
-            while (i.hasNext()){ 
-                int n = i.next(); 
-                if (!visited[n]) { 
-                    visited[n] = true; 
-                    queue.add(n); 
-                } 
-            } 
-        } 
-    } 
-  }
-  class Main{ 
-    public static void main(String args[]) 
-    { 
+            Iterator<Integer> iterator = this.adj_list[root_node].listIterator();
+
+            while (iterator.hasNext()) {
+
+                int node = iterator.next();
+
+                if (!visited[node]) {
+
+                    visited[node] = true;
+                    queue.add(node);
+                }
+            }
+        }
+    }
+}
+
+public class Main{
+
+    public static void main(String args[]) {
+
         //create a graph with 5 vertices
-        Graph g = new Graph(5); 
-        //add edges to the graph  
-        g.addEdge(0, 1); 
-        g.addEdge(0, 2); 
-        g.addEdge(0, 3); 
-        g.addEdge(1, 2); 
-        g.addEdge(2, 4); 
+        Graph graph = new Graph(5);
+
+        //add edges to the graph
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(0, 3);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 4);
+
         //print BFS sequence
-        System.out.println("Breadth-first traversal of graph with 0 as starting vertex:"); 
-        g.BFS(0); 
-    } 
+        System.out.println("Breadth-first traversal of graph with 0 as starting vertex:");
+        graph.BFS(0);
+    }
 }
 ```
 
@@ -2916,7 +3029,6 @@ class Graph {
 traversal beginning to end by incrementing the index by 1 until in the array data structure with O(n) linear time complexity
 
 ```
-
 public static int linearSearch(int[] nums, int value) {
 
     for(int index = 0; index < nums.length; index++) {
@@ -3001,7 +3113,6 @@ private static int recursivePartition(int[] nums, int start, int end, int search
 # Algorithm Sort
 
 ```
-
 public static void swapValues(int[] array, int i, int j) {
 
     if(i == j) return;
@@ -3038,7 +3149,6 @@ bubble the largest element to the top/unsorted partition that grows with each lo
 - right-to-left sorted partition growth
 
 ```
-
 public static void bubbleSort(int[] array) {
 
     // sorted partition
@@ -3089,7 +3199,6 @@ selection sort looks for the largest element in the unsorted partition
 - then decrement the lastUnsortedIndex var by 1 and repeat the process
 
 ```
-
 public static void selectionSort(int[] array) {
 
     // last index in the given iteration of the unsorted partition (array starts as unsorted)
@@ -3130,6 +3239,7 @@ public static void selectionSort(int[] array) {
             lastUnsortedIndex--;
         }
     }
+
     System.out.println(Arrays.toString(array));
 }
 ```
@@ -3708,75 +3818,222 @@ Relationships = the different ways two or multiple tables (entities) are related
         ex: many authors-to-many books relationship (a book can have mulitple authors)
 
 __PRIMARY KEY AUTO_INCREMENT__
-    
-when creating a table, ensures one column that is always unique for joined relationships
+
+when creating a table, a primary key ensures one column that is always unique for joined relationships
+
+```
+CREATE TABLE students(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(20)
+);
+
+SHOW TABLES;
+DESC students;
+```
 
 __FOREIGN KEY__
-    
-when creating a table, references to another table within a given table
-explicitely using a FOREIGN KEY protects from bad data input
+
+when creating a table, a foreign key references to another table within a given table
+explicitly protects from bad data input
+
+```
+CREATE TABLE series(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(20)
+);
+
+CREATE TABLE reviewers(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(20)
+);
+
+CREATE TABLE REVIEWS(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    series_id INT,
+    reviewers_id INT,
+    FOREIGN KEY(series_id)
+        REFERENCES series(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY(reviewers)
+        REFERENCES reviewers(id)
+        ON DELETE CASCADE
+);
+```
 
 __JOIN__
 
 when you SELECT data, take data from multiple tables and temporarily consolidate them in a meaningful way
 
-an INNER JOIN only shows data that overlap (the middle of a venn diagram)
+an INNER JOIN only shows data that overlap (the middle of a venn diagram with no nulls)
 
-a LEFT or RIGHT join will ALSO show data overlap PLUS null data pairs (left/right + middle of a venn diagram)
+a LEFT or RIGHT join will ALSO show data overlap PLUS null data pairs (left/right + middle of a venn diagram that will most likely have nulls)
+
+<img src="/content/SQL_joins.jpeg" alt="SQL Joins Diagram">
 
 # MapReduce
 
-A parallel processing technique for processing a big data set which is distributed on a commodity cluster, instead of using serial processing.
+MapReduce is a programming model or pattern within the Hadoop framework that is used to access big data stored in the Hadoop File System (HDFS).
 
-- popular packages: Hadoop and MapReduce
+- MapReduce facilitates concurrent processing by splitting petabytes of data into smaller chunks, and processing them in parallel on Hadoop commodity servers.
 
-__STEP 1: create maps__
+With MapReduce, rather than sending data to where the application or logic resides, the logic is executed on the server where the data already resides, to expedite processing.
 
-the maps are the individual tasks that convert input records into intermediate output records
+- Data access and storage is disk-based—the input is usually stored as files containing structured, semi-structured, or unstructured data, and the output is also stored in files.
 
-- connections from input key/value pairs to a set of intermediate key/value pairs
+At the crux of MapReduce are two functions: Map and Reduce. They are sequenced one after the other.
 
-__STEP 2: shuffle map to reducers__
+- The Map function takes input from the disk as <key,value> pairs, processes them, and produces another set of intermediate <key,value> pairs as output.
 
-send the map output records to the reducers
+- The Reduce function also takes inputs as <key,value> pairs, and produces <key,value> pairs as output.
 
-__STEP 3: assign a reduce task per map__
+<img src="/content/map_reduce.png" alt="map reduce">
 
-all map same-key output values are assigned to a single reducer together
+The types of keys and values differ based on the use case.
+
+- All inputs and outputs are stored in the HDFS.
+- While the map is a mandatory step to filter and sort the initial data, the reduce function is optional.
+
+```
+<k1, v1> -> Map() -> list(<k2, v2>)
+<k2, list(v2)> -> Reduce() -> list(<k3, v3>)
+```
+
+Mappers and Reducers are the Hadoop servers that run the Map and Reduce functions respectively. It doesn’t matter if these are the same or different servers.
+
+__STEP 1: create MAPS__
+
+The input data is first split into smaller blocks. Each block is then assigned to a mapper for processing.
+
+For example, if a file has 100 records to be processed, 100 mappers can run together to process one record each. Or maybe 50 mappers can run together to process two records each. The Hadoop framework decides how many mappers to use, based on the size of the data to be processed and the memory block available on each mapper server.
+
+__STEP 2: shuffle map to REDUCERS__
+
+After all the mappers complete processing, the framework shuffles and sorts the results before passing them on to the reducers. A reducer cannot start while a mapper is still in progress. All the map output values that have the same key are assigned to a single reducer, which then aggregates the values for that key.
+
+__Combine and Partition__
+
+There are two intermediate steps between Map and Reduce.
+
+Combine is an optional process. The combiner is a reducer that runs individually on each mapper server. It reduces the data on each mapper further to a simplified form before passing it downstream.
+
+This makes shuffling and sorting easier as there is less data to work with. Often, the combiner class is set to the reducer class itself, due to the cumulative and associative functions in the reduce function. However, if needed, the combiner can be a separate class as well.
+
+Partition is the process that translates the <key, value> pairs resulting from mappers to another set of <key, value> pairs to feed into the reducer. It decides how the data has to be presented to the reducer and also assigns it to a particular reducer.
+
+The default partitioner determines the hash value for the key, resulting from the mapper, and assigns a partition based on this hash value. There are as many partitions as there are reducers. So, once the partitioning is complete, the data from each partition is sent to a specific reducer.
+
+__MapReduce Example__
+
+Consider an ecommerce system that receives a million requests every day to process payments.
+
+- There may be several exceptions thrown during these requests such as "payment declined by a payment gateway," "out of inventory," and "invalid address."
+
+- A developer wants to analyze last four days' logs to understand which exception is thrown how many times.
+
+The objective is to isolate use cases that are most prone to errors, and to take appropriate action. For example, if the same payment gateway is frequently throwing an exception, is it because of an unreliable service or a badly written interface? If the "out of inventory" exception is thrown often, does it mean the inventory calculation service has to be improved, or does the inventory stocks need to be increased for certain products?
+
+The developer can ask relevant questions and determine the right course of action.
+
+- To perform this analysis on logs that are bulky, with millions of records, MapReduce is an apt programming model.
+
+- Multiple mappers can process these logs simultaneously: one mapper could process a day's log or a subset of it based on the log size and the memory block available for processing in the mapper server.
 
 ```
 /*
-    key = city name
-    list = each element/record that has data & shared key
-    reducerTask = for each team per division, get total annual sales (12 months)
-*/
+    The parameters—MapReduce class name, Map, Reduce and Combiner classes, input and output types, input and output file paths—are all defined in the main function.
+    The Mapper class extends MapReduceBase and implements the Mapper interface.
+    The Reducer class extends MapReduceBase and implements the Reducer interface.
+ */
+public static void main(String[] args) throws Exception {
 
-reducerPacificWest: {
-    suns: [
-            [9,5,2,3,6,4,1,5,9,7,1,3],
-            suns
-        ],
+    JobConf conf = new JobConf(ExceptionCount.class);
+    conf.setJobName("exceptioncount");
 
-    warriors: [
-            [1,5,5,3,6,4,1,4,1,4,2,9],
-            warriors
-        ],
+    conf.setOutputKeyClass(Text.class);
+    conf.setOutputValueClass(IntWritable.class);
 
-    clippers: [
-            [3,5,2,9,6,4,1,7,5,9,8,3],
-            clippers
-        ],
+    conf.setMapperClass(Map.class);
+    conf.setReducerClass(Reduce.class);
+    conf.setCombinerClass(Reduce.class);
 
-    kings: [
-            [6,8,2,8,6,4,1,5,2,7,1,1],
-            kings
-        ]
+    conf.setInputFormat(TextInputFormat.class);
+    conf.setOutputFormat(TextOutputFormat.class);
+
+    FileInputFormat.setInputPaths(conf, new Path(args[0]));
+    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+
+    JobClient.runJob(conf);
 }
 ```
 
-__STEP 4: reduce to small value set__
+Step 1: CREATE MAPS
 
-process the data by adding data as final output result
+For simplification, let's assume that the Hadoop framework runs just four mappers: Mapper 1, Mapper 2, Mapper 3, and Mapper 4.
+
+The value input to the mapper is one record of the log file. The key could be a text string such as "file name + line number." The mapper, then, processes each record of the log file to produce key value pairs. Here, we will just use a filler for the value as '1.' The output from the mappers look like this:
+
+```
+Mapper 1 -> <Exception A, 1>, <Exception B, 1>, <Exception A, 1>, <Exception C, 1>, <Exception A, 1>
+Mapper 2 -> <Exception B, 1>, <Exception B, 1>, <Exception A, 1>, <Exception A, 1>
+Mapper 3 -> <Exception A, 1>, <Exception C, 1>, <Exception A, 1>, <Exception B, 1>, <Exception A, 1>
+Mapper 4 -> <Exception B, 1>, <Exception C, 1>, <Exception C, 1>, <Exception A, 1>
+```
+
+Assuming that there is a combiner running on each mapper—Combiner 1 … Combiner 4—that calculates the count of each exception (which is the same function as the reducer), the input to Combiner 1 will be:
+
+```
+<Exception A, 1>, <Exception B, 1>, <Exception A, 1>, <Exception C, 1>, <Exception A, 1>
+```
+
+Step 2: COMBINE
+
+The output of Combiner 1 will be:
+
+```
+<Exception A, 3>, <Exception B, 1>, <Exception C, 1>
+```
+
+The output from the other combiners will be:
+
+```
+Combiner 2: <Exception A, 2> <Exception B, 2>
+Combiner 3: <Exception A, 3> <Exception B, 1> <Exception C, 1>
+Combiner 4: <Exception A, 1> <Exception B, 1> <Exception C, 2>
+```
+
+Step 3: PARTITION
+
+After this, the partitioner allocates the data from the combiners to the reducers. The data is also sorted for the reducer.
+
+The input to the reducers will be as below:
+
+```
+Reducer 1: <Exception A> {3,2,3,1}
+Reducer 2: <Exception B> {1,2,1,1}
+Reducer 3: <Exception C> {1,1,2}
+```
+
+If there were no combiners involved, the input to the reducers will be as below:
+
+```
+Reducer 1: <Exception A> {1,1,1,1,1,1,1,1,1}
+Reducer 2: <Exception B> {1,1,1,1,1}
+Reducer 3: <Exception C> {1,1,1,1}
+```
+
+Here, the example is a simple one, but when there are terabytes of data involved, the combiner process’ improvement to the bandwidth is significant.
+
+Step 4: REDUCE
+
+Now, each reducer just calculates the total count of the exceptions as:
+
+```
+Reducer 1: <Exception A, 9>
+Reducer 2: <Exception B, 5>
+Reducer 3: <Exception C, 4>
+```
+
+The data shows that Exception A is thrown more often than others and requires more attention. When there are more than a few weeks' or months' of data to be processed together, the potential of the MapReduce program can be truly exploited.
 
 # Distributed Cache
 
@@ -3911,9 +4168,9 @@ a hardware device that transforms between physical states (analog) and bits (dig
 
 __IP ADDRESS__
 
-An IP address identifies geographic location based on organization that “owns” it.
+An Internet Protocol (IP) address identifies geographic location based on the organization that “owns” it.
 
-Groups of addresses are allotted to various organizations by IANA (Internet Assigned Numbers Authority)
+Groups of addresses are allotted to various organizations by Internet Assigned Numbers Authority (IANA)
 
 Each computer on the Internet is assigned an IP Address
 consisting of four numbers between 0 and 255 inclusive:
@@ -3929,14 +4186,11 @@ There are multiple paths from one node
 
 <img src="/content/routing.png">
 
-Two network nodes (e.g. phones) establish a
-dedicated connection via one or more
-switching stations.
+Two network nodes (e.g. phones) establish a dedicated connection via one or more switching stations.
 
 __PACKET SWITCHING__
 
-We attach the source and destination IP addresses to the
-message & two network nodes (e.g. computers) communicate by breaking the message up into small packets
+We attach the source and destination IP addresses to the message & two network nodes (e.g. computers) communicate by breaking the message up into small packets
 
 Routers forward packets toward the destination
 
@@ -3947,14 +4201,18 @@ __INTERNET STRUCTURE__
 the Core provides transport services to edges
 
 - the routers forward packets
+
 - Internet Service Providers (ISPs) provide data transmission media (fiber optic etc.)
+
 - domain name servers (DNS) provide directory of host
 names (more on this next time)
 
 the Edges provide the services people use
 
 - individual users, “hosts”
+
 - private networks (corporate, educational, government…)
+
 - business, government, nonprofit services
 
 <img src="/content/packet-switching.png">
@@ -3968,12 +4226,15 @@ Routers should only be responsible for getting data quickly from its source to i
 Everything else is responsibility of edges
 
 - error detection & recovery
+
 - confidentiality via encryption
 
 Issues:
 
 - lack of trust because of bad actors on the Internet
+
 - profit opportunities for ISPs
+
 - corporate and government monitoring of communications
 
 __NET NEUTRALITY__
@@ -4041,9 +4302,9 @@ SOA is more adaptable to advances in technology. You can modernize your applicat
 
 __ESB__
 
-<img src="/content/esb.png">
-
 An enterprise service bus (ESB) is software that you can use when communicating with a system that has multiple services. It establishes communication between services and service consumers no matter what the technology.
+
+<img src="/content/esb.png">
 
 __SOA DRAWBACKS__
 
@@ -4179,7 +4440,7 @@ __Operating System__
 
 Operating systems like Microsoft Windows and Linux, can make use of physical RAM as well as hard drive swap space to manage a total pool of available memory.
 
-When memory is allocated in a system, not all of the available is always consumed in a linear manner, which can lead to fragmentation. 
+When memory is allocated in a system, not all of the available is always consumed in a linear manner, which can lead to fragmentation.
 
 - Internal Fragmentation – Memory is allocated to a process or application and isn’t used, leaving un-allocated or fragmented memory.
 
