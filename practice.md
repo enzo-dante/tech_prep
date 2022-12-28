@@ -1,3 +1,90 @@
+# Behavioral Interview Questions
+
+__1. Tell me about yourself.__
+
+My mission in life is to bring people together and realize greatness on a community & personal level.
+
+My 4-core values, which align well with BetMgM's stated cultural tenets are:
+
+1. choose enduring greatness
+
+2. do whatever you can to produce the desired results
+
+3. be committed to improvement
+
+4. insist on shared core values
+
+"Do what is right = choose enduring long-term greatness, Hustle Hard = do whatever you can to produce the desired results & be committed to improvement, Backed By the Best = insist on shared core values"
+
+I train in the evenings & perform on the weekends as a latin dancer with the very achievable goal of becoming a multi-world champion.
+
+__2a. Why do you want to work here specifically?__
+
+I want to work at __BetMgM__ specifically because:
+
+One, the Strategy & Planning role intrigues me: It seems like an ideal entry point for career opportunities that balance both my technology and business interests. While I was doing my research into your company I noticed that your company doesn't currently offer sports betting on Competitive Latin Dance, the prospect of potentially leading that initiative down the road excites me.
+
+Two, per Glassdoor reviews, you genuinely score high on collaborative culture and Adam Greenblatt's CEO leadership. I've learned through experience & reading, that no one achieves enduring greatness alone, which is what I want. Thus, insisting on surrounding myself with other people that share the same core values is paramount.
+
+__2b. What sports betting experience do you have?__
+
+Even though I don't have any online sports betting experience, I did start studying the industry for this interview by reading up on BetMgm's business profile & Sport Betting Glossary page. I was hoping to dabble in online sports betting by placing a wager on my Phoenix Suns basketball team soon.  
+
+Business Profile per Etain update:
+
+BetMGM LLC (“BetMGM”), one of the leading sports betting and iGaming operators across the U.S., jointly owned by Entain plc (LSE: ENT) (“Entain”) and MGM Resorts International (NYSE: MGM) (“MGM Resorts”), is today providing an update on performance and outlook for 2022.
+
+- Strong financial performance in fiscal year 2021 & fiscal year 2022 net revenue from operations expected to be over $1.3bn
+
+- Expecting to launch online sportsbooks in Illinois and Louisiana in the first quarter as well as retail sportsbooks in Puerto Rico and both online sportsbook and iGaming in Ontario later this year
+
+- Expanding our first-to-market Bingo product and the BetMGM Racing app into additional states while continuing to enhance our products in existing markets
+
+Sports Betting Glossary:
+https://sports.betmgm.com/en/blog/sports-betting-terms-glossary-how-to-bet-online/
+
+Action
+To have action on a sporting event means you’ve placed a bet on the game.
+
+Against the Spread
+The spread is the margin by which one team or player is favored in one event. If you’re betting against the spread, you’re betting one side covers the spread.
+
+American Odds
+American sports betting odds, those used by BetMGM, are displayed as plus-minus odds, e.g., +400 or -130. Plus odds represent the amount you’d win on a $100 bet ($400, not including stake, for +400 odds), while minus odds represent the amount you’d wager to profit $100 ($130 on for -130 odds).
+
+Antepost
+Most commonly used in horse racing betting, an antepost bet – also written as ante-post or ante post – is placed before the betting market has opened for a particular event.
+
+Backdoor Cover
+The Kansas City Chiefs, a 9-point home favorite, led the Dallas Cowboys by 13 points in the final minute when Dak Prescott connected with Amari Cooper on a 60-yard busted-coverage touchdown with one second remaining. The Cowboys lost the game by six points but, as a 9-point underdog, covered the spread. That’s a backdoor cover.
+
+Bad Beat
+If you held a Chiefs (-9) ticket, the Cowboys’ meaningless touchdown was a bad beat, i.e., a lost bet that appeared to be a guaranteed winner.
+
+__3. How do your previous experiences correlate to this specific position?__
+
+My experience as an international box-office coordinator at Lionsgate, taught me the importance of having built-in quality assurance checks when creating & updating financial models based on local sales data from our international distributors. Prior to that, I also served as an executive assist to their then-president of Motion Picture, Erik Feig, managing his calendar and taking meeting notes.
+
+As an SE at Choice Hotels, not only did I hone my technical skills & understanding, but I gained first-hand exposure to macro product management by implementing user stories. As an SE that adhered to the Agile Scrum methodology, I built up experience with Content Management Systems & Project Management Tools  to guide features from inception to Test Driven Development implementation to production deployment.
+
+__4. What CMS (content management system) experience do you have?__
+
+Based off what I am learning in this Google Digital Marketing course I'm taking, I recently built and deployed an SEO website using WIX to build up my nascent side-hustle business of teaching private salsa dance lessons.
+
+On an enterprise-level, I regularly used Bitbucket when I was running production Jenkin & AWS deployments every-other week (We were migrating from on-premise to the cloud, thus 2 deployments). When I was on production trouble-shooting calls, I routinely checked that all the information was properly entered in our CMS to make sure our API calls would work properly. Thankfully, my team and I routinely documented all of our findings in Confluence for future reference.
+
+__5. What project management tools do you have experience with?__
+
+For some personal projects, I've used Trello's Kanban Board with a waterfall project management approach to define to-do, doing, & done phases. For my latest on-going Java project - A music manager TDD app demonstrating how Java can interface with a SQL database -- I simply used Github and am using my Readme file as PR request & Kanban board.
+
+As an enterprise SE, I used Atlassian's Jira to track progress on user stories during a sprint and Bitbucket as version control.
+
+__6. What are your current salary requirements?__
+
+Given my technical background, 70K-80K dollars a year would be fair.
+
+# Technical Interview Questions
+
 __Q1__
 
 Given a signed 32-bit integer x, return x with its digits reversed
@@ -83,9 +170,9 @@ O(1) constant: in-place algorithm that doesn't require additional memory space
 
 ```json
 
-private static final String FIZZ = "Fizz"; 
-private static final String BUZZ = "Buzz"; 
-private static final String FIZZ_BUZZ = "FizzBuzz"; 
+private static final String FIZZ = "Fizz";
+private static final String BUZZ = "Buzz";
+private static final String FIZZ_BUZZ = "FizzBuzz";
 
 @Test
 void fizzBuzz_0() {
@@ -123,7 +210,7 @@ void fizzBuzz_5() {
 void fizzBuzz_3And5() {
     ArrayList<String> actualValues = Q2.fizzBuzz(15);
     ArrayList<String> expectedValues = new ArrayList<>();
-    
+
     expectedValues.add("1");
     expectedValues.add("2");
     expectedValues.add(FIZZ);
@@ -538,26 +625,26 @@ public class Playlist {
     // CONSTANTS: static class variables assigned FINAL value before compilation/instantiation
     private static final String MENU =
         "\n\tPlaylist Menu\n".toUpperCase() +
-        "0 - quit\n" + 
-        "1 - next song\n" + 
-        "2 - previous song\n" + 
-        "3 - replay current song\n" + 
-        "4 - list playlist songs\n" + 
-        "5 - print available actions\n" + 
+        "0 - quit\n" +
+        "1 - next song\n" +
+        "2 - previous song\n" +
+        "3 - replay current song\n" +
+        "4 - list playlist songs\n" +
+        "5 - print available actions\n" +
         "6 - delete current song from playlist\n";
 
-    private static final String CURRENTLY_PLAYING = "Currently playing: "; 
+    private static final String CURRENTLY_PLAYING = "Currently playing: ";
     private static final String INVALID_INPUT = "Invalid input";
     private static final String NO_SONGS = "No songs in playlist";
-    private static final String PLAYLIST_BEGINNING = "Playlist beginning"; 
-    private static final String PLAYLIST_COMPLETE = "Playlist complete"; 
-    private static final String REPLAYING = "Now replaying: "; 
-    private static final String SELECTION = "\nSelection: "; 
+    private static final String PLAYLIST_BEGINNING = "Playlist beginning";
+    private static final String PLAYLIST_COMPLETE = "Playlist complete";
+    private static final String REPLAYING = "Now replaying: ";
+    private static final String SELECTION = "\nSelection: ";
     private static final String SONG_REMOVED = " - song in playlist has been removed";
 
     // OOP ENCAPSULATION private class fields
     private String name;
-    
+
     // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
     public Playlist(String name) {
         this.name = name;
@@ -676,7 +763,7 @@ public class Playlist {
 
                     case 3: // repeat
 
-                        // handle direction: if forward, validate previous node & show 
+                        // handle direction: if forward, validate previous node & show
 
                         break;
 
@@ -715,7 +802,7 @@ public class Playlist {
 public class Song {
 
     // OOP ENCAPSULATION private class fields/object instance members
-    private String title;  
+    private String title;
     private Double duration;
 
     // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
@@ -777,7 +864,7 @@ public class AlbumTest {
     @Test
     void album_findSong_success() {
 
-        String testTitle = OUI; 
+        String testTitle = OUI;
 
         Song expected = new Song(testTitle, 239);
         Song actual = Album.findSong(testTitle);
@@ -835,7 +922,7 @@ public class AlbumTest {
     @Test
     void album_addToPlayList1_true() {
 
-        String testTitle = OUI; 
+        String testTitle = OUI;
         LinkedList<Song> testPlaylist = new LinkedList<>();
 
         boolean actual = Album.addToPlaylist(testTitle, testPlaylist);
@@ -855,7 +942,7 @@ public class AlbumTest {
     @Test
     void album_addToPlayList2_true() {
 
-        int testTrack = 0; 
+        int testTrack = 0;
         LinkedList<Song> testPlaylist = new LinkedList<>();
 
         boolean actual = Album.addToPlaylist(testTrack, testPlaylist);
@@ -1195,7 +1282,7 @@ __Q9__
 
 ```
 /**
-* ! query many-to-many table from created reviewers, series, review tables 
+* ! query many-to-many table from created reviewers, series, review tables
 *
 * * reviewers schema:
 * *    id,
@@ -1366,12 +1453,24 @@ SELECT
             AVG(reviews.rating),
             2
         ),
-        0 
+        0
     ) AS "avg_rating"
 FROM series
 LEFT JOIN reviews
     ON series.id = reviews.series_id
 GROUP BY series.genre
 ORDER BY series.genre ASC
-LIMIT 3; 
+LIMIT 3;
 ```
+
+challenge 6: reproduce the table below (there will be nulls):
+
+```
+first_name | last_name | COUNT | MIN | MAX | AVG | STATUS
+
+     thomas  | stoneman | 5  | 7.0  | 9.5 | 8.02 | ACTIVE
+     wyatt   | skaggs   | 9  | 5.5  | 9.3 | 7.80 | ACTIVE
+     colt    | steele   | 10 | 4.5  | 9.9 | 8.77 | POWER USER
+     marlon  | crafford | 0  | 0    | 0   | 0.00 | INACTIVE
+```
+

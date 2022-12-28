@@ -34,170 +34,75 @@ O(n-squared) QUADRATIC time complexity: the absolute worst-case, the number of s
 
 - pronounced: O of n-squared
 
-# Test Driven Development (TDD)
+# Content Management System
 
-writing code that tests your other code to ensure a level of performance quality when your app is in production; making refactoring and collaboration safer and bug-free
+A content management system (CMS) is a tool that allows you to build all of the pieces of your website - from text to photos to widgets - via an easy-to-use interface.
 
-1. development BEGINS by writing RED failing tests
+With a CMS like Wordpress, Wix, or Atlassian's Bitbucket, you don’t need to write your own code; instead, you can apply pre-created templates and plug-ins to quickly and efficiently build a website.
 
-2. once tests are written, write the MINIMUM amount of GREEN code necessary to make tests pass
+# Project Management 
 
-3. refactor = clean up the code, while ensuring that tests still pass
+Enterprise project management software helps businesses accurately measure and control scope creep (costs, time and resources) and consistently deliver projects that are in alignment with business goals to ensure project success. 
 
-4. once tests pass, a feature is considered complete
+__Jira Agile__ 
 
-__TDD JUNIT__
+Agile project management takes an iterative approach to development by creating several incremental steps with regular feedback intervals (sprints).
 
-1. update project structure JUnit library dependency to compile
+The development team can only accept work that it has the capacity for. The product owner doesn't push work to the team or commit them to arbitrary deadlines. The development team pulls work from the program's backlog as it can accept new work.
 
-```
-   File -> project structure -> Modules -> Dependencies Tab ->
-       Export window -> Junit ->
-           open dropdown -> change "Test" to "Compile" -> Ok
-```
+UPSIDE
 
-2. add JUnit Library
+- A project requirement is segmented into smaller pieces, which are then prioritized by importance.
 
-- right-click add "JUnit" to class path
+- Promotes collaboration, especially with the customer. 
 
-- select "Use JUnit from IntelliJ IDEA distribution"
+- Adjusts at regular intervals to ensure a customer’s needs are met
 
-- click Ok
+DOWNSIDE
 
-3. define class, method signatures, & test suite
+- Critical path and inter-project dependencies may not be clearly defined as in waterfall
 
-4. create JUnit Test class & generate methods to test in root
+Agile Scrum uses two-week sprints to get work done. These sprints are planned in advance, executed, and then reviewed at the end of the two-week period. During sprint planning, the team creates a sprint backlog. The team completes these backlog tasks during the sprint, managing the work among themselves.
 
-- click yellow light bulb onHover over independent class name
+To build an AGILE roadmap, product owners take into account market trajectories, value propositions, and engineering constraints.
 
-- FIX if IDE is unable to identify built-in JUnit Test class
+<img src="/content/jira-agile.png" alt="agile project management">
 
-- select specific methods to test
+Jira software is the project management tool for AGILE teams, customizable for any type of project.
 
-5. BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
+- Teams can start with a project template or create their own custom workflow.
 
-6. run expected failing tests suite
+- Jira issues, also known as tasks, tracks each piece of work that passes through the workflow steps to completion.
 
-7. review run configuration for all tests
-  want to test class in application, NOT the application itself
+- Jira's automation engine enables teams to easily automate tasks and processes. With all project information in one place, reports can also be generated to track progress, productivity and ensure nothing slip
 
-- right-click outside created Test class & select run Test class
-- right-click outside created Test class & select modify run configuration
-- review configurations & click Ok
-- review right-corner dropdown is respective Test suite
+__Trello Waterfall__
 
-8. setup tests objects run before & after teardown every test run
+The waterfall project management approach follows a linear, sequential formula.
 
-```
-public class AnimalTest {
+The waterfall project management approach entails a clearly defined sequence of execution with project phases that do not advance until a phase receives final approval. Once a phase is completed, it can be difficult and costly to revisit a previous stage. 
 
-    private static final String BEFORE_ALL = "STATIC execute only once before all test suit is run, read data fro mdb for tests";
-    private static final String BEFORE_EACH = "execute code in setup() before each test is run";
-    private static final String AFTER_EACH = "execute code in setup() after each test is run";
-    private static final String AFTER_ALL = "STATIC execute only once after all test suit is run";
+UPSIDE
 
-    private Animal animal;
+- Requires less coordination due to clearly defined phases sequential processes
 
-    @BeforeAll
-    static void beforeAll() {
-        System.out.println(BEFORE_ALL);
-    }
+DOWNSIDE
 
-    @BeforeEach
-    void beforeEach() {
-        System.out.println(BEFORE_EACH);
-        animal = new Animal("Teddy", "Bear");
-    }
+- Harder to break up and share work because of stricter phase sequences teams are more specialized & risk of time waste due to delays and setbacks during phase transitions
 
-    @AfterEach
-    void afterEach() {
-        System.out.println(AFTER_EACH);
-    }
+Trello Kanban’s namesake board visualizes the team’s workflow. The board is split into categories of work to be done, work in progress, and completed work, and teams can add more categories as necessary to better visualize their process.
 
-    @AfterAll
-    static void afterAll() {
-        System.out.println(AFTER_ALL);
-    }
+<img src="/content/trello-waterfall.png" alt="agile project management">
 
-    @Test
-    void hasEaten_true() {
+Trello project management workflow Phases:
 
-        int testHunger = 80;
+- Backlog
+- In Progress
+- Blocked/Paused
+- Ready for Launch
+- Live
 
-        boolean actual = animal.hasEaten(testHunger);
-        assertTrue(actual);
-    }
-
-    @Test
-    void hasEaten_false() {
-
-        int testHunger = 80;
-
-        boolean actual = animal.hasEaten(testHunger);
-        assertFalse(actual);
-    }
-}
-```
-
-9. write test method assertions that test against class functionality
-
-- in testSuite, click on green arrow/red x in gutter next to specific method to test
-
-- review only passing or only failing tests with toggle in top-left of Test window
-
-```
-// JUnit TRY-CATCH: handle expected exceptions handing modify @Test annotation
-
-try {
-    double balance = checkingsAccount.withdraw(600.00, false);
-    assertEquals(400.00, balance, 0);
-} catch(IllegalArgumentException e) {
-    System.out.println(e.getMessage());
-}
-```
-
-BEST PRACTICE:
-
-write easily understood test method names
-
-```
-getBalance_deposit()
-getBalance_withdraw()
-```
-
-write on 1 independent assertion for 1 independent test
-
-setup any independent class instances that can be reused (without cross-pollination) on each test method
-
-```
-assertEquals(expectedValue, actualTestValue);
-
-assertNotEquals(expectedValue, actualTestValue);
-
-assertTrue(actualTestValue, failMsg);
-
-assertFalse(actualTestValue, failMsg);
-
-// consider two arrays equal if length & every element in order identical
-assertArrayEquals(expectedArray, actualTestArray);
-
-assertNull(actualTestValue);
-
-// easy-to-read check for null values
-assertNotNull(actualTestValue);
-
-assertSame(expectedValue, actualTestValue);
-
-// compares object references, unlike assertEquals that checks if instances are the same
-assertNotSame(expectedValue, actualTestValue);
-
-// compare the actual value against a matcher range of values
-assertThat(expectedValue, actualTestValue);
-```
-
-10. write method implementation in file
-
-11. individually run implemented functions until all failing tests resolved in test suite
+The Trello tasks are placed on cards and team members who are assigned to that task are added to the card. The card moves through the workflow as progress is made on completing the task.
 
 # Keywords
 
@@ -279,6 +184,129 @@ public class Person {
 }
 ```
 
+__AUTOBOXING__
+
+converting primitive dataType -> Wrapper class dataType w/ greater functionality
+
+```
+// given an integer n, return the number of trailing zeroes in n!
+
+public static Integer trailingZeroFactorial(int n) {
+
+    if(n < 0) return -1;
+
+    Integer nFactorial = n; // AUTOBOXING
+    int everyFiveCount = 0
+
+    while(nFactorial % 5 == 0) {
+
+        nFactorial /= 5;
+
+        // ex) 15 / 5 = there are 3 fives in 15
+        everyFiveCount += nFactorial;
+    }
+
+    return everyFiveCount; // AUTOBOXING
+}
+```
+
+__UNBOXING__
+
+casting greater functionality Wrapper class dataType -> primitive dataType
+
+```
+private static double calculateInterest(Double amount, Double interestRate) {
+    return amount * (interestRate/100);
+}
+```
+
+__WRAPPER CLASS__
+
+class variables with greater functionality for respective primitive dataType
+
+```
+int currentValue = Integer.parseInt(numberSubstring);
+```
+
+__OOP CLASSES__
+
+In object-oriented programming, a class is a blueprint for creating objects (a particular data structure), providing initial values for state (member variables or attributes), and implementations of behavior (member functions or methods).
+
+```
+public class Animal {
+
+    private String name;
+    private int numLegs;
+
+    // OOP CONSTRUCTOR that initializes the class fields & INTRINSIC LOCK on class/object blueprint instantiation
+    public Animal(String name, int numLegs) {
+
+        this.numLegs = numLegs;
+        this.name = "unnamed".toUpperCase();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getNumLegs() {
+        return this.numLegs;
+    }
+}
+```
+
+An instance is a specific object created from a particular class. Classes are used to create and manage new objects and support inheritance (a key ingredient in object-oriented programming and a mechanism of reusing code).
+
+```
+// The user-defined objects are created using the class keyword.
+public static void main(String[] args) {
+
+    Animal animal = new Animal(4);
+
+    animal.setName("Toby the Dog");
+    System.out.println(animal.getName());
+
+    Scanner scanner = new Scanner(System.in);
+    scanner.close();
+}
+```
+
+__OOP COMPOSITION + INNER CLASS__
+
+logically grouped class components within an extending parent super class
+
+```
+public class PC {
+
+    private Motherboard motherboard;
+
+    public PC(int ramSlots) {
+        this.motherboard = new MotherBoard(ramSlots);
+    }
+
+    public Motherboard getMotherboard() {
+        return this.motherboard;
+    }
+
+    class Motherboard {
+
+        private int ramSlots;
+
+        public Motherboard(int ramSlots) {
+            this.ramSlots = ramSlots;
+        }
+
+        public int getRamSlots() {
+            return this.ramSlots;
+        }
+    }
+}
+```
+
 __OOP ENCAPSULATION__
 
 use access modifiers to guard the class fields & methods methods from inappropriate external access
@@ -353,129 +381,6 @@ public class Player implements ISports {
 }
 ```
 
-__OOP CLASSES__
-
-In object-oriented programming, a class is a blueprint for creating objects (a particular data structure), providing initial values for state (member variables or attributes), and implementations of behavior (member functions or methods).
-
-```
-public class Animal {
-
-    private String name;
-    private int numLegs;
-
-    // OOP CONSTRUCTOR that initializes the class fields & INTRINSIC LOCK on class/object blueprint instantiation
-    public Animal(String name, int numLegs) {
-
-        this.numLegs = numLegs;
-        this.name = "unnamed".toUpperCase();
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getNumLegs() {
-        return this.numLegs;
-    }
-}
-```
-
-An instance is a specific object created from a particular class. Classes are used to create and manage new objects and support inheritance (a key ingredient in object-oriented programming and a mechanism of reusing code).
-
-```
-// The user-defined objects are created using the class keyword.
-public static void main(String[] args) {
-
-    Animal animal = new Animal(4);
-
-    animal.setName("Toby the Dog");
-    System.out.println(animal.getName());
-
-    Scanner scanner = new Scanner(System.in);
-    scanner.close();
-}
-```
-
-__WRAPPER CLASS__
-
-class variables with greater functionality for respective primitive dataType
-
-```
-int currentValue = Integer.parseInt(numberSubstring);
-```
-
-__AUTOBOXING__
-
-converting primitive dataType -> Wrapper class dataType w/ greater functionality
-
-```
-// given an integer n, return the number of trailing zeroes in n!
-
-public static Integer trailingZeroFactorial(int n) {
-
-    if(n < 0) return -1;
-
-    Integer nFactorial = n; // AUTOBOXING
-    int everyFiveCount = 0
-
-    while(nFactorial % 5 == 0) {
-
-        nFactorial /= 5;
-
-        // ex) 15 / 5 = there are 3 fives in 15
-        everyFiveCount += nFactorial;
-    }
-
-    return everyFiveCount; // AUTOBOXING
-}
-```
-
-__UNBOXING__
-
-casting greater functionality Wrapper class dataType -> primitive dataType
-
-```
-private static double calculateInterest(Double amount, Double interestRate) {
-    return amount * (interestRate/100);
-}
-```
-
-__OOP COMPOSITION + INNER CLASS__
-
-logically grouped class components within an extending parent super class
-
-```
-public class PC {
-
-    private Motherboard motherboard;
-
-    public PC(int ramSlots) {
-        this.motherboard = new MotherBoard(ramSlots);
-    }
-
-    public Motherboard getMotherboard() {
-        return this.motherboard;
-    }
-
-    class Motherboard {
-
-        private int ramSlots;
-
-        public Motherboard(int ramSlots) {
-            this.ramSlots = ramSlots;
-        }
-
-        public int getRamSlots() {
-            return this.ramSlots;
-        }
-    }
-}
-```
-
 __EXCEPTION HANDLING__
 
 look before you leap: use if-else statement to handle errors
@@ -498,6 +403,209 @@ try {
 } catch(InterruptedException  e2) {
 
     System.out.println("Thread running the task was interrupted");
+}
+```
+
+# Interfaces
+
+an abstract collection of publicly-shared method signatures & public CONSTANTS that MUST ALL be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
+
+```
+interface ITelephone {
+
+    // define the public 'signature' (only method names & parameters) of the shared behavior & public CONSTANTS used by the set of class
+    void powerOn();
+    boolean dial(int phoneNumber);
+
+    final String NO_POWER = "No power button";
+}
+
+class DeskPhone implements ITelephone {
+
+    private static final String RINGING = "Ring ring ring";
+
+    private int myNumber;
+    private boolean isRinging;
+
+    public DeskPhone(int myNumber) {
+        this.myNumber = myNumber;
+        this.isRinging = false;
+    }
+
+    @Override
+    public void powerOn() {
+        System.out.println(NO_POWER);
+    }
+
+    @Override
+    public boolean dial(int phoneNumber) {
+        System.out.println(RINGING);
+        this.isRinging = true;
+    }
+}
+```
+
+# Abstract Classes
+
+__ABSTRACTION__
+
+defining the inherited signature, WITHOUT implementation
+
+__ABSTRACT CLASS__
+
+force child subclass OOP INHERITANCE of method, signatures, & parent super-class fields for a set of classes
+
+- This is achieved by mandating OOP POLYMORPHISM method signatures to be defined in order to execute respectively-unique implementation
+
+  - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
+
+__OOP INHERITANCE__
+
+child subclass inherits public class fields + methods from extending parent super class
+
+```
+// abstract keyword = no logic, only define the class or method signature shared across adhering classes
+abstract class AbstractAnimal {
+
+    private String name;
+
+    public AbstractAnimal(String name) {
+        this.name = name;
+    }
+
+    public abstract void eat();
+
+    public String getName() {
+        return this.name;
+    }
+}
+
+// OOP INHERITANCE: child-class constructor needs to extend parent super-class Animal in addition to abstract class method implementation
+class Dog extends AbstractAnimal {
+
+    private String color;
+
+    public Dog(String color, String name) {
+        super(name);
+        this.color = color;
+    }
+
+    @Override
+    public void eat() {
+        System.out.println(super.getName() + " is eating");
+    }
+
+    public String getColor() {
+        return this.color;
+    }
+}
+```
+
+# Interfaces vs Abstract Classes
+
+ABSTRACT CLASSES can have class fields/object instance members AND define abstract publicly-shared signatures
+
+- you CANNOT instantiate an ABSTRACT CLASS, you must use a normal class that inherits from an ABSTRACT CLASS for instantiation
+
+INTERFACES can ONLY define publicly-shared signatures & public CONSTANTS
+
+# Generics
+
+improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
+
+```
+ArrayList<Integer> onlyIntegers = new ArrayList<>();
+onlyIntegers.add(1);
+
+// not using generics
+ArrayList elements = new ArrayList<>();
+elements.add(1);
+```
+
+GENERICS make identifying bugs/code breaks faster throughout lifecycle (preferably before prod runtime & in compile time) and subsequently cheaper to fix due to less resources being exhausted
+
+```
+interface ISports {
+    String getName();
+}
+
+abstract class Player implements ISports {
+
+    private final String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+}
+
+class FootballPlayer extends Player {
+
+    public FootballPlayer(String name) {
+        super(name);
+    }
+}
+
+// Comparable<Team<T>> = only compare the same-sport teams
+class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
+
+    private final String ALREADY_ON_TEAM = " already on team";
+    private final String ADDED_TO_TEAM = " added to team";
+
+    private String name;
+    private int won;
+    private int tied;
+
+    // GENERICS: specify datatype parameters when creating classes, interfaces, or methods thus improving ENCAPSULATION
+    private ArrayList<T> members;
+
+    public SportsTeam(String name) {
+        this.name = name;
+
+        this.members = new ArrayList<T>();
+        this.won = 0;
+        this.tied = 0;
+    }
+
+    public boolean addPlayer(T player) {
+
+        if(this.members.contains(player)) {
+
+            // since using GENERICS CLASS extends bound Type parameter, no need to cast dataType
+            System.out.println(player.getName() + ALREADY_ON_TEAM);
+            return false;
+        }
+
+        this.members.add(player);
+        System.out.println(player.getName() + ADDED_TO_TEAM + " " + this.getName());
+
+        return true;
+    }
+
+    public int ranking() {
+        return (this.won * 2) + this.tied;
+    }
+
+    @Override
+    public int compareTo(SportsTeam<T> team) {
+
+        boolean isLowerRank = (this.ranking() > team.ranking());
+        boolean isHigherRank = (this.ranking() < team.ranking());
+        int sameRank = 0;
+
+        if(isLowerRank) {
+            return -1;
+        } else if(isHigherRank){
+            return 1;
+        }
+        return sameRank;
+    }
+
+    // Getters & Setters
 }
 ```
 
@@ -726,209 +834,6 @@ __POTENTIAL PROBLEMS__
 make sure to avoid redundant recursive calls (solved via MEMOIZATION)
 
 - MEMOIZATION is a technique that can be used to improve the efficiency of divide & conquer algorithms by storing the solutions to earlier problems & eliminating redundant calls
-
-# Interfaces
-
-an abstract collection of publicly-shared method signatures & public CONSTANTS that MUST ALL be uniquely implemented/@Override for designated classes for standardization via OOP POLYMORPHISM
-
-```
-interface ITelephone {
-
-    // define the public 'signature' (only method names & parameters) of the shared behavior & public CONSTANTS used by the set of class
-    void powerOn();
-    boolean dial(int phoneNumber);
-
-    final String NO_POWER = "No power button";
-}
-
-class DeskPhone implements ITelephone {
-
-    private static final String RINGING = "Ring ring ring";
-
-    private int myNumber;
-    private boolean isRinging;
-
-    public DeskPhone(int myNumber) {
-        this.myNumber = myNumber;
-        this.isRinging = false;
-    }
-
-    @Override
-    public void powerOn() {
-        System.out.println(NO_POWER);
-    }
-
-    @Override
-    public boolean dial(int phoneNumber) {
-        System.out.println(RINGING);
-        this.isRinging = true;
-    }
-}
-```
-
-# Abstract Classes
-
-__ABSTRACTION__
-
-defining the inherited signature, WITHOUT implementation
-
-__ABSTRACT CLASS__
-
-force child subclass OOP INHERITANCE of method, signatures, & parent super-class fields for a set of classes
-
-- This is achieved by mandating OOP POLYMORPHISM method signatures to be defined in order to execute respectively-unique implementation
-
-  - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
-
-__OOP INHERITANCE__
-
-child subclass inherits public class fields + methods from extending parent super class
-
-```
-// abstract keyword = no logic, only define the class or method signature shared across adhering classes
-abstract class AbstractAnimal {
-
-    private String name;
-
-    public AbstractAnimal(String name) {
-        this.name = name;
-    }
-
-    public abstract void eat();
-
-    public String getName() {
-        return this.name;
-    }
-}
-
-// OOP INHERITANCE: child-class constructor needs to extend parent super-class Animal in addition to abstract class method implementation
-class Dog extends AbstractAnimal {
-
-    private String color;
-
-    public Dog(String color, String name) {
-        super(name);
-        this.color = color;
-    }
-
-    @Override
-    public void eat() {
-        System.out.println(super.getName() + " is eating");
-    }
-
-    public String getColor() {
-        return this.color;
-    }
-}
-```
-
-# Interfaces vs Abstract Classes
-
-ABSTRACT CLASSES can have class fields/object instance members AND define abstract publicly-shared signatures
-
-- you CANNOT instantiate an ABSTRACT CLASS, you must use a normal class that inherits from an ABSTRACT CLASS for instantiation
-
-INTERFACES can ONLY define publicly-shared signatures & public CONSTANTS
-
-# Generics
-
-improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
-
-```
-ArrayList<Integer> onlyIntegers = new ArrayList<>();
-onlyIntegers.add(1);
-
-// not using generics
-ArrayList elements = new ArrayList<>();
-elements.add(1);
-```
-
-GENERICS make identifying bugs/code breaks faster throughout lifecycle (preferably before prod runtime & in compile time) and subsequently cheaper to fix due to less resources being exhausted
-
-```
-interface ISports {
-    String getName();
-}
-
-abstract class Player implements ISports {
-
-    private final String name;
-
-    public Player(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-}
-
-class FootballPlayer extends Player {
-
-    public FootballPlayer(String name) {
-        super(name);
-    }
-}
-
-// Comparable<Team<T>> = only compare the same-sport teams
-class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
-
-    private final String ALREADY_ON_TEAM = " already on team";
-    private final String ADDED_TO_TEAM = " added to team";
-
-    private String name;
-    private int won;
-    private int tied;
-
-    // GENERICS: specify datatype parameters when creating classes, interfaces, or methods thus improving ENCAPSULATION
-    private ArrayList<T> members;
-
-    public SportsTeam(String name) {
-        this.name = name;
-
-        this.members = new ArrayList<T>();
-        this.won = 0;
-        this.tied = 0;
-    }
-
-    public boolean addPlayer(T player) {
-
-        if(this.members.contains(player)) {
-
-            // since using GENERICS CLASS extends bound Type parameter, no need to cast dataType
-            System.out.println(player.getName() + ALREADY_ON_TEAM);
-            return false;
-        }
-
-        this.members.add(player);
-        System.out.println(player.getName() + ADDED_TO_TEAM + " " + this.getName());
-
-        return true;
-    }
-
-    public int ranking() {
-        return (this.won * 2) + this.tied;
-    }
-
-    @Override
-    public int compareTo(SportsTeam<T> team) {
-
-        boolean isLowerRank = (this.ranking() > team.ranking());
-        boolean isHigherRank = (this.ranking() < team.ranking());
-        int sameRank = 0;
-
-        if(isLowerRank) {
-            return -1;
-        } else if(isHigherRank){
-            return 1;
-        }
-        return sameRank;
-    }
-
-    // Getters & Setters
-}
-```
 
 # Concurrency
 
@@ -4677,3 +4582,168 @@ __REGEX quantifiers__
 
     ? = once or none (optional)
 ```
+
+# Test Driven Development (TDD)
+
+writing code that tests your other code to ensure a level of performance quality when your app is in production; making refactoring and collaboration safer and bug-free
+
+1. development BEGINS by writing RED failing tests
+
+2. once tests are written, write the MINIMUM amount of GREEN code necessary to make tests pass
+
+3. refactor = clean up the code, while ensuring that tests still pass
+
+4. once tests pass, a feature is considered complete
+
+__TDD JUNIT__
+
+1. update project structure JUnit library dependency to compile
+
+```
+   File -> project structure -> Modules -> Dependencies Tab ->
+       Export window -> Junit ->
+           open dropdown -> change "Test" to "Compile" -> Ok
+```
+
+2. add JUnit Library
+
+- right-click add "JUnit" to class path
+
+- select "Use JUnit from IntelliJ IDEA distribution"
+
+- click Ok
+
+3. define class, method signatures, & test suite
+
+4. create JUnit Test class & generate methods to test in root
+
+- click yellow light bulb onHover over independent class name
+
+- FIX if IDE is unable to identify built-in JUnit Test class
+
+- select specific methods to test
+
+5. BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
+
+6. run expected failing tests suite
+
+7. review run configuration for all tests
+  want to test class in application, NOT the application itself
+
+- right-click outside created Test class & select run Test class
+- right-click outside created Test class & select modify run configuration
+- review configurations & click Ok
+- review right-corner dropdown is respective Test suite
+
+8. setup tests objects run before & after teardown every test run
+
+```
+public class AnimalTest {
+
+    private static final String BEFORE_ALL = "STATIC execute only once before all test suit is run, read data fro mdb for tests";
+    private static final String BEFORE_EACH = "execute code in setup() before each test is run";
+    private static final String AFTER_EACH = "execute code in setup() after each test is run";
+    private static final String AFTER_ALL = "STATIC execute only once after all test suit is run";
+
+    private Animal animal;
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println(BEFORE_ALL);
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        System.out.println(BEFORE_EACH);
+        animal = new Animal("Teddy", "Bear");
+    }
+
+    @AfterEach
+    void afterEach() {
+        System.out.println(AFTER_EACH);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println(AFTER_ALL);
+    }
+
+    @Test
+    void hasEaten_true() {
+
+        int testHunger = 80;
+
+        boolean actual = animal.hasEaten(testHunger);
+        assertTrue(actual);
+    }
+
+    @Test
+    void hasEaten_false() {
+
+        int testHunger = 80;
+
+        boolean actual = animal.hasEaten(testHunger);
+        assertFalse(actual);
+    }
+}
+```
+
+9. write test method assertions that test against class functionality
+
+- in testSuite, click on green arrow/red x in gutter next to specific method to test
+
+- review only passing or only failing tests with toggle in top-left of Test window
+
+```
+// JUnit TRY-CATCH: handle expected exceptions handing modify @Test annotation
+
+try {
+    double balance = checkingsAccount.withdraw(600.00, false);
+    assertEquals(400.00, balance, 0);
+} catch(IllegalArgumentException e) {
+    System.out.println(e.getMessage());
+}
+```
+
+BEST PRACTICE:
+
+write easily understood test method names
+
+```
+getBalance_deposit()
+getBalance_withdraw()
+```
+
+write on 1 independent assertion for 1 independent test
+
+setup any independent class instances that can be reused (without cross-pollination) on each test method
+
+```
+assertEquals(expectedValue, actualTestValue);
+
+assertNotEquals(expectedValue, actualTestValue);
+
+assertTrue(actualTestValue, failMsg);
+
+assertFalse(actualTestValue, failMsg);
+
+// consider two arrays equal if length & every element in order identical
+assertArrayEquals(expectedArray, actualTestArray);
+
+assertNull(actualTestValue);
+
+// easy-to-read check for null values
+assertNotNull(actualTestValue);
+
+assertSame(expectedValue, actualTestValue);
+
+// compares object references, unlike assertEquals that checks if instances are the same
+assertNotSame(expectedValue, actualTestValue);
+
+// compare the actual value against a matcher range of values
+assertThat(expectedValue, actualTestValue);
+```
+
+10. write method implementation in file
+
+11. individually run implemented functions until all failing tests resolved in test suite
