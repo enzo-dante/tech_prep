@@ -1,6 +1,8 @@
 # Behavioral Interview Questions
 
-__1. Tell me about yourself.__
+__Interviewer__
+
+__1. Tell me about yourself__
 
 My mission in life is to bring people together and realize greatness on a community & personal level.
 
@@ -14,9 +16,17 @@ My 4-core values, which align well with BetMgM's stated cultural tenets are:
 
 4. insist on shared core values
 
-"Do what is right = choose enduring long-term greatness, Hustle Hard = do whatever you can to produce the desired results & be committed to improvement, Backed By the Best = insist on shared core values"
+SIMILARITIES
+
+Do what is right = choose enduring long-term greatness
+Hustle Hard = do whatever you can to produce the desired results & be committed to improvement
+Backed By the Best = insist on shared core values"
 
 I train in the evenings & perform on the weekends as a latin dancer with the very achievable goal of becoming a multi-world champion.
+
+__What you'd like to learn in the role__
+
+I would like to learn how to manage and grow an enterprise-level business with decisions based on data analytics.
 
 __2a. Why do you want to work here specifically?__
 
@@ -24,42 +34,7 @@ I want to work at __BetMgM__ specifically because:
 
 One, the Strategy & Planning role intrigues me: It seems like an ideal entry point for career opportunities that balance both my technology and business interests. While I was doing my research into your company I noticed that your company doesn't currently offer sports betting on Competitive Latin Dance, the prospect of potentially leading that initiative down the road excites me.
 
-Two, per Glassdoor reviews, you genuinely score high on collaborative culture and Adam Greenblatt's CEO leadership. I've learned through experience & reading, that no one achieves enduring greatness alone, which is what I want. Thus, insisting on surrounding myself with other people that share the same core values is paramount.
-
-__2b. What sports betting experience do you have?__
-
-Even though I don't have any online sports betting experience, I did start studying the industry for this interview by reading up on BetMgm's business profile & Sport Betting Glossary page. I was hoping to dabble in online sports betting by placing a wager on my Phoenix Suns basketball team soon.  
-
-Business Profile per Etain update:
-
-BetMGM LLC (“BetMGM”), one of the leading sports betting and iGaming operators across the U.S., jointly owned by Entain plc (LSE: ENT) (“Entain”) and MGM Resorts International (NYSE: MGM) (“MGM Resorts”), is today providing an update on performance and outlook for 2022.
-
-- Strong financial performance in fiscal year 2021 & fiscal year 2022 net revenue from operations expected to be over $1.3bn
-
-- Expecting to launch online sportsbooks in Illinois and Louisiana in the first quarter as well as retail sportsbooks in Puerto Rico and both online sportsbook and iGaming in Ontario later this year
-
-- Expanding our first-to-market Bingo product and the BetMGM Racing app into additional states while continuing to enhance our products in existing markets
-
-Sports Betting Glossary:
-https://sports.betmgm.com/en/blog/sports-betting-terms-glossary-how-to-bet-online/
-
-Action
-To have action on a sporting event means you’ve placed a bet on the game.
-
-Against the Spread
-The spread is the margin by which one team or player is favored in one event. If you’re betting against the spread, you’re betting one side covers the spread.
-
-American Odds
-American sports betting odds, those used by BetMGM, are displayed as plus-minus odds, e.g., +400 or -130. Plus odds represent the amount you’d win on a $100 bet ($400, not including stake, for +400 odds), while minus odds represent the amount you’d wager to profit $100 ($130 on for -130 odds).
-
-Antepost
-Most commonly used in horse racing betting, an antepost bet – also written as ante-post or ante post – is placed before the betting market has opened for a particular event.
-
-Backdoor Cover
-The Kansas City Chiefs, a 9-point home favorite, led the Dallas Cowboys by 13 points in the final minute when Dak Prescott connected with Amari Cooper on a 60-yard busted-coverage touchdown with one second remaining. The Cowboys lost the game by six points but, as a 9-point underdog, covered the spread. That’s a backdoor cover.
-
-Bad Beat
-If you held a Chiefs (-9) ticket, the Cowboys’ meaningless touchdown was a bad beat, i.e., a lost bet that appeared to be a guaranteed winner.
+Two, per Glassdoor reviews, you score high on collaborative culture and Adam Greenblatt's CEO leadership. I've learned through experience & reading, that no one achieves enduring greatness alone, which is what I want. Thus, insisting on surrounding myself with other people that share the same core values is paramount.
 
 __3. How do your previous experiences correlate to this specific position?__
 
@@ -82,6 +57,9 @@ As an enterprise SE, I used Atlassian's Jira to track progress on user stories d
 __6. What are your current salary requirements?__
 
 Given my technical background, 70K-80K dollars a year would be fair.
+
+# End of Interview Questions
+
 
 # Technical Interview Questions
 
@@ -1474,3 +1452,81 @@ first_name | last_name | COUNT | MIN | MAX | AVG | STATUS
      marlon  | crafford | 0  | 0    | 0   | 0.00 | INACTIVE
 ```
 
+```
+SHOW DATABASES;
+SELECT database();
+USE ig_db;
+
+SHOW TABLES;
+DESC reviewers;
+DESC reviews;
+
+SELECT
+    IFNULL(
+        reviewers.first_name,
+        UPPER("missing")
+    ),
+    IFNULL(
+        reviewers.last_name,
+        UPPER("missing")
+    ),
+    IFNULL(
+        COUNT(reviews.id),
+        0
+    ) AS UPPER("count"),
+    IFNULL(
+        MIN(reviews.rating),
+        0.0
+    ) AS UPPER("min"),
+    IFNULL(
+        MAX(reviews.rating),
+        0.0
+    ) AS UPPER("max"),
+    IFNULL(
+        ROUND(
+            AVG(reviews.rating), 2
+        ),
+        0.00
+    ) AS UPPER("avg"),
+    CASE
+        WHEN AVG(reviews.rating) IS NULL
+            THEN UPPER("inactive")
+        WHEN AVG(reviews.rating) > 0 AND AVG(reviews.rating) < 10
+            THEN UPPER("active")
+        ELSE
+            THEN UPPER("power user")
+    END
+FROM reviewers
+LEFT JOIN reviews
+    ON reviewers.id = reviews.reviewer_id
+GROUP BY reviewers.id
+ORDER BY UPPER("min") DESC
+LIMIT 4;
+```
+
+__Q10__
+
+given an integer n, return the number of trailing zeroes in n!
+
+TIME COMPLEXITY: O(logn) logarithmic
+SPACE COMPLEXITY: O(1) constant
+
+```
+public static Integer trailingZeroFactorial(int n) {
+
+    if(n < 0) return -1;
+
+    Integer nFactorial = n; // AUTOBOXING
+    int everyFiveCount = 0
+
+    while(nFactorial % 5 == 0) {
+
+        nFactorial /= 5;
+
+        // ex) 15 / 5 = there are 3 fives in 15
+        everyFiveCount += nFactorial;
+    }
+
+    return everyFiveCount; // AUTOBOXING
+}
+```

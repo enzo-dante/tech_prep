@@ -1,7 +1,3 @@
-# Econometrics
-
-The application of statistical methods to economic data in order to give empirical content to economic relationships.
-
 # Big O Notation
 
 __TIME COMPLEXITY:__
@@ -34,81 +30,41 @@ O(n-squared) QUADRATIC time complexity: the absolute worst-case, the number of s
 
 - pronounced: O of n-squared
 
-# Content Management System
+# Java Keywords
 
-A content management system (CMS) is a tool that allows you to build all of the pieces of your website - from text to photos to widgets - via an easy-to-use interface.
+__CONSTANTS__
 
-With a CMS like Wordpress, Wix, or Atlassian's Bitbucket, you don’t need to write your own code; instead, you can apply pre-created templates and plug-ins to quickly and efficiently build a website.
+static class variables assigned FINAL value before compilation/instantiation
 
-# Project Management 
+```
+private static final String POWER_USER = "I am a power user";
+```
 
-Enterprise project management software helps businesses accurately measure and control scope creep (costs, time and resources) and consistently deliver projects that are in alignment with business goals to ensure project success. 
+__ACCESS-MODIFIERS__
 
-__Jira Agile__ 
+control the access to a given variable or method with a keyword
 
-Agile project management takes an iterative approach to development by creating several incremental steps with regular feedback intervals (sprints).
+```
+public class Person {
 
-The development team can only accept work that it has the capacity for. The product owner doesn't push work to the team or commit them to arbitrary deadlines. The development team pulls work from the program's backlog as it can accept new work.
+    // PRIVATE keyword: access to the variable or method is limited to the scope of the defining class
+    private String name;
 
-UPSIDE
+    // PUBLIC keyword: the variable or method can be accessed from any scope
+    public Person(String name) {
+        this.name = name;
+    }
 
-- A project requirement is segmented into smaller pieces, which are then prioritized by importance.
-
-- Promotes collaboration, especially with the customer. 
-
-- Adjusts at regular intervals to ensure a customer’s needs are met
-
-DOWNSIDE
-
-- Critical path and inter-project dependencies may not be clearly defined as in waterfall
-
-Agile Scrum uses two-week sprints to get work done. These sprints are planned in advance, executed, and then reviewed at the end of the two-week period. During sprint planning, the team creates a sprint backlog. The team completes these backlog tasks during the sprint, managing the work among themselves.
-
-To build an AGILE roadmap, product owners take into account market trajectories, value propositions, and engineering constraints.
-
-<img src="/content/jira-agile.png" alt="agile project management">
-
-Jira software is the project management tool for AGILE teams, customizable for any type of project.
-
-- Teams can start with a project template or create their own custom workflow.
-
-- Jira issues, also known as tasks, tracks each piece of work that passes through the workflow steps to completion.
-
-- Jira's automation engine enables teams to easily automate tasks and processes. With all project information in one place, reports can also be generated to track progress, productivity and ensure nothing slip
-
-__Trello Waterfall__
-
-The waterfall project management approach follows a linear, sequential formula.
-
-The waterfall project management approach entails a clearly defined sequence of execution with project phases that do not advance until a phase receives final approval. Once a phase is completed, it can be difficult and costly to revisit a previous stage. 
-
-UPSIDE
-
-- Requires less coordination due to clearly defined phases sequential processes
-
-DOWNSIDE
-
-- Harder to break up and share work because of stricter phase sequences teams are more specialized & risk of time waste due to delays and setbacks during phase transitions
-
-Trello Kanban’s namesake board visualizes the team’s workflow. The board is split into categories of work to be done, work in progress, and completed work, and teams can add more categories as necessary to better visualize their process.
-
-<img src="/content/trello-waterfall.png" alt="agile project management">
-
-Trello project management workflow Phases:
-
-- Backlog
-- In Progress
-- Blocked/Paused
-- Ready for Launch
-- Live
-
-The Trello tasks are placed on cards and team members who are assigned to that task are added to the card. The card moves through the workflow as progress is made on completing the task.
-
-# Keywords
+    // PROTECTED keyword: access to the variable or method is limited to the scope of the defining class & it's INHERITED subclasses within the package
+    protected String talk() {
+        return "This is protected speech";
+    }
+}
+```
 
 __STATIC__
 
-a unique class variable assigned to a single space in memory & referenced across entire application
+a unique class variable assigned to a single space in memory & referenced across an entire application
 
 ```
 public class Test {
@@ -123,7 +79,7 @@ public class Test {
 
 __STATIC INITIALIZATION BLOCKS__
 
-one-time on-initialization execution of 'static {}' and their assigned STATIC FINAL variables
+one-time on-initialization execution of the 'static {}' and their assigned STATIC FINAL variables
 
 ```
 private static final String OWNER;
@@ -131,88 +87,45 @@ private static final String FIRST_STATIC_MSG;
 
 static {
     OWNER = "Tim";
-    FIRST_STATIC_MSG = "STATIC INITIALIZATION BLOCKS: one-time on-initialization execution of 'static {}' and their assigned STATIC FINAL variables";
+    FIRST_STATIC_MSG = "The owner is " + OWNER;
     System.out.println(FIRST_STATIC_MSG);
 }
 ```
 
-__CONSTANTS__
-
-static class variables assigned FINAL value before compilation/instantiation
-
-```
-private static final String POWER_USER = "I am a power user";
-```
-
 __METHOD OVERLOADING__
 
-use same name, but with unique parameters, for related methods to reduce tech debt and optimize readability & scalability
+use the same name, but with unique parameters, for related methods to reduce tech debt and optimize readability & scalability
 
 ```
-
+// method 1
 public int add() {
     return 1 + 1;
 }
 
+// method 2
 public int add(int a, int b) {
     return a + b;
 }
 
+// method 3
 public int add(int n, String msg) {
     System.out.println(msg);
     return 100 + n;
 }
 ```
 
-__ACCESS-MODIFIERS__
-
-```
-public class Person {
-
-    // PRIVATE: access to the variable or method is limited to the scope of the defining class
-    private String name;
-
-    // PUBLIC: the variable or method can be accessed from any scope
-    public Person(String name) {
-        this.name = name;
-    }
-
-    // PROTECTED: access to the variable or method is limited to the scope of the defining class & it's OOP INHERITANCE subclasses within the package
-    protected String talk() {
-        return "This is protected speech";
-    }
-}
-```
-
 __AUTOBOXING__
 
-converting primitive dataType -> Wrapper class dataType w/ greater functionality
+converting a primitive dataType variable -> a corresponding Wrapper class dataType variable with greater functionality
 
 ```
-// given an integer n, return the number of trailing zeroes in n!
-
-public static Integer trailingZeroFactorial(int n) {
-
-    if(n < 0) return -1;
-
-    Integer nFactorial = n; // AUTOBOXING
-    int everyFiveCount = 0
-
-    while(nFactorial % 5 == 0) {
-
-        nFactorial /= 5;
-
-        // ex) 15 / 5 = there are 3 fives in 15
-        everyFiveCount += nFactorial;
-    }
-
-    return everyFiveCount; // AUTOBOXING
-}
+int primitiveIntVariable = 1;
+Integer wrappedInteger = primitiveIntVariable;
 ```
 
 __UNBOXING__
 
-casting greater functionality Wrapper class dataType -> primitive dataType
+casting a Wrapper class dataType variable with greater functionality -> corresponding primitive dataType variable
 
 ```
 private static double calculateInterest(Double amount, Double interestRate) {
@@ -220,29 +133,69 @@ private static double calculateInterest(Double amount, Double interestRate) {
 }
 ```
 
+__ternary operator__
+
+a ternary operator is shorthand for a simple if-else statement
+
+```
+String currentName = (hunger > 70) ? "Can't remember" : "Bill";
+```
+
 __WRAPPER CLASS__
 
-class variables with greater functionality for respective primitive dataType
+class dataType variables with greater functionality
 
 ```
 int currentValue = Integer.parseInt(numberSubstring);
 ```
 
-__OOP CLASSES__
+__Ojbect-Oriented Programming (OOP) CLASSES__
 
-In object-oriented programming, a class is a blueprint for creating objects (a particular data structure), providing initial values for state (member variables or attributes), and implementations of behavior (member functions or methods).
+Classes are used to create and manage new objects and support inheritance (a key ingredient in object-oriented programming and a mechanism of reusing code).
+
+A class' state may be comprised of class fields (the object attributes) and methods (the object's callable implementations of behavior)
+
+On object instantiation, the object's initial state might need to be set by providing initial values for the class instance.
 
 ```
 public class Animal {
 
+    // CONSTANTS/static class variables assigned FINAL value before compilation/instantiation
+    private static final String SLEEPING = " goes to sleep.";
+
+    // OOP ENCAPSULATION private class fields
+    private int energy;
+    private boolean isHungry;
     private String name;
     private int numLegs;
 
-    // OOP CONSTRUCTOR that initializes the class fields & INTRINSIC LOCK on class/object blueprint instantiation
-    public Animal(String name, int numLegs) {
+    // OOP CONSTRUCTOR method that initializes the class fields & INTRINSIC LOCK on the instantiation of the class/object blueprint
+    public Animal(int numLegs, int energy) {
 
         this.numLegs = numLegs;
+        this.energy = energy;
+
+        // default value
         this.name = "unnamed".toUpperCase();
+        this.isHungry = false;
+    }
+
+    // CLASS METHODS: unique object behavior
+    public void sleep() {
+
+        System.out.println(this.name + SLEEPING);
+        this.energy = 100;
+
+        this.toggleHunger();
+    }
+
+    private void toggleHunger() {
+        this.isHungry = !this.isHungry;
+    }
+
+    // OOP GETTERS & SETTERS
+    public boolean isHungry() {
+        return this.isHungry;
     }
 
     public String getName() {
@@ -256,10 +209,20 @@ public class Animal {
     public int getNumLegs() {
         return this.numLegs;
     }
+
+    public int getEnergy() {
+        return this.energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
 }
 ```
 
-An instance is a specific object created from a particular class. Classes are used to create and manage new objects and support inheritance (a key ingredient in object-oriented programming and a mechanism of reusing code).
+__OOP CLASS INSTANCES__
+
+An instance is a specific object created from a specific class blueprint.
 
 ```
 // The user-defined objects are created using the class keyword.
@@ -268,11 +231,13 @@ public static void main(String[] args) {
     Animal animal = new Animal(4);
 
     animal.setName("Toby the Dog");
-    System.out.println(animal.getName());
-
-    Scanner scanner = new Scanner(System.in);
-    scanner.close();
+    System.out.println(animal.getName() + " has " + animal.getNumLegs() + " legs.");
 }
+```
+
+```
+Scanner scanner = new Scanner(System.in);
+scanner.close();
 ```
 
 __OOP COMPOSITION + INNER CLASS__
@@ -282,17 +247,21 @@ logically grouped class components within an extending parent super class
 ```
 public class PC {
 
+    // OOP ENCAPSULATION private class fields
     private Motherboard motherboard;
 
+    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
     public PC(int ramSlots) {
         this.motherboard = new MotherBoard(ramSlots);
     }
 
+    // OOP GETTERS & SETTERS methods
     public Motherboard getMotherboard() {
         return this.motherboard;
     }
 
-    class Motherboard {
+    // inner class
+    protected class Motherboard {
 
         private int ramSlots;
 
@@ -457,14 +426,15 @@ force child subclass OOP INHERITANCE of method, signatures, & parent super-class
 
 - This is achieved by mandating OOP POLYMORPHISM method signatures to be defined in order to execute respectively-unique implementation
 
-  - CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
+  - you CANNOT instantiate an ABSTRACT CLASS, must use a normal class that inherits from ABSTRACT CLASS for instantiation
 
 __OOP INHERITANCE__
 
 child subclass inherits public class fields + methods from extending parent super class
 
+abstract keyword = no logic in the given code block, only define the class or method signature shared across adhering classes that will be implemented later by inheriting subclasses.
+
 ```
-// abstract keyword = no logic, only define the class or method signature shared across adhering classes
 abstract class AbstractAnimal {
 
     private String name;
@@ -606,83 +576,6 @@ class SportsTeam<T extends Player> implements Comparable<SportsTeam<T>> {
     }
 
     // Getters & Setters
-}
-```
-
-# Serialization
-
-the process of converting a data object—a combination of code and data represented within a region of data storage—into a series of bytes that saves the state of the object in an easily transmittable form.
-
-<img src="/content/serialization.png">
-
-```
-/**
- * Call the ObjectOutputStream() which takes a serializable object and converts it into a sequence (stream) of bytes.
- */
-public static void serialize(Book book, String filename) throws Exception {
-
-    FileOutputStream file = new FileOutputStream(fileName);
-    ObjectOutputStream out = new ObjectOutputStream(file);
-
-    out.writeObject(book);
-
-    out.close();
-    file.close();
-}
-
-/**
- * Call the ObjectInputStream() reads a stream of bytes and converts it back into a Java object.
- * It can then be cast back to the original object.
- */
-public static Book deserialize(String fileName) throws Exception {
-
-    FileInputStream file = new FileInputStream(fileName);
-    ObjectInputStream in = new ObjectInputStream(file);
-
-    Book book = (Book) in.readObject();
-
-    in.close();
-    file.close();
-
-    return book;
-}
-```
-
-The serialization process is dependent on implementing instances: classes that are eligible for serialization need to implement Serializable interface.
-
-__TRANSIENT__
-
-use transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
-
-```
-public class Book implements Serializable {
-
-    private static final long serialVersionUID = -2936687026040726549L;
-    private String bookName;
-
-    private transient String description;
-    private transient int copies;
-
-    // getters and setters
-}
-```
-
-```
-@Test
-void bookSerialization() {
-
-    Book book = new Book();
-
-    book.setBookName("Java Reference");
-    book.setDescription("will not be saved");
-    book.setCopies(25);
-
-    // the bookName has been properly persisted.
-    assertEquals("Java Reference", book.getBookName());
-
-    // the copies field has value 0 and the description is null instead of the original values.
-    assertEquals(0, book.getCopies());
-    assertNull(book.getDescription());
 }
 ```
 
@@ -834,239 +727,6 @@ __POTENTIAL PROBLEMS__
 make sure to avoid redundant recursive calls (solved via MEMOIZATION)
 
 - MEMOIZATION is a technique that can be used to improve the efficiency of divide & conquer algorithms by storing the solutions to earlier problems & eliminating redundant calls
-
-# Concurrency
-
-Software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
-
-<img src="/content/concurrency.jpeg">
-
-__CONCURRENCY BENEFITS__
-
-- free up the main thread so that it can continue working and executing, you can report progress or accept user input and perform those other tasks on the screen or in other parts of the program, while another long-running task that we kicked off in another thread continues to execute in the background.
-
-- might want to use threads is because an API requires us to provide one.
-
-__PROCESS__
-
-an instance of a computer program with its own memory space that's sequentially executed by a computer system that has the ability to run several computer programs concurrently.
-
-- every process has a memory HEAP
-
-```
-java virtual machine instance ->
-        the JVM runs as a PROCESS ->
-            running a java console application ->
-                we're initiating said PROCESS
-```
-
-__THREAD__
-
-a unit of execution within a process, each process can have multiple threads: a method for a program to "split" itself into two or more simultaneously or pseudo-simultaneously running tasks.
-
-- every thread has a memory THREAD STACK.
-
-__THREADS .start()__
-
-only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
-
-```
-new Thread() {
-    @Override
-    public void run() {
-        System.out.println("Hello from anonymous class Thread")
-    }
-}.start();
-```
-
-__MULTI-THREADING__
-
-the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
-
-__THREAD JOIN__
-
-when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
-
-```
-public static void main(String[] args) {
-
-    // THREADS + GENERIC CLASSES/LAMBDAS: Thread.instance w/ parameter class instance that implements Runnable INTERFACE & immediately .start() no-name instance on it's own thread in the HEAP
-    Thread anotherThread = new Thread(new MyRunnableThread());
-    anotherThread.start();
-
-    Thread anonymousThread = new Thread(new MyRunnableThread() {
-        @Override
-        public void run() {
-
-            try {
-
-                // anotherThread.interrupt();
-
-
-                // THREAD JOIN: And when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
-                int timeout = 2000;
-                anotherThread.join(timeout)
-
-                System.out.println("anotherThread terminated or timed out, so I'm running again");
-
-            } catch(InterruptedException e) {
-                System.out.println("this.thread counldn't wait...it was interrupted");
-            }
-        }
-    });
-
-    anonymousRunnableThread.start();
-    System.out.println("Again, hello from the main Thread");
-}
-
-class MyRunnableThread implements Runnable {
-    @Override
-    public void run() {
-        System.out.println("Hello from MyRunnableThread interface implementation of .run()");
-    }
-}
-```
-
-# Synchronization
-
-the process of semi-controlling/influencing when threads execute code and therefore when they can access the heap is called synchronization.
-
-- when working with threads, we have to synchronize all areas where we think or where interference can happen.
-
-__THREAD SYNCHRONIZATION code blocks__
-
-<img src="/content/thread_synchronization.png">
-
-use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
-
-```
-public synchronized void doCountdown() {
-    String color = ThreadColor.ANSI_CYAN;
-    String threadName = Thread.currentThread().getName();
-
-    switch(threadName) {
-        case THREAD_ONE:
-            color = ThreadColor.ANSI_CYAN;
-            break;
-        case THREAD_TWO:
-            color = ThreadColor.ANSI_PURPLE;
-            break;
-        default:
-            color = ThreadColor.ANSI_GREEN;
-            break;
-    }
-    synchronizedLoop(color, threadName);
-}
-
-private void synchronizedLoop(String color, String threadName) {
-
-    synchronized(this) {
-        for(int i = 10; i > 0; i--) {
-            System.out.println(color + threadName + ": i = " + i);
-        }
-    }
-}
-```
-
-__DEAD LOCKS__
-
-application freezes during execution due to unreleased INTRINSIC LOCKS - the synchronized shared-resource code executes one at a time and the single running thread is holding the objects INTRINSIC LOCK blocking other threads that WAIT for the lock release via NOTIFY
-
-<img src="/content/thread_synchronization_locks.png">
-
-__THREAD SYNCHRONIZATION + DEADLOCKS__
-
-key to avoiding deadlocks when two or more threads will be competing for two or more locks. You want to make sure that all threads or all the threads will try to obtain the locks in the same order.
-
-```
-public static Object lock1 = new Object();
-
-private static class Thread1 extends Thread {
-
-    public void run() {
-
-        synchronized(lock1) {
-
-            // THREAD SYNCHRONIZATION + EXCEPTION HANDLING + INTRINSIC REENTRANT LOCK: in TRY-FINALLY code block, use ReentrantLock.lock() to acquire the object's intrinsic lock & execute code one at a time -- other calling threads will suspend until the single running thread calls Reentrant.unlock() to pass the class/object's INTRINSIC LOCK.
-            try {
-                Thread.sleep(1000);
-            } catch(InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-}
-```
-
-__ARRAY BLOCKING QUEUE__
-
-a queue is a (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
-
-```
-// ArrayBlockingQueue: we have to pass in the number of elements the array should be able to hold
-int numElements = 6;
-
-// THREAD SYNCHRONIZATION + EXCEPTION HANDLING + INTRINSIC REENTRANT LOCK: in TRY-FINALLY code block, use ReentrantLock.lock() to acquire the object's intrinsic lock & execute code one at a time -- other calling threads will suspend until the single running thread calls Reentrant.unlock() to pass the class/object's INTRINSIC LOCK.
-ArrayBlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(numElements);
-
-QueueProducer producer = new QueueProducer(arrayBlockingQueue, ThreadColor.ANSI_YELLOW);
-QueueConsumer consumer1 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI_PURPLE);
-QueueConsumer consumer2 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI_CYAN);
-```
-
-__EXECUTOR SERVICE__
-
-optimize a managed set of threads, thus reducing the overhead of thread creation
-
-```
-int numThreads = 3;
-ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
-
-executorService.execute(producer);
-executorService.execute(consumer1);
-executorService.execute(consumer2);
-```
-
-__FUTURE__
-
-a return value from an executed thread in a thread pool
-
-```
-// THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
-Future<String> future = executorService.submit(new Callable<String>() {
-    @Override
-    public String call() throws Exception {
-        return "executorService.submit() was called; this is the result";
-    }
-});
-```
-
-__ATOMIC ACTIONS__
-
-once a thread starts these actions, they cannot be suspended during execution, and must complete
-
-- reading and writing reference variables
-
-- reading and writing primitive variables, exception long & double
-
-- reading and writing volatile variables
-
-```
-int atomicAction1 = 1;
-int atomicAction2 = atomicAction1;
-```
-
-__VOLATILE VARIABLES__
-
-the JVM writes the value back to main memory immediately after a thread updates the value in its CPU cache, and it also guarantees that every time a variable reads from a volatile variable, it will get the latest value.
-
-```
-public volatile int volatileVariable;
-```
-
-__THREAD STARVATION__
-
-threads aren't given the opportunity to progress due to threat priority - assigning a high priority to a thread means the OS should try and run the thread before other waiting threads.
 
 # Data Structures
 
@@ -1265,10 +925,6 @@ remove all shared elements found in both sets & return all non-shared elements o
 
 <img src="/content/ds_singly_linked_list.png" alt="data structure singly linked list">
 
-HEAD --> { currentNodeValue, nextNodePointer } --> { currentNodeValue, nextNodePointer } --> null
-
-Singly LinkedLists w/ an array backing
-
 ```
 public class EmployeeNode {
 
@@ -1289,6 +945,7 @@ public class EmployeeNode {
 ```
 
 ```
+// Singly LinkedLists w/ an array backing
 public class EmployeeLinkedList {
 
     private Employee head;
@@ -1367,8 +1024,6 @@ public class EmployeeLinkedList {
 
 <img src="/content/ds_doubly_linked_list.png" alt="data structure doubly linked-list">
 
-Doubly LinkedLists w/ an array backing
-
 ```
 public class EmployeeNode {
 
@@ -1392,6 +1047,7 @@ public class EmployeeNode {
 ```
 
 ```
+// Doubly LinkedLists w/ an array backing
 public class DoublyLinkedList {
 
     private Employee head;
@@ -2349,14 +2005,14 @@ public class MaxHeap {
 
             ex) max heap sort
 
-                                80
+                            80
 
                         75       60
 
                     68    55          40  52
 
                 67
-                                67
+                            67
 
                         75       60
 
@@ -2366,7 +2022,7 @@ public class MaxHeap {
 
                 must heapify() index 0 - index 6
 
-                                75
+                            75
 
                         68       60
 
@@ -2433,7 +2089,7 @@ public class MaxHeap {
 
                 * ex: add 20 as child to 15 parent
 
-                                    22
+                                22
 
                             19       18
 
@@ -2443,7 +2099,7 @@ public class MaxHeap {
 
                 * since 20 is greater than 15 parent, swap
 
-                                    22
+                                22
 
                             19       18
 
@@ -2453,7 +2109,7 @@ public class MaxHeap {
 
                 * since 20 is greater than 19 parent, swap, afterwards the complete tree has been heapify()
 
-                                    22
+                                22
 
                             20       18
 
@@ -2653,78 +2309,7 @@ public class MaxHeap {
 <img src="/content/ds_graph.png" alt="data structure graph">
 
 ```
-//class to store edges of the weighted graph
-public class Edge {
 
-    private int src, dest, weight;
-
-    public Edge(int src, int dest, int weight) {
-            this.src = src;
-            this.dest = dest;
-            this.weight = weight;
-    }
-
-    // OOP GETTERS & SETTERS
-}
-
-// Graph class
-public class Graph {
-
-    // node of adjacency list
-    static class Node {
-
-        private int value, weight;
-
-        public Node(int value, int weight) {
-            this.value = value;
-            this.weight = weight;
-        }
-
-        // OOP GETTERS & SETTERS
-    };
-
-    // define adjacency list
-    private List<List<Node>> adj_list = new ArrayList<>();
-
-    //Graph Constructor
-    public Graph(List<Edge> edges) {
-
-        // adjacency list memory allocation
-        for (int i = 0; i < edges.size(); i++) {
-            this.adj_list.add(i, new ArrayList<>());
-        }
-
-        // add edges to the graph
-        for (Edge edge : edges) {
-
-            // allocate new node in adjacency List from src to dest
-            this.adj_list.get(edge.getSrc())
-                .add(new Node(edge.getDest(), edge.getWeight()));
-        }
-    }
-
-    // print adjacency list for the graph
-    public static void printGraph(Graph graph) {
-
-        int src_vertex = 0;
-        int list_size = graph.adj_list.size();
-
-        System.out.println("The contents of the graph:");
-
-        while (src_vertex < list_size) {
-
-            //traverse through the adjacency list and print the edges
-            for (Node edge : graph.adj_list.get(src_vertex)) {
-
-                System.out.print("Vertex: " + src_vertex + " ==> " + edge.value +
-                                " (" + edge.weight + ")\t");
-            }
-
-            System.out.println();
-            src_vertex++;
-        }
-    }
-}
 ```
 
 __Graph Traversal: Breadth-first search vs. Depth-first search__
@@ -2759,7 +2344,7 @@ public class Graph {
     private int vertices;   // No. of vertices
 
     // adjacency list declaration
-    private LinkedList<Integer> adj_list[];
+    private LinkedList<Integer> adj_list;
 
     // graph Constructor: to initialize adjacency lists as per no of vertices
     public Graph(int vertices) {
@@ -2777,7 +2362,7 @@ public class Graph {
     }
 
     // helper function for DFS technique
-    public void DFS_helper(int v,boolean visited[]) {
+    public void DFS_helper(int v, boolean[] visited) {
 
         // current node is visited
         visited[v] = true;
@@ -2792,6 +2377,7 @@ public class Graph {
 
             if (!visited[node]) {
 
+                // recursion
                 DFS_helper(node, visited);
             }
         }
@@ -3665,66 +3251,395 @@ private static int getPivot(int[] array, int start, int end) {
 }
 ```
 
+
+__REGEX character class__
+
+- character classes allow us to specify characters to filter in a pattern
+
+```
+    \ = escape special meaning of a character
+
+    . = matches everything
+
+    \. = string value of a period
+
+    \d = digit 0-9
+
+    \w = letter, digit, or underscore
+
+    \s = whitespace character
+
+    \D = not a digit
+
+    \W = not a word character
+
+    \S = not a whitespace character
+```
+
+__REGEX boundary matcher__
+
+- character classes allow us to specify characters in a GROUP/RANGE to filter in a pattern
+
+```
+    [] = character classes allow us to specify groups/ranges of characters
+
+    [^] = anything that is NOT the specified characters in the brackets with the carrot symbol
+
+        [^k] = anything but the lowercase letter k
+
+    ^ = carrot anchor species the search string has to start with defined regular expression
+
+        ^\d{3}
+
+    '$' = dollar sign boundary denotes the end of string or line
+
+    \b = word boundary
+
+        ex: \b\w+\b = select only and every word
+
+            'hello world I am typing'
+
+    | = the pipe character in regex denotes logical or
+
+        "Mr|Mrs|Ms"
+
+    () = parenthesis represent whole group
+
+        (\(\d{3}\)|\d{3}) \d{3} \d{4}
+```
+
+__REGEX quantifiers__
+
+- specify how many times a specific character should occur in a pattern
+
+```
+    + = one or more
+
+    {x} = exactly x times.
+
+        {3} = 3 times
+
+    {3,5} = 3 to 5 times
+
+    {4,} = four or more times
+
+    * = zero or more times
+
+    ? = once or none (optional)
+```
+
+# Test Driven Development (TDD)
+
+writing code that tests your other code to ensure a level of performance quality when your app is in production; making refactoring and collaboration safer and bug-free
+
+1. development BEGINS by writing RED failing tests
+
+2. once tests are written, write the MINIMUM amount of GREEN code necessary to make tests pass
+
+3. refactor = clean up the code, while ensuring that tests still pass
+
+4. once tests pass, a feature is considered complete
+
+__TDD JUNIT__
+
+1. update project structure JUnit library dependency to compile
+
+```
+   File -> project structure -> Modules -> Dependencies Tab ->
+       Export window -> Junit ->
+           open dropdown -> change "Test" to "Compile" -> Ok
+```
+
+2. add JUnit Library
+
+- right-click add "JUnit" to class path
+
+- select "Use JUnit from IntelliJ IDEA distribution"
+
+- click Ok
+
+3. define class, method signatures, & test suite
+
+4. create JUnit Test class & generate methods to test in root
+
+- click yellow light bulb onHover over independent class name
+
+- FIX if IDE is unable to identify built-in JUnit Test class
+
+- select specific methods to test
+
+5. BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
+
+6. run expected failing tests suite
+
+7. review run configuration for all tests
+  want to test class in application, NOT the application itself
+
+- right-click outside created Test class & select run Test class
+- right-click outside created Test class & select modify run configuration
+- review configurations & click Ok
+- review right-corner dropdown is respective Test suite
+
+8. setup tests objects run before & after teardown every test run
+
+```
+public class AnimalTest {
+
+    private static final String BEFORE_ALL = "STATIC execute only once before all test suit is run, read data fro mdb for tests";
+    private static final String BEFORE_EACH = "execute code in setup() before each test is run";
+    private static final String AFTER_EACH = "execute code in setup() after each test is run";
+    private static final String AFTER_ALL = "STATIC execute only once after all test suit is run";
+
+    private Animal animal;
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println(BEFORE_ALL);
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        System.out.println(BEFORE_EACH);
+        animal = new Animal("Teddy", "Bear");
+    }
+
+    @AfterEach
+    void afterEach() {
+        System.out.println(AFTER_EACH);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println(AFTER_ALL);
+    }
+
+    @Test
+    void hasEaten_true() {
+
+        int testHunger = 80;
+
+        boolean actual = animal.hasEaten(testHunger);
+        assertTrue(actual);
+    }
+
+    @Test
+    void hasEaten_false() {
+
+        int testHunger = 80;
+
+        boolean actual = animal.hasEaten(testHunger);
+        assertFalse(actual);
+    }
+}
+```
+
+9. write test method assertions that test against class functionality
+
+- in testSuite, click on green arrow/red x in gutter next to specific method to test
+
+- review only passing or only failing tests with toggle in top-left of Test window
+
+```
+// JUnit TRY-CATCH: handle expected exceptions handing modify @Test annotation
+
+try {
+    double balance = checkingsAccount.withdraw(600.00, false);
+    assertEquals(400.00, balance, 0);
+} catch(IllegalArgumentException e) {
+    System.out.println(e.getMessage());
+}
+```
+
+BEST PRACTICE:
+
+write easily understood test method names
+
+```
+getBalance_deposit()
+getBalance_withdraw()
+```
+
+write on 1 independent assertion for 1 independent test
+
+setup any independent class instances that can be reused (without cross-pollination) on each test method
+
+```
+assertEquals(expectedValue, actualTestValue);
+
+assertNotEquals(expectedValue, actualTestValue);
+
+assertTrue(actualTestValue, failMsg);
+
+assertFalse(actualTestValue, failMsg);
+
+// consider two arrays equal if length & every element in order identical
+assertArrayEquals(expectedArray, actualTestArray);
+
+assertNull(actualTestValue);
+
+// easy-to-read check for null values
+assertNotNull(actualTestValue);
+
+assertSame(expectedValue, actualTestValue);
+
+// compares object references, unlike assertEquals that checks if instances are the same
+assertNotSame(expectedValue, actualTestValue);
+
+// compare the actual value against a matcher range of values
+assertThat(expectedValue, actualTestValue);
+```
+
+10. write method implementation in file
+
+11. individually run implemented functions until all failing tests resolved in test suite
+
+# Content Management System
+
+A content management system (CMS) is a tool that allows you to build all of the pieces of your website - from text to photos to widgets - via an easy-to-use interface.
+
+With a CMS like Wordpress, Wix, or Atlassian's Bitbucket, you don’t need to write your own code; instead, you can apply pre-created templates and plug-ins to quickly and efficiently build a website.
+
+# Project Management
+
+Enterprise project management software helps businesses accurately measure and control scope creep (costs, time, and resources) and consistently deliver projects that are in alignment with business goals to ensure project success.
+
+__Agile Methodology__
+
+Agile project management takes an iterative approach to development by creating several incremental steps with regular feedback intervals (sprints).
+
+The development team can only accept work that it has the CAPACITY for. The product owner doesn't push work to the team or commit them to arbitrary deadlines. The development team pulls work from the program's backlog as it can accept new work.
+
+AGILE UPSIDE
+
+- A project requirement is segmented into smaller pieces, which are then prioritized by importance.
+
+- Promotes collaboration, especially with the customer.
+
+- Adjusts at regular intervals to ensure a customer’s needs are met
+
+AGILE DOWNSIDE
+
+- Critical path and inter-project dependencies may not be clearly defined as in waterfall
+
+Agile Scrum uses two-week sprints to get work done. These sprints are planned in advance, executed, and then reviewed at the end of the two-week period. During sprint planning, the team creates a sprint backlog. The team completes these backlog tasks during the sprint, managing the work among themselves.
+
+To build an AGILE roadmap, product owners take into account market trajectories, value propositions, and engineering constraints.
+
+<img src="/content/jira-agile.png" alt="agile project management">
+
+__Jira + Agile__
+
+Jira software is the project management tool for AGILE teams, customizable for any type of project.
+
+- Teams can start with a project template or create their own custom workflow.
+
+- Jira issues, also known as tasks, tracks each piece of work that passes through the workflow steps to completion.
+
+- Jira's automation engine enables teams to easily automate tasks and processes.
+
+- With all project information in one place, reports can also be generated to track progress, productivity and ensure nothing slips.
+
+__Waterfall Methodology__
+
+The waterfall project management approach follows a linear, sequential formula.
+
+The waterfall project management approach entails a clearly defined sequence of execution with project phases that do not advance until a phase receives final approval.
+
+- Once a phase is completed, it can be difficult and costly to revisit a previous stage.
+
+WATERFALL UPSIDE
+
+- Requires less coordination due to clearly defined phases that are sequential processes
+
+WATERFALL DOWNSIDE
+
+- It's harder to break up and share work because of stricter phase sequences
+
+- thus teams are more specialized & the risk of time waste due to delays and setbacks are higher during phase transitions
+
+__Trello + Waterfall__
+
+Trello Kanban’s board visualizes the team’s workflow.
+
+- The board is split into categories of work to be done, work in progress, and completed work, and teams can add more categories as necessary to better visualize their process.
+
+The Trello tasks are placed on cards and team members who are assigned to that task are added to the card.
+
+- The card moves through the workflow as progress is made on completing the task.
+
+<img src="/content/trello-waterfall.png" alt="agile project management">
+
+Trello project management workflow Phases:
+
+- Backlog
+- In Progress
+- Blocked/Paused
+- Ready for Launch
+- Live
+
 # SQL
 
 SQL is a query language, whereas MySQL is a relational database that uses SQL to query a database
 
-__RELATIONAL DATABASE__
+__RELATIONAL DATABASES__
 
 an interconnected database that holds data tables, a collection of columns (headers) and rows (data)
 
+- all the data is structured into a uniform manner through data table constraints
+
 - you can have multiple tables joined together by a defined relationship
 
-- relationships help force constraints using primary keys and foreign keys
+- relationships help force constraints using primary keys and foreign keys to give meaning
 
-- table constraints: all the data is structured into a uniform manner
+- a relational database's storage is concentrated: 1 node contains an entire copy of the data, not partitioned by default
 
-- storage is concentrated: 1 node that contains an entire copy of the data, not partitioned by default
+- relational databases can be scale in 2 manners:
 
-- relational db scale can be either:
+  - vertical scaling: build a better machine via more memory, faster hard disk, better cpu
 
-  - vertical: build a better machine via more memory, faster hard disk, better cpu
+  - horizontal scaling: simply add more machines (servers)
 
-  - horizontal: simply add more machines
-
-- relational db access uses raw SQL
+- relational databases can be accessed through raw SQL
 
 __NON-RELATIONAL DATABASES__
 
-collected tables, documents, or graphs hold data together but CANNOT be joined together by a relationship, but organized by key-value stores, that is distributed over multiple servers to be built to scale with high performance & low latency
+collected tables, documents, or graphs hold data together but CANNOT be joined together by a relationship, but rather organized by key-value stores, that is distributed over multiple servers to be built to scale with high performance & low latency
 
-- best when the data model fits (graphs)
+- its best to use non-relational databases when the data model fits (graphs)
 
-- storage relies on hashing function for the input and the result is used to identify the partition where the data is stored
+- non-relational database storage relies on hashing functions for the input and the result is used to identify the partition where the data is stored
 
-- nonrelational db scale is easily improved by adding more partitions that function & improved independently
+- non-relational database scale is easily improved by adding more partitions that function improved & improved independently
 
-- access: many are no-sql databases that have their own CRUD (create, read, update, delete) functionality that rely on key-value stores
+- when accessing a non-relational database: many are no-sql databases that have their own CRUD (create, read, update, delete) functionality that rely on key-value stores
 
-  - REST APIs are used to hit a specific endpoint that comes with certain functionality
+  - non-relational databases rely on REST APIs to hit a specific endpoint that comes with certain functionality
 
-__RELATIONSHIPS__
+__SQL RELATIONSHIPS__
 
-always compartmentalize dataset into separate tables
-then join if necessary by shared relationship
+when using relational databases, always compartmentalize the dataset into separate tables
 
-Relationships = the different ways two or multiple tables (entities) are related
+- this improves performance because you are only getting the data that you need
 
-    1. one-to-one relationship (not very common)
+if you need data originating from different tables, then you can build queries that join said necessary tables by shared relationship
+
+SQL JOIN Relationships = the different ways two or multiple data tables are related -- there are 3 main types of JOIN RELATIONSHIPS
+
+    1. one-to-one relationships (not very common)
 
         ex: 1 customer-to-1 customer details relationship
 
-    2. one-to-many relationship (most common)
+    2. one-to-many relationships (most common)
 
-        ex: 1 book-to-many reviews relationship
+        ex: 1 book-to-many book reviews relationship
 
-    3. many-to-many relationship (relatively common)
+    3. many-to-many relationships (relatively common)
 
-        ex: many authors-to-many books relationship (a book can have mulitple authors)
+        ex: many authors-to-many books relationship (a book can have multiple authors)
 
 __PRIMARY KEY AUTO_INCREMENT__
 
-when creating a table, a primary key ensures one column that is always unique for joined relationships
+when creating a table, a primary key ensures one column that is always unique for joined relationships between 2 or more tables
 
 ```
 CREATE TABLE students(
@@ -3738,8 +3653,8 @@ DESC students;
 
 __FOREIGN KEY__
 
-when creating a table, a foreign key references to another table within a given table
-explicitly protects from bad data input
+when creating a table, a foreign key references to a shared attribute in another table 
+this constraint explicitly guards against bad data input
 
 ```
 CREATE TABLE series(
@@ -3759,7 +3674,7 @@ CREATE TABLE REVIEWS(
     FOREIGN KEY(series_id)
         REFERENCES series(id)
         ON DELETE CASCADE,
-    FOREIGN KEY(reviewers)
+    FOREIGN KEY(reviewers_id)
         REFERENCES reviewers(id)
         ON DELETE CASCADE
 );
@@ -3767,13 +3682,350 @@ CREATE TABLE REVIEWS(
 
 __JOIN__
 
-when you SELECT data, take data from multiple tables and temporarily consolidate them in a meaningful way
+when you SELECT data from multiple tables and join them, you are temporarily consolidate them in a meaningful way
 
-an INNER JOIN only shows data that overlap (the middle of a venn diagram with no nulls)
+an INNER JOIN only shows data that overlaps between multiple data tables (it can be visualized as the middle of a venn diagram with no nulls)
 
-a LEFT or RIGHT join will ALSO show data overlap PLUS null data pairs (left/right + middle of a venn diagram that will most likely have nulls)
+a LEFT or RIGHT join will ALSO show data overlap IN ADDITION TO the null data pairs (the specified left or right section + the middle of a venn diagram)
+
+It is common for LEFT OR RIGH joins to have nulls, anything that does not fall in the overlap section of a venn diagram is a null data pair
 
 <img src="/content/SQL_joins.jpeg" alt="SQL Joins Diagram">
+
+# Serialization
+
+Serialization is the process of converting a data object into a series of bytes that saves the state of the object in an easily transmittable form - like a file, database, memory.
+
+- a data object is a combination of code and data represented within a region of data storage
+
+Deserialization is the reverse process where it reads a stream of bytes from a data source - like a file, database, or memory - and converts it back into the original data object - in Java, the deserialized data needs to be cast back to the original dataType object.
+
+<img src="/content/serialization.png">
+
+```
+/**
+ * ObjectOutputStream() takes a serializable object and converts it into a sequence/stream of bytes.
+ */
+public static void serialize(Book book, String filename) throws Exception {
+
+    FileOutputStream file = new FileOutputStream(fileName);
+    ObjectOutputStream out = new ObjectOutputStream(file);
+
+    // serialize the book data object
+    out.writeObject(book);
+
+    // ensure that the serialization/deserialization resources are no longer unnecessarily utilizing memory or processing after task completion
+    out.close();
+    file.close();
+}
+
+/**
+ * ObjectInputStream() reads a stream of bytes and converts it back into a data object.
+ * That data object must then be cast back into the the original dataType object.
+ */
+public static Book deserialize(String fileName) throws Exception {
+
+    FileInputStream file = new FileInputStream(fileName);
+    ObjectInputStream in = new ObjectInputStream(file);
+
+    // deserialization of a byte stream
+    Book book = (Book) in.readObject();
+
+    // ensure that the serialization/deserialization resources are no longer unnecessarily utilizing memory or processing after task completion
+    in.close();
+    file.close();
+
+    // return the deserialized original data object
+    return book;
+}
+```
+
+__TRANSIENT__
+
+use the transient keyword to ignore class fields during serialization that do not represent the state of the object or for any non-serializable references
+
+The serialization process is dependent on implementing instances: classes that are eligible for serialization need to implement the Serializable interface in Java.
+
+```
+public class Book implements Serializable {
+
+    // OOP ENCAPSULATION private class fields
+    private static final long serialVersionUID = -2936687026040726549L;
+    private String bookName;
+
+    private transient String description;
+    private transient int copies;
+
+    // in the given example, an OOP constructor isn't required since all class fields will be set to null or 0 (depending on their dataType) on instantiation
+
+    // OOP GETTERS & SETTERS 
+}
+```
+
+```
+public class BookTest {
+
+    // CONSTANTS/static class variables assigned FINAL value before compilation/instantiation
+    private static final String JAVA_REF = "Java Reference"; 
+
+    @Test
+    void bookSerialization() {
+
+        Book book = new Book();
+
+        book.setBookName(JAVA_REF);
+        book.setDescription("description will not be saved due to transient keyword in class field definition");
+        book.setCopies(25);
+
+        // the below test results with the bookName having been properly persisted.
+
+        String expected = JAVA_REF; 
+        String actual = book.getBookName();
+        assertEquals(expected, actual);
+
+        // due to the transient keyword, the below tests results with the copies field having a value of 0 and the description is null instead of the original values.
+
+        int expectedCopies = 0;
+        int actualCopies = book.getCopies();
+        assertEquals(expectedCopies, actualCopies);
+
+        assertNull(book.getDescription());
+    }
+}
+```
+
+# Concurrency
+
+Software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
+
+<img src="/content/concurrency.jpeg">
+
+__CONCURRENCY BENEFITS__
+
+- free up the main thread so that it can continue working and executing, you can report progress or accept user input and perform those other tasks on the screen or in other parts of the program, while another long-running task that we kicked off in another thread continues to execute in the background.
+
+- might want to use threads is because an API requires us to provide one.
+
+__PROCESS__
+
+an instance of a computer program with its own memory space that's sequentially executed by a computer system that has the ability to run several computer programs concurrently.
+
+- every process has a memory HEAP
+
+```
+java virtual machine instance ->
+        the JVM runs as a PROCESS ->
+            running a java console application ->
+                we're initiating said PROCESS
+```
+
+__THREAD__
+
+a unit of execution within a process, each process can have multiple threads: a method for a program to "split" itself into two or more simultaneously or pseudo-simultaneously running tasks.
+
+- every thread has a memory THREAD STACK.
+
+__THREADS .start()__
+
+only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
+
+```
+new Thread() {
+    @Override
+    public void run() {
+        System.out.println("Hello from anonymous class Thread")
+    }
+}.start();
+```
+
+__MULTI-THREADING__
+
+the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
+
+__THREAD JOIN__
+
+when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
+
+```
+public static void main(String[] args) {
+
+    // THREADS + GENERIC CLASSES/LAMBDAS: Thread.instance w/ parameter class instance that implements Runnable INTERFACE & immediately .start() no-name instance on it's own thread in the HEAP
+    Thread anotherThread = new Thread(new MyRunnableThread());
+    anotherThread.start();
+
+    Thread anonymousThread = new Thread(new MyRunnableThread() {
+        @Override
+        public void run() {
+
+            try {
+
+                // anotherThread.interrupt();
+
+
+                // THREAD JOIN: And when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
+                int timeout = 2000;
+                anotherThread.join(timeout)
+
+                System.out.println("anotherThread terminated or timed out, so I'm running again");
+
+            } catch(InterruptedException e) {
+                System.out.println("this.thread counldn't wait...it was interrupted");
+            }
+        }
+    });
+
+    anonymousRunnableThread.start();
+    System.out.println("Again, hello from the main Thread");
+}
+
+class MyRunnableThread implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("Hello from MyRunnableThread interface implementation of .run()");
+    }
+}
+```
+
+# Synchronization
+
+the process of semi-controlling/influencing when threads execute code and therefore when they can access the heap is called synchronization.
+
+- when working with threads, we have to synchronize all areas where we think or where interference can happen.
+
+__THREAD SYNCHRONIZATION code blocks__
+
+<img src="/content/thread_synchronization.png">
+
+use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
+
+```
+public synchronized void doCountdown() {
+    String color = ThreadColor.ANSI_CYAN;
+    String threadName = Thread.currentThread().getName();
+
+    switch(threadName) {
+        case THREAD_ONE:
+            color = ThreadColor.ANSI_CYAN;
+            break;
+        case THREAD_TWO:
+            color = ThreadColor.ANSI_PURPLE;
+            break;
+        default:
+            color = ThreadColor.ANSI_GREEN;
+            break;
+    }
+    synchronizedLoop(color, threadName);
+}
+
+private void synchronizedLoop(String color, String threadName) {
+
+    synchronized(this) {
+        for(int i = 10; i > 0; i--) {
+            System.out.println(color + threadName + ": i = " + i);
+        }
+    }
+}
+```
+
+__DEAD LOCKS__
+
+application freezes during execution due to unreleased INTRINSIC LOCKS - the synchronized shared-resource code executes one at a time and the single running thread is holding the objects INTRINSIC LOCK blocking other threads that WAIT for the lock release via NOTIFY
+
+<img src="/content/thread_synchronization_locks.png">
+
+__THREAD SYNCHRONIZATION + DEADLOCKS__
+
+key to avoiding deadlocks when two or more threads will be competing for two or more locks. You want to make sure that all threads or all the threads will try to obtain the locks in the same order.
+
+```
+public static Object lock1 = new Object();
+
+private static class Thread1 extends Thread {
+
+    public void run() {
+
+        synchronized(lock1) {
+
+            // THREAD SYNCHRONIZATION + EXCEPTION HANDLING + INTRINSIC REENTRANT LOCK: in TRY-FINALLY code block, use ReentrantLock.lock() to acquire the object's intrinsic lock & execute code one at a time -- other calling threads will suspend until the single running thread calls Reentrant.unlock() to pass the class/object's INTRINSIC LOCK.
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+}
+```
+
+__ARRAY BLOCKING QUEUE__
+
+a queue is a (FIFO) first-in, first-out abstract class implemented by a LINKED LIST that uses enqueue(), dequeue(), peek()
+
+```
+// ArrayBlockingQueue: we have to pass in the number of elements the array should be able to hold
+int numElements = 6;
+
+// THREAD SYNCHRONIZATION + EXCEPTION HANDLING + INTRINSIC REENTRANT LOCK: in TRY-FINALLY code block, use ReentrantLock.lock() to acquire the object's intrinsic lock & execute code one at a time -- other calling threads will suspend until the single running thread calls Reentrant.unlock() to pass the class/object's INTRINSIC LOCK.
+ArrayBlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(numElements);
+
+QueueProducer producer = new QueueProducer(arrayBlockingQueue, ThreadColor.ANSI_YELLOW);
+QueueConsumer consumer1 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI_PURPLE);
+QueueConsumer consumer2 = new QueueConsumer(arrayBlockingQueue, ThreadColor.ANSI_CYAN);
+```
+
+__EXECUTOR SERVICE__
+
+optimize a managed set of threads, thus reducing the overhead of thread creation
+
+```
+int numThreads = 3;
+ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
+
+executorService.execute(producer);
+executorService.execute(consumer1);
+executorService.execute(consumer2);
+```
+
+__FUTURE__
+
+a return value from an executed thread in a thread pool
+
+```
+// THREADS + ANONYMOUS CLASSES/LAMBDA: when using anonymous classes, immediately executing no-name Thread class w/ Thread.subclass parameter that implements Runnable interface to .start() on its own thread in the HEAP
+Future<String> future = executorService.submit(new Callable<String>() {
+    @Override
+    public String call() throws Exception {
+        return "executorService.submit() was called; this is the result";
+    }
+});
+```
+
+__ATOMIC ACTIONS__
+
+once a thread starts these actions, they cannot be suspended during execution, and must complete
+
+- reading and writing reference variables
+
+- reading and writing primitive variables, exception long & double
+
+- reading and writing volatile variables
+
+```
+int atomicAction1 = 1;
+int atomicAction2 = atomicAction1;
+```
+
+__VOLATILE VARIABLES__
+
+the JVM writes the value back to main memory immediately after a thread updates the value in its CPU cache, and it also guarantees that every time a variable reads from a volatile variable, it will get the latest value.
+
+```
+public volatile int volatileVariable;
+```
+
+__THREAD STARVATION__
+
+threads aren't given the opportunity to progress due to threat priority - assigning a high priority to a thread means the OS should try and run the thread before other waiting threads.
 
 # MapReduce
 
@@ -3946,7 +4198,7 @@ __CACHE__
 
 computer short-term memory & caching means saving frequently accessed data in-memory
 
-It is typically faster then the origin data source.
+Accessing cache is typically faster than accessing the origin data source again
 
 - You know Accessing data from RAM is always faster than accessing it from the hard drive
 
@@ -4430,320 +4682,3 @@ By diving the memory into fix blocks, it eliminates the issue of External Fragme
 __Cons:__
 
 Paging increases the price of computer hardware, as page addresses are mapped to hardware. Memory is forced to store variables like page tables. Some memory space stays unused when available blocks are not sufficient for address space for jobs to run. Since the physical memory is split into equal sizes, it allows for internal fragmentation.
-
-# Regular Expressions (REGEX)
-
-a case-sensitive search Strings for a specific pattern or validate user input matches a specific pattern
-
-__REGEX potential use cases__
-
-  1. email validation
-
-  2. credit card number validation
-
-  3. phone number validation
-
-  4. advanced find/replace in text
-
-  5. formatting text/output
-
-  6. syntax highlighting
-
-__match quick check__
-
-selecting REGULAR EXPRESSION string literal will enable a "yellow bulb" pop-up that has a "check RegExp" option
-
-EXAMPLE: US phone number REGEX
-
-```
-
-String usPhoneRegex = "^[\(]{1}[0-9]{3}[\)]{1}[ ]{1}[0-9]{3}[0-9][\-]{1}[0-9]{4})$";
-Pattern usPhonePattern = Pattern.compile(usPhoneRegex);
-
-String test = "(1) 123-123-1234";
-Matcher foundMatch = usPhonePattern.matcher(test);
-
-System.out.println("found match: " + foundMatch);
-```
-
-EXAMPLE: email regex
-
-- starts with 1 or more letter, number, plus sign, dash, underscore, or period
-
-- a single @ sign
-
-- 1 or more letter, number, or dash
-
-- a single dot
-
-- ends with 1 or more letter, number, dash or period
-
-```
-
-String emailRegex = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
-
-/*
-    pattern explanation:
-
-        ^ = search string has to start with any of the defined characters in the bracket
-
-        [a-zA-Z0-9_.+-] = allow lower case a-z, upper case a-z, 0-9, underscore, period, plus sign, or dash
-
-        + = allow one or more of the specified characters in the defined bracket
-
-        @ = a single 'commercial at' sign
-
-        [a-zA-Z0-9-] = allow lower case a-z, upper case a-z, 0-9 or dash
-
-        + = allow one or more of the specified characters in the defined bracket
-
-        \. = a single dot that (must use escape backslash to specify)
-
-        [a-zA-Z0-9-.] = allow lower case a-z, upper case a-z, 0-9, underscore, dash or period
-
-        + = allow one or more of the specified characters in the defined bracket
-
-        $ = search string has to end with any of the defined characters in the bracket
-*/
-```
-
-__REGEX character class__
-
-- character classes allow us to specify characters to filter in a pattern
-
-```
-    \ = escape special meaning of a character
-
-    . = matches everything
-
-    \. = string value of a period
-
-    \d = digit 0-9
-
-    \w = letter, digit, or underscore
-
-    \s = whitespace character
-
-    \D = not a digit
-
-    \W = not a word character
-
-    \S = not a whitespace character
-```
-
-__REGEX boundary matcher__
-
-- character classes allow us to specify characters in a GROUP/RANGE to filter in a pattern
-
-```
-    [] = character classes allow us to specify groups/ranges of characters
-
-    [^] = anything that is NOT the specified characters in the brackets with the carrot symbol
-
-        [^k] = anything but the lowercase letter k
-
-    ^ = carrot anchor species the search string has to start with defined regular expression
-
-        ^\d{3}
-
-    '$' = dollar sign boundary denotes the end of string or line
-
-    \b = word boundary
-
-        ex: \b\w+\b = select only and every word
-
-            'hello world I am typing'
-
-    | = the pipe character in regex denotes logical or
-
-        "Mr|Mrs|Ms"
-
-    () = parenthesis represent whole group
-
-        (\(\d{3}\)|\d{3}) \d{3} \d{4}
-```
-
-__REGEX quantifiers__
-
-- specify how many times a specific character should occur in a pattern
-
-```
-    + = one or more
-
-    {x} = exactly x times.
-
-        {3} = 3 times
-
-    {3,5} = 3 to 5 times
-
-    {4,} = four or more times
-
-    * = zero or more times
-
-    ? = once or none (optional)
-```
-
-# Test Driven Development (TDD)
-
-writing code that tests your other code to ensure a level of performance quality when your app is in production; making refactoring and collaboration safer and bug-free
-
-1. development BEGINS by writing RED failing tests
-
-2. once tests are written, write the MINIMUM amount of GREEN code necessary to make tests pass
-
-3. refactor = clean up the code, while ensuring that tests still pass
-
-4. once tests pass, a feature is considered complete
-
-__TDD JUNIT__
-
-1. update project structure JUnit library dependency to compile
-
-```
-   File -> project structure -> Modules -> Dependencies Tab ->
-       Export window -> Junit ->
-           open dropdown -> change "Test" to "Compile" -> Ok
-```
-
-2. add JUnit Library
-
-- right-click add "JUnit" to class path
-
-- select "Use JUnit from IntelliJ IDEA distribution"
-
-- click Ok
-
-3. define class, method signatures, & test suite
-
-4. create JUnit Test class & generate methods to test in root
-
-- click yellow light bulb onHover over independent class name
-
-- FIX if IDE is unable to identify built-in JUnit Test class
-
-- select specific methods to test
-
-5. BEFORE running, add fail(NOT_IMPLEMENTED) to each Test class method stub
-
-6. run expected failing tests suite
-
-7. review run configuration for all tests
-  want to test class in application, NOT the application itself
-
-- right-click outside created Test class & select run Test class
-- right-click outside created Test class & select modify run configuration
-- review configurations & click Ok
-- review right-corner dropdown is respective Test suite
-
-8. setup tests objects run before & after teardown every test run
-
-```
-public class AnimalTest {
-
-    private static final String BEFORE_ALL = "STATIC execute only once before all test suit is run, read data fro mdb for tests";
-    private static final String BEFORE_EACH = "execute code in setup() before each test is run";
-    private static final String AFTER_EACH = "execute code in setup() after each test is run";
-    private static final String AFTER_ALL = "STATIC execute only once after all test suit is run";
-
-    private Animal animal;
-
-    @BeforeAll
-    static void beforeAll() {
-        System.out.println(BEFORE_ALL);
-    }
-
-    @BeforeEach
-    void beforeEach() {
-        System.out.println(BEFORE_EACH);
-        animal = new Animal("Teddy", "Bear");
-    }
-
-    @AfterEach
-    void afterEach() {
-        System.out.println(AFTER_EACH);
-    }
-
-    @AfterAll
-    static void afterAll() {
-        System.out.println(AFTER_ALL);
-    }
-
-    @Test
-    void hasEaten_true() {
-
-        int testHunger = 80;
-
-        boolean actual = animal.hasEaten(testHunger);
-        assertTrue(actual);
-    }
-
-    @Test
-    void hasEaten_false() {
-
-        int testHunger = 80;
-
-        boolean actual = animal.hasEaten(testHunger);
-        assertFalse(actual);
-    }
-}
-```
-
-9. write test method assertions that test against class functionality
-
-- in testSuite, click on green arrow/red x in gutter next to specific method to test
-
-- review only passing or only failing tests with toggle in top-left of Test window
-
-```
-// JUnit TRY-CATCH: handle expected exceptions handing modify @Test annotation
-
-try {
-    double balance = checkingsAccount.withdraw(600.00, false);
-    assertEquals(400.00, balance, 0);
-} catch(IllegalArgumentException e) {
-    System.out.println(e.getMessage());
-}
-```
-
-BEST PRACTICE:
-
-write easily understood test method names
-
-```
-getBalance_deposit()
-getBalance_withdraw()
-```
-
-write on 1 independent assertion for 1 independent test
-
-setup any independent class instances that can be reused (without cross-pollination) on each test method
-
-```
-assertEquals(expectedValue, actualTestValue);
-
-assertNotEquals(expectedValue, actualTestValue);
-
-assertTrue(actualTestValue, failMsg);
-
-assertFalse(actualTestValue, failMsg);
-
-// consider two arrays equal if length & every element in order identical
-assertArrayEquals(expectedArray, actualTestArray);
-
-assertNull(actualTestValue);
-
-// easy-to-read check for null values
-assertNotNull(actualTestValue);
-
-assertSame(expectedValue, actualTestValue);
-
-// compares object references, unlike assertEquals that checks if instances are the same
-assertNotSame(expectedValue, actualTestValue);
-
-// compare the actual value against a matcher range of values
-assertThat(expectedValue, actualTestValue);
-```
-
-10. write method implementation in file
-
-11. individually run implemented functions until all failing tests resolved in test suite
