@@ -2308,8 +2308,58 @@ public class MaxHeap {
 
 <img src="/content/ds_graph.png" alt="data structure graph">
 
-```
+This implementation represents a graph as an adjacency list, which is a collection of lists that hold the vertices that are adjacent to each vertex in the graph.
 
+- The addEdge method adds an edge from the source vertex to the destination vertex by adding the destination vertex to the list of neighbors for the source vertex.
+
+- The getNeighbors method returns the list of neighbors for a given vertex.
+
+```
+import java.util.ArrayList;
+import java.util.List;
+
+public class Execute {
+
+    public static void main(String[] args) {
+
+        // You can create a new instance of the Graph class and add edges like this
+        Graph graph = new Graph(5);
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 4);
+        graph.addEdge(1, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(1, 4);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 4);
+    }
+}
+
+public class Graph {
+
+    // OOP ENCAPSULATION private class fields
+    private List<List<Integer>> adjacencyList;
+
+    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
+    public Graph(int numVertices) {
+
+      this.adjacencyList = new ArrayList<>(numVertices);
+
+      for (int i = 0; i < numVertices; i++) {
+        adjacencyList.add(new ArrayList<>());
+      }
+    }
+
+    // OOP METHODS: unique object behavior
+    public void addEdge(int source, int destination) {
+      adjacencyList.get(source).add(destination);
+    }
+
+    public List<Integer> getNeighbors(int vertex) {
+      return adjacencyList.get(vertex);
+    }
+
+    // OOP GETTERS & SETTERS
+}
 ```
 
 __Graph Traversal: Breadth-first search vs. Depth-first search__
@@ -2318,199 +2368,124 @@ Use either search algorithm to recursively traverse a graph which is a collectio
 
 __depth-first search__
 
-DFS technique starts with a root node and then traverses the adjacent nodes of the root node by going deeper into the graph.
+Depth-first search (DFS) is an algorithm for traversing a graph or a tree data structure.
 
-In the DFS technique, the nodes are traversed depth-wise until there are no more children to explore.
+- It begins at the root node and explores as far as possible along each branch before backtracking.
 
-Once we reach the leaf node (no more child nodes), the DFS backtracks and starts with other nodes and carries out traversal in a similar manner.
+This will traverse the graph starting at the startVertex and visit all reachable vertices in a depth-first manner. You can check which vertices have been visited by looking at the visited array.
 
-DFS technique uses a stack data structure to store the nodes that are being traversed.
-
-- hasPath(s, t): recursively, nodeS do you have a path to nodeT?
-- nodes asks (left-to-right) it's child if it has a path to nodeT, repeat until reached nodeT or null
-
-Detect a cycle in a graph: DFS facilitates to detect a cycle in a graph when we can backtrack to an edge.
-
-Path-finding: As we have already seen in the DFS illustration, given any two vertices we can find the path between these two vertices.
-
-Minimum spanning tree and shortest path: If we run the DFS technique on the non-weighted graph, it gives us the minimum spanning tree and the shorted path.
-
-Topological sorting: Topological sorting is used when we have to schedule the jobs. We have dependencies among various jobs. We can also use topological sorting for resolving dependencies among linkers, instruction schedulers, data serialization, etc.
+- For example, visited[i] will be true if vertex i has been visited during the search.
 
 ```
-//DFS Technique for undirected graph
-public class Graph {
+import java.util.ArrayList;
+import java.util.List;
 
-    private int vertices;   // No. of vertices
+public class Execute {
 
-    // adjacency list declaration
-    private LinkedList<Integer> adj_list;
+    public static void main(String[] args) {
 
-    // graph Constructor: to initialize adjacency lists as per no of vertices
-    public Graph(int vertices) {
-        this.vertices = vertices;
-        this.adj_list = new LinkedList[vertices];
+        List<List<Integer>> graph = // create the graph
+        int startVertex = // choose the start vertex
 
-        for (int i = 0; i < vertices; ++i) {
-            adj_list[i] = new LinkedList();
+        DepthFirstSearch dfs = new DepthFirstSearch();
+        dfs.search(graph, startVertex);
+    }
+} 
+
+public class DepthFirstSearch {
+
+    // OOP ENCAPSULATION private class fields
+    private boolean[] visited;
+
+    // OOP METHODS: unique object behavior
+    public void search(List<List<Integer>> graph, int startVertex) {
+      int numVertices = graph.size();
+      visited = new boolean[numVertices];
+      dfs(graph, startVertex);
+    }    
+
+    /**
+     * The dfs method is a recursive function that marks the current vertex as visited and then recursively visits all of its unvisited neighbors.
+     * The search method initializes the visited array and calls the dfs method to start the search at the startVertex.
+     */
+    public void dfs(List<List<Integer>> graph, int vertex) {
+
+      this.visited[vertex] = true;
+
+      for (int neighbor : graph.get(vertex)) {
+
+        if (!visited[neighbor]) {
+
+            // recursion
+            dfs(graph, neighbor);
         }
-    }
-
-    //add an edge to the graph
-    public void addEdge(int v, int w) {
-        this.adj_list[v].add(w);  // Add w to v's list.
-    }
-
-    // helper function for DFS technique
-    public void DFS_helper(int v, boolean[] visited) {
-
-        // current node is visited
-        visited[v] = true;
-        System.out.print(v + " ");
-
-        // process all adjacent vertices
-        Iterator<Integer> iterator = this.adj_list[v].listIterator();
-
-        while(iterator.hasNext()) {
-
-            int node = iterator.next();
-
-            if (!visited[node]) {
-
-                // recursion
-                DFS_helper(node, visited);
-            }
-        }
-    }
-
-    public void DFS(int v) {
-
-        //initially none of the vertices are visited
-        boolean visited[] = new boolean[this.vertices];
-
-        // call recursive DFS_helper function for DFS technique
-        DFS_helper(v, visited);
-    }
-}
-
-public class Main{
-
-    public static void main(String args[]) {
-
-        //create a graph object and add edges to it
-        Graph graph = new Graph(5);
-
-        graph.addEdge(0, 1);
-        graph.addEdge(0, 2);
-        graph.addEdge(0, 3);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 4);
-
-        //print the DFS Traversal sequence
-        System.out.println(
-            "Depth First Traversal for given graph with 0 as starting vertex: "
-        );
-
-        graph.DFS(0);
+      }
     }
 }
 ```
 
 __breadth-first Search__
 
-This means we traverse the graph level wise. When we explore all the vertices or nodes at one level we proceed to the next level.
+Breadth-first search (BFS) is an algorithm for traversing a graph or a tree data structure.
 
-- hasPath(s, t): recursively, does nodeS do you have a path to nodeT?
+- It starts at the root node and explores the neighbor nodes first, before moving on to the next level neighbors.
 
-- nodes checks if any of its children are nodeT, if no edges to first level children, then check next level and repeat
+This will traverse the graph starting at the startVertex and visit all reachable vertices in a breadth-first manner.
 
-Garbage collection: One of the algorithms used by the garbage collection technique to copy Garbage collection is “Cheney’s algorithm”. This algorithm uses a breadth-first traversal technique.
+- You can check which vertices have been visited by looking at the visited array.
 
-Broadcasting in networks: Broadcasting of packets from one point to another in a network is done using the BFS technique.
-
-GPS navigation: We can use the BFS technique to find adjacent nodes while navigating using GPS.
-
-Social networking websites: BFS technique is also used in social networking websites to find the network of people surrounding a particular person.
-
-Shortest path and minimum spanning tree in un-weighted graph: In the unweighted graph, the BFS technique can be used to find a minimum spanning tree and the shortest
+- For example, visited[i] will be true if vertex i has been visited during the search.
 
 ```
-//undirected graph represented using adjacency list.
-public class Graph {
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
-    private int vertices;   // No. of vertices
-    private LinkedList<Integer> adj_list[]; //Adjacency Lists
+public class Execute {
 
-    // graph Constructor:number of vertices in graph are passed
-    public Graph(int vertices) {
-        this.vertices = vertices;
-        this.adj_list = new LinkedList[v];
+    public static void main(String[] args) {
 
-        // create adjacency lists
-        for (int i=0; i < vertices; ++i) {
-            this.adj_list[i] = new LinkedList();
-        }
-    }
-
-    // add an edge to the graph
-    public void addEdge(int v,int w) {
-        this.adj_list[v].add(w);
-    }
-
-    // BFS traversal from the root_node
-    public void BFS(int root_node) {
-
-        // initially all vertices are not visited
-        boolean visited[] = new boolean[this.vertices];
-
-        // BFS queue
-        LinkedList<Integer> queue = new LinkedList<>();
-
-        // current node = visited, insert into queue
-        visited[root_node] = true;
-
-        queue.add(root_node);
-
-        while (queue.size() != 0) {
-
-            // deque an entry from queue and process it
-            root_node = queue.poll();
-            System.out.print(root_node + " ");
-
-            // get all adjacent nodes of current node and process
-            Iterator<Integer> iterator = this.adj_list[root_node].listIterator();
-
-            while (iterator.hasNext()) {
-
-                int node = iterator.next();
-
-                if (!visited[node]) {
-
-                    visited[node] = true;
-                    queue.add(node);
-                }
-            }
-        }
+        List<List<Integer>> graph = // create the graph
+        int startVertex = // choose the start vertex
+        
+        BreadthFirstSearch bfs = new BreadthFirstSearch();
+        bfs.bfs(graph, startVertex);
     }
 }
 
-public class Main{
+public class BreadthFirstSearch {
 
-    public static void main(String args[]) {
+    // OOP ENCAPSULATION private class fields
+    private boolean[] visited;
 
-        //create a graph with 5 vertices
-        Graph graph = new Graph(5);
+    // OOP METHODS: unique object behavior
+    /**
+     * The bfs method starts at the startVertex and marks it as visited. It then adds the vertex to a queue and processes all of its unvisited neighbors.
+     * For each neighbor, it marks it as visited and adds it to the queue. This continues until all reachable vertices have been visited.
+     */
+    public void bfs(List<List<Integer>> graph, int startVertex) {
 
-        //add edges to the graph
-        graph.addEdge(0, 1);
-        graph.addEdge(0, 2);
-        graph.addEdge(0, 3);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 4);
+      int numVertices = graph.size();
+      this.visited = new boolean[numVertices];
 
-        //print BFS sequence
-        System.out.println("Breadth-first traversal of graph with 0 as starting vertex:");
-        graph.BFS(0);
+      Deque<Integer> queue = new ArrayDeque<>();
+      queue.add(startVertex);
+      this.visited[startVertex] = true;
+
+      while (!queue.isEmpty()) {
+
+        int vertex = queue.poll();
+
+        for (int neighbor : graph.get(vertex)) {
+
+          if (!visited[neighbor]) {
+
+            queue.add(neighbor);
+            this.visited[neighbor] = true;
+          }
+        }
+      }
     }
 }
 ```
@@ -3804,7 +3779,7 @@ __CONCURRENCY BENEFITS__
 
 - free up the main thread so that it can continue working and executing, you can report progress or accept user input and perform those other tasks on the screen or in other parts of the program, while another long-running task that we kicked off in another thread continues to execute in the background.
 
-- might want to use threads is because an API requires us to provide one.
+- using a thread is ideal because many APIs require us to provide one.
 
 __PROCESS__
 
@@ -3827,7 +3802,9 @@ a unit of execution within a process, each process can have multiple threads: a 
 
 __THREADS .start()__
 
-only JVM executes .run() for a given single Thread (always a new Thread instance), including priority-assigned threads, and CANNOT assume Thread instance execution order
+only JVM executes .run() for a given single Thread (and it's always a new Thread instance), including priority-assigned threads
+
+you CANNOT assume the order of Thread instance execution 
 
 ```
 new Thread() {
@@ -3840,16 +3817,16 @@ new Thread() {
 
 __MULTI-THREADING__
 
-the JVM is multi-processed and multithreaded and has background processes running while a single-thread (main) process/application is executing.
+the JVM is multi-processed and multithreaded and has background processes running while a single-thread process (the main thread) is executing.
 
 __THREAD JOIN__
 
-when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach timeout value and then it will wake to continue to execute.
+when we join a thread to a second thread, the first thread will wait for the second thread to terminate or reach the timeout value and then it will wake to continue to execute.
 
 ```
 public static void main(String[] args) {
 
-    // THREADS + GENERIC CLASSES/LAMBDAS: Thread.instance w/ parameter class instance that implements Runnable INTERFACE & immediately .start() no-name instance on it's own thread in the HEAP
+    // THREADS + GENERIC CLASSES/LAMBDAS: Thread.instance w/ parameter class instance that implements Runnable INTERFACE & immediately calls the .start() with the no-name instance on it's own thread in the HEAP
     Thread anotherThread = new Thread(new MyRunnableThread());
     anotherThread.start();
 
@@ -3878,7 +3855,7 @@ public static void main(String[] args) {
     System.out.println("Again, hello from the main Thread");
 }
 
-class MyRunnableThread implements Runnable {
+public class MyRunnableThread implements Runnable {
     @Override
     public void run() {
         System.out.println("Hello from MyRunnableThread interface implementation of .run()");
@@ -3888,18 +3865,21 @@ class MyRunnableThread implements Runnable {
 
 # Synchronization
 
-the process of semi-controlling/influencing when threads execute code and therefore when they can access the heap is called synchronization.
+Sychronization is the process of influencing when threads execute code and therefore when they can access the heap in memory.
 
-- when working with threads, we have to synchronize all areas where we think or where interference can happen.
+- when working with threads, we have to synchronize all areas where thread interference can potentially happen.
 
 __THREAD SYNCHRONIZATION code blocks__
 
-<img src="/content/thread_synchronization.png">
+Use the synchronized keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
 
-use synchronization keyword so that all other threads that want to call any synchronized sections in that class will suspend until the single thread running the synchronized code block exits it & passes the object's INTRINSIC LOCK.
+- every object in Java has an INTRINSIC LOCK
+
+<img src="/content/thread_synchronization.png">
 
 ```
 public synchronized void doCountdown() {
+
     String color = ThreadColor.ANSI_CYAN;
     String threadName = Thread.currentThread().getName();
 
@@ -3914,6 +3894,7 @@ public synchronized void doCountdown() {
             color = ThreadColor.ANSI_GREEN;
             break;
     }
+
     synchronizedLoop(color, threadName);
 }
 

@@ -63,6 +63,31 @@ Given my technical background, 70K-80K dollars a year would be fair.
 
 # Technical Interview Questions
 
+__Q0__
+
+// excel Vlookup formula
+
+```
+=Vlookup(lookup value, table array, column number, range lookup);
+```
+
+Task 1: find the n of days in transit from the data at L8
+
+<img src="/content/vlookup1.png" alt="vlookup1">
+
+Solution:
+
+```
+=VLOOKUP(store_purchased, fixed_table_array, output_column_of_n_transit, exact_match)
+
+- store purchased is the shared key in primary table (but under different name in reference table)
+- $ is fixed referenced table (to avoid reference movement when coping & pasting)
+- 3 is the target output column 
+- false for isApproximateMatch, we want exact matches
+```
+
+<img src="/content/vlookup1_solution.png" alt="vlookup1 solution">
+
 __Q1__
 
 Given a signed 32-bit integer x, return x with its digits reversed
@@ -1260,6 +1285,72 @@ __Q9__
 
 ```
 /**
+* ! query many-to-many table from created reviewers, series, review tables that uses prep data for respective table
+*
+* ? in imdb database, create reviewer, series, and reviews tables with the many-to-many connections for the review table
+* ?     on delete cascade for relevant fields and tables
+*
+* * reviewers schema:
+* *    id,
+* *    first_name (mandatory default 'MISSING' max 20 chars),
+* *    last_name (mandatory default 'MISSING' max 20 chars)
+*
+* * series schema:
+* *    id,
+* *    title (mandatory default "MISSING" max 20 chars),
+* *    released_year (4-digit mandatory),
+* *    genre (max 100 chars)
+*
+* * reviews schema:
+* *    id,
+* *    rating (MIN 0.0 to MAX 9.9),
+* *    series_id,
+* *    reviewer_id
+*
+* * on delete cascade many-to-many relationships
+*/
+
+SHOW DATABASES;
+
+CREATE DATABASE imdb;
+USE imdb;
+
+CREATE TABLE reviewers(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(20)  NOT NULL DEFAULT "MISSING", 
+    last_name VARCHAR(20) NOT NULL DEFAULT UPPER("missing")
+);
+
+DESC reviewers;
+
+CREATE TABLE series(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(20) NOT NULL DEFAULT UPPER("missing"),
+    released_year YEAR(4) NOT NULL,
+    genre VARCHAR(100)
+);
+
+DESC series;
+
+CREATE TABLE reviews(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rating DECIMAL(2, 1) NOT NULL,
+    series_id INT,
+    reviewer_id INT,
+    FOREIGN KEY(series_id)
+        REFERENCES series(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY(reviewer_id)
+        REFERENCES reviewers(id)
+        ON DELETE CASCADE
+);
+
+DESC reviews;
+SHOW TABLES;
+```
+
+```
+/**
 * ! query many-to-many table from created reviewers, series, review tables
 *
 * * reviewers schema:
@@ -1444,32 +1535,26 @@ LIMIT 3;
 challenge 6: reproduce the table below (there will be nulls):
 
 ```
-first_name | last_name | COUNT | MIN | MAX | AVG | STATUS
+    first_name | last_name | COUNT | MIN | MAX | AVG | STATUS
 
-     thomas  | stoneman | 5  | 7.0  | 9.5 | 8.02 | ACTIVE
-     wyatt   | skaggs   | 9  | 5.5  | 9.3 | 7.80 | ACTIVE
-     colt    | steele   | 10 | 4.5  | 9.9 | 8.77 | POWER USER
-     marlon  | crafford | 0  | 0    | 0   | 0.00 | INACTIVE
+    thomas  | stoneman | 5  | 7.0  | 9.5 | 8.02 | ACTIVE
+    wyatt   | skaggs   | 9  | 5.5  | 9.3 | 7.80 | ACTIVE
+    colt    | steele   | 10 | 4.5  | 9.9 | 8.77 | POWER USER
+    marlon  | crafford | 0  | 0    | 0   | 0.00 | INACTIVE
 ```
 
 ```
 SHOW DATABASES;
 SELECT database();
-USE ig_db;
+USE imdb;
 
 SHOW TABLES;
-DESC reviewers;
 DESC reviews;
+DESC reviewers;
 
 SELECT
-    IFNULL(
-        reviewers.first_name,
-        UPPER("missing")
-    ),
-    IFNULL(
-        reviewers.last_name,
-        UPPER("missing")
-    ),
+    reviewers.first_name,
+    reviewers.last_name,
     IFNULL(
         COUNT(reviews.id),
         0
@@ -1484,24 +1569,63 @@ SELECT
     ) AS UPPER("max"),
     IFNULL(
         ROUND(
-            AVG(reviews.rating), 2
+            AVG(reviews.rating),
+            2
         ),
         0.00
-    ) AS UPPER("avg"),
+    ) AS UPPER("avg")
     CASE
-        WHEN AVG(reviews.rating) IS NULL
+        WHEN AVG(reviews.rating) IS NULL OR AVG(reviews.rating) <= 0
             THEN UPPER("inactive")
-        WHEN AVG(reviews.rating) > 0 AND AVG(reviews.rating) < 10
+        WHEN AVG(reviews.rating) > 0 AND AVG(reviews.rating) < 10 
             THEN UPPER("active")
         ELSE
             THEN UPPER("power user")
     END
 FROM reviewers
 LEFT JOIN reviews
-    ON reviewers.id = reviews.reviewer_id
+    ON reviewers.id =  reviews.reviewer_id 
 GROUP BY reviewers.id
 ORDER BY UPPER("min") DESC
 LIMIT 4;
+```
+
+challenge 7: reproduce the table below (no nulls):
+
+```
+    title | rating | reviewer
+
+    archer | 8.0 | thomas stoneman
+    archer | 7.0 | domingo cortes
+    archer | 8.5 | kimbra masters
+    arrested development | 8.4 | pinkie petit
+    arrested development | 9.9 | colt steele
+    bobs burgers | 7.0 | thomas stoneman
+```
+
+```
+SHOW DATABASES;
+SELECT database();
+USE imdb;
+
+SHOW TABLES;
+DESC series;
+DESC reviews;
+DESC reviewers;
+
+SELECT
+    series.title,
+    reviews.rating,
+    CONCAT(
+        reviewers.first_name, " ", reviewers.last_name
+    ) AS "reviewer"
+FROM reviews
+INNER JOIN series
+    ON reviews.series_id = series.id 
+INNER JOIN reviewers
+    ON reviews.reviewer_id = reviewers.id
+ORDER BY series.title ASC
+LIMIT 6;
 ```
 
 __Q10__
@@ -1529,4 +1653,51 @@ public static Integer trailingZeroFactorial(int n) {
 
     return everyFiveCount; // AUTOBOXING
 }
+```
+
+__Q11__
+
+```
+/**
+* ! query one-to-many table from created students and papers table that uses prep data for respective table
+*
+* ? get the student id, student first_name, paper title, paper grade,
+* ?    by student id of the respective paper
+* ?    and order by students id first, then paper's grade DESC
+*
+* * students schema:
+* *    primary key(id),
+* *    first_name mandatory default "MISSING"
+*
+* * papers schema:
+* *    id primary key mandatory,
+* *    title 100 max chars,
+* *    grade INT,
+* *    student_id INT,
+* *    foreign key (student_id)
+*/
+```
+
+get the student id, student first_name, paper title, paper grade,
+by student id of the respective paper
+and order by paper's grade DESC
+
+```
+SHOW DATABASES;
+SELECT database();
+USE school;
+
+SHOW TABLES;
+DESC students;
+DESC papers;
+
+SELECT
+    students.id,
+    students.first_name,
+    papers.title,
+    papers.grade 
+FROM students
+INNER JOIN papers
+    ON students.id = papers.student_id
+ORDER BY students.id, papers.grade ASC;
 ```
