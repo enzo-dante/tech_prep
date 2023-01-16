@@ -22,7 +22,7 @@ I quickly learned the scope of the project wasn't adequately understood given th
 
 So I expressed my concerns to my PM, who organized virtual-meetings with all the stake holders.
 
-After those meeting, I updated the logic on our backend, validated against my unit tests, and made sure our CDN had the necessary content
+After those meeting, I updated the logic on our backend, validated against my unit tests, and made sure our CDN had the necessary resources
 
 Unfortunately, there were edge cases that I didn't take into account, so my implementation didn't pass QA. I brought up my failure to provide a scalable-solution and one of the stake holders from another domain possessed an excel that visually demonstrated how all 12 possible customer experiences should play out.
 
@@ -132,7 +132,7 @@ I quickly learned the scope of the project wasn't adequately understood given th
 
 So I expressed my concerns to my PM, who organized virtual-meetings with all the stake holders.
 
-After those meeting, I updated the logic on our backend, validated against my unit tests, and made sure our CDN had the necessary content
+After those meeting, I updated the logic on our backend, validated against my unit tests, and made sure our CDN had the necessary resources
 
 Unfortunately, there were edge cases that I didn't take into account, so my implementation didn't pass QA. I brought up my failure to provide a scalable-solution and one of the stake holders from another domain possessed an excel that visually demonstrated how all 12 possible customer experiences should play out.
 

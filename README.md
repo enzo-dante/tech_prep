@@ -732,7 +732,7 @@ make sure to avoid redundant recursive calls (solved via MEMOIZATION)
 
 # Arrays
 
-<img src="/content/ds_array.png">
+<img src="/resources/ds_array.png">
 
 O(1) CONSTANT time complexity when getting an element in an array with an index because it always take 3 steps
 
@@ -757,7 +757,7 @@ for(int index = 0; index < intArray.length; index++) {
 
 # 2D Arrays / Matrix
 
-<img src="/content/ds_matrix.png" alt="data structure 2-dimensional array">
+<img src="/resources/ds_matrix.png" alt="data structure 2-dimensional array">
 
 Two Dimensional arrays are needed when data is formatted as TABLE or SPREADSHEET
 
@@ -879,7 +879,7 @@ employeeList.add(new Employee("First 2", "Last 2", 22));
 
 # sets
 
-<img src="/content/ds_hashtable.png" alt="data structure set">
+<img src="/resources/ds_hashtable.png" alt="data structure set">
 
 sets are a computationally fast unordered collection WITHOUT DUPLICATES implemented via a HASHSET class
 
@@ -923,7 +923,7 @@ remove all shared elements found in both sets & return all non-shared elements o
 
 # Singly LinkedLists
 
-<img src="/content/ds_singly_linked_list.png" alt="data structure singly linked list">
+<img src="/resources/ds_singly_linked_list.png" alt="data structure singly linked list">
 
 ```
 public class EmployeeNode {
@@ -1022,7 +1022,7 @@ public class EmployeeLinkedList {
 
 # Doubly LinkedLists
 
-<img src="/content/ds_doubly_linked_list.png" alt="data structure doubly linked-list">
+<img src="/resources/ds_doubly_linked_list.png" alt="data structure doubly linked-list">
 
 ```
 public class EmployeeNode {
@@ -1209,7 +1209,7 @@ public class DoublyLinkedList {
 
 # Stacks
 
-<img src="/content/ds_stack.png" alt="data structure stack">
+<img src="/resources/ds_stack.png" alt="data structure stack">
 
 LIFO STACKS: an abstract class that only accesses variables from the top/front on a stack because it's a last-in, first-out (LIFO) data structure implemented by a LINKED_LIST or ARRAY
 
@@ -1292,7 +1292,7 @@ public class ArrayStack {
 
 # Maps
 
-<img src="/content/ds_hashtable.png" alt="data structure maps">
+<img src="/resources/ds_hashtable.png" alt="data structure maps">
 
 an INTERFACE of unique_key-value pairs implemented by the HASHMAP or LINKED HASHMAP classes with 2 GENERIC parameters
 
@@ -1333,7 +1333,7 @@ languages.containsKey(key)
 
 # Queues
 
-<img src="/content/ds_queue.png" alt="data structure queue">
+<img src="/resources/ds_queue.png" alt="data structure queue">
 
 FIFO QUEUES: an abstract class that only accesses variables from the top/front on the queue because it's a first-in, first-out (FIFO) data structure implemented by a LINKED_LIST or ARRAY
 
@@ -1467,7 +1467,7 @@ public class CircularQueue {
 
 # Binary Trees
 
-<img src="/content/ds_tree.png" alt="data structure tree">
+<img src="/resources/ds_tree.png" alt="data structure tree">
 
 BINARY TREE:
 
@@ -1907,7 +1907,7 @@ public class BinaryTree {
 
 # Heaps
 
-<img src="/content/ds_heaps.png" alt="data structure heaps">
+<img src="/resources/ds_heaps.png" alt="data structure heaps">
 
 a complete binary tree with array-backing, only interested in  min & max at ROOT of tree O(1) time complexity that functions left-to-right
 
@@ -2306,7 +2306,7 @@ public class MaxHeap {
 
 # Graphs
 
-<img src="/content/ds_graph.png" alt="data structure graph">
+<img src="/resources/ds_graph.png" alt="data structure graph">
 
 This implementation represents a graph as an adjacency list, which is a collection of lists that hold the vertices that are adjacent to each vertex in the graph.
 
@@ -3468,9 +3468,9 @@ assertThat(expectedValue, actualTestValue);
 
 11. individually run implemented functions until all failing tests resolved in test suite
 
-# Content Management System
+# resources Management System
 
-A content management system (CMS) is a tool that allows you to build all of the pieces of your website - from text to photos to widgets - via an easy-to-use interface.
+A resources management system (CMS) is a tool that allows you to build all of the pieces of your website - from text to photos to widgets - via an easy-to-use interface.
 
 With a CMS like Wordpress, Wix, or Atlassian's Bitbucket, you don’t need to write your own code; instead, you can apply pre-created templates and plug-ins to quickly and efficiently build a website.
 
@@ -3500,7 +3500,7 @@ Agile Scrum uses two-week sprints to get work done. These sprints are planned in
 
 To build an AGILE roadmap, product owners take into account market trajectories, value propositions, and engineering constraints.
 
-<img src="/content/jira-agile.png" alt="agile project management">
+<img src="/resources/jira-agile.png" alt="agile project management">
 
 __Jira + Agile__
 
@@ -3542,7 +3542,7 @@ The Trello tasks are placed on cards and team members who are assigned to that t
 
 - The card moves through the workflow as progress is made on completing the task.
 
-<img src="/content/trello-waterfall.png" alt="agile project management">
+<img src="/resources/trello-waterfall.png" alt="agile project management">
 
 Trello project management workflow Phases:
 
@@ -3665,7 +3665,7 @@ a LEFT or RIGHT join will ALSO show data overlap IN ADDITION TO the null data pa
 
 It is common for LEFT OR RIGH joins to have nulls, anything that does not fall in the overlap section of a venn diagram is a null data pair
 
-<img src="/content/SQL_joins.jpeg" alt="SQL Joins Diagram">
+<img src="/resources/SQL_joins.jpeg" alt="SQL Joins Diagram">
 
 # Serialization
 
@@ -3675,7 +3675,7 @@ Serialization is the process of converting a data object into a series of bytes 
 
 Deserialization is the reverse process where it reads a stream of bytes from a data source - like a file, database, or memory - and converts it back into the original data object - in Java, the deserialized data needs to be cast back to the original dataType object.
 
-<img src="/content/serialization.png">
+<img src="/resources/serialization.png">
 
 ```
 /**
@@ -3773,7 +3773,7 @@ public class BookTest {
 
 Software that can execute processes simultaneously (one task doesn't have to complete before another one can start)
 
-<img src="/content/concurrency.jpeg">
+<img src="/resources/concurrency.jpeg">
 
 __CONCURRENCY BENEFITS__
 
@@ -3875,7 +3875,7 @@ Use the synchronized keyword so that all other threads that want to call any syn
 
 - every object in Java has an INTRINSIC LOCK
 
-<img src="/content/thread_synchronization.png">
+<img src="/resources/thread_synchronization.png">
 
 ```
 public synchronized void doCountdown() {
@@ -3912,7 +3912,7 @@ __DEAD LOCKS__
 
 application freezes during execution due to unreleased INTRINSIC LOCKS - the synchronized shared-resource code executes one at a time and the single running thread is holding the objects INTRINSIC LOCK blocking other threads that WAIT for the lock release via NOTIFY
 
-<img src="/content/thread_synchronization_locks.png">
+<img src="/resources/thread_synchronization_locks.png">
 
 __THREAD SYNCHRONIZATION + DEADLOCKS__
 
@@ -4024,7 +4024,7 @@ At the crux of MapReduce are two functions: Map and Reduce. They are sequenced o
 
 - The Reduce function also takes inputs as <key,value> pairs, and produces <key,value> pairs as output.
 
-<img src="/content/map_reduce.png" alt="map reduce">
+<img src="/resources/map_reduce.png" alt="map reduce">
 
 The types of keys and values differ based on the use case.
 
@@ -4201,7 +4201,7 @@ If any data is modified in the database, it should be invalidated or modified in
 
 Read-Through
 
-<img src="/content/distributed-cache-read-through.png">
+<img src="/resources/distributed-cache-read-through.png">
 
 - The data is written into the cache and the corresponding database at the same time.
 
@@ -4211,7 +4211,7 @@ Read-Through
 
 Write-Through
 
-<img src="/content/distributed-cache-write-through.png">
+<img src="/resources/distributed-cache-write-through.png">
 
 - In this strategy, every information directly written to the database just bypassing the cache.
 
@@ -4219,7 +4219,7 @@ Write-Through
 
 Write-Back
 
-<img src="/content/distributed-cache-write-back.png">
+<img src="/resources/distributed-cache-write-back.png">
 
 - The data is written to cache only and completion is immediately confirmed to the client. The write to the permanent storage is done after specified intervals or under certain conditions. This results in low latency and high throughput for write-intensive applications.
 
@@ -4278,7 +4278,7 @@ A cache eviction algorithm is a way of deciding which element to evict when the 
 
 - Least Frequently Used (LFU): Counts how often an item is needed. Those that are used least often are discarded first.
 
-<img src="/content/distributed-cache.png">
+<img src="/resources/distributed-cache.png">
 
 # Internet Fundamentals
 
@@ -4286,13 +4286,13 @@ __COMPUTER NETWORK__
 
 a set of independent computer systems connected by telecommunications links for the purpose of sharing information & resources.
 
-<img src="/content/computer-network.png">
+<img src="/resources/computer-network.png">
 
 __INTERNET__
 
 an independent global system of computer networks connected by a collection of protocols implemented in software and hardware designed to interconnect all types of networks like cell phones, Ethernet, wifi, etc.
 
-<img src="/content/internet.jpeg">
+<img src="/resources/internet.jpeg">
 
 __PROTOCOLS__
 
@@ -4302,7 +4302,7 @@ __MODEM__
 
 a hardware device that transforms between physical states (analog) and bits (digital) for the internet
 
-<img src="/content/modem.png">
+<img src="/resources/modem.png">
 
 __IP ADDRESS__
 
@@ -4322,7 +4322,7 @@ __ROUTING__
 There are multiple paths from one node
 (computer) to another
 
-<img src="/content/routing.png">
+<img src="/resources/routing.png">
 
 Two network nodes (e.g. phones) establish a dedicated connection via one or more switching stations.
 
@@ -4353,7 +4353,7 @@ the Edges provide the services people use
 
 - business, government, nonprofit services
 
-<img src="/content/packet-switching.png">
+<img src="/resources/packet-switching.png">
 
 __END-TO-END PRINCIPLE__
 
@@ -4384,7 +4384,7 @@ control the Internet within their borders
 
 # Service-Oriented Architectures (SOA)
 
-<img src="/content/soa.png">
+<img src="/resources/soa.png">
 
 A method of software development that uses easily switchable software components called services to create business applications.
 
@@ -4442,7 +4442,7 @@ __ESB__
 
 An enterprise service bus (ESB) is software that you can use when communicating with a system that has multiple services. It establishes communication between services and service consumers no matter what the technology.
 
-<img src="/content/esb.png">
+<img src="/resources/esb.png">
 
 __SOA DRAWBACKS__
 
@@ -4460,7 +4460,7 @@ For SOA implementations with an ESB, the ESB creates a single point of failure. 
 
 __MICROSERVICES vs SOA__
 
-<img src="/content/microservices.png">
+<img src="/resources/microservices.png">
 
 Microservices architecture is made up of very small and completely independent software components, called microservices, that specialize and focus on one task only.
 
@@ -4482,7 +4482,7 @@ The distribution of loads across as many servers as necessary to handle the work
 
 - In this case, you can scale infinitely by adding more physical machines to an existing pool of resources.
 
-<img src="/content/cloud-load-balancers.png">
+<img src="/resources/cloud-load-balancers.png">
 
 Load balancers can either be hardware-based or software-based that prevents servers from breaking down or getting overloaded.
 
@@ -4494,7 +4494,7 @@ Cloud load balancing takes a software-based approach to distributing network tra
 
 - software-based is not an instance-based or device-based solution, so you won't be locked into a physical load-balancing infrastructure or face the HA, scale, and management challenges inherent in instance-based load balancers.
 
-<img src="/content/cloud-load-balancer-functions-2.png">
+<img src="/resources/cloud-load-balancer-functions-2.png">
 
 A load balancer receives incoming traffic and routes those requests to active targets based on a configured policy.
 
@@ -4502,7 +4502,7 @@ A load balancing service also monitors the health of the individual targets to e
 
 __BENEFITS__
 
-<img src="/content/cloud-load-balancer-functions-1.jpeg">
+<img src="/resources/cloud-load-balancer-functions-1.jpeg">
 
 Prevents Network Server Overload
 
@@ -4562,7 +4562,7 @@ Memory management is all about making sure there is as much available memory spa
 
 __The Memory Management Unit (MMU)__
 
-<img src="/content/computer_system.png">
+<img src="/resources/computer_system.png">
 
 Within a computing system is the core hardware component that translates virtual logical address space to physical addresses. The MMU is typically a physical piece of hardware and is sometimes referred to as a Paged Memory Management Unit (PMMU).
 
@@ -4572,7 +4572,7 @@ Within a computing system is the core hardware component that translates virtual
 
 As memory is used by multiple parts of a modern system, memory allocation and memory management can take on different forms.
 
-<img src="/content/memory_management.png">
+<img src="/resources/memory_management.png">
 
 __Operating System__
 
@@ -4600,13 +4600,13 @@ __Storage Memory Management__
 
 With new NVME storage drives, operating systems can benefit from faster storage drives to help expand and enable more persistent forms of memory management.
 
-<img src="/content/cpu.jpeg">
+<img src="/resources/cpu.jpeg">
 
 __cpu (central processing unit)__
 
 circuitry in a computer that controls the manipulation of data that powers a computer via a small flat square called the motherboard
 
-<img src="/content/cpu_components.png">
+<img src="/resources/cpu_components.png">
 
 __cpu component: ALU (arithmetic logic unit)__
 
@@ -4636,7 +4636,7 @@ Paging is a method of writing and reading data from a secondary storage(Drive) f
 
 When a computer runs out of RAM, the operating system (OS) will move pages of memory over to the computer’s hard disk to free up RAM for other processes. This ensures that the operating system will never run out of memory and crash.
 
-<img src="/content/paging.png">
+<img src="/resources/paging.png">
 
 When a program tries to access a page that is not stored in RAM, the processor treats this action as a page fault. When this occurs the operating system must:
 

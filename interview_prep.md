@@ -2,6 +2,9 @@
 
 __Interviewer__
 
+name:
+title:
+
 __1. Tell me about yourself__
 
 My mission in life is to bring people together and realize greatness on a community & personal level.
@@ -40,9 +43,9 @@ __3. How do your previous experiences correlate to this specific position?__
 
 My experience as an international box-office coordinator at Lionsgate, taught me the importance of having built-in quality assurance checks when creating & updating financial models based on local sales data from our international distributors. Prior to that, I also served as an executive assist to their then-president of Motion Picture, Erik Feig, managing his calendar and taking meeting notes.
 
-As an SE at Choice Hotels, not only did I hone my technical skills & understanding, but I gained first-hand exposure to macro product management by implementing user stories. As an SE that adhered to the Agile Scrum methodology, I built up experience with Content Management Systems & Project Management Tools  to guide features from inception to Test Driven Development implementation to production deployment.
+As an SE at Choice Hotels, not only did I hone my technical skills & understanding, but I gained first-hand exposure to macro product management by implementing user stories. As an SE that adhered to the Agile Scrum methodology, I built up experience with resources Management Systems & Project Management Tools  to guide features from inception to Test Driven Development implementation to production deployment.
 
-__4. What CMS (content management system) experience do you have?__
+__4. What CMS (resources management system) experience do you have?__
 
 Based off what I am learning in this Google Digital Marketing course I'm taking, I recently built and deployed an SEO website using WIX to build up my nascent side-hustle business of teaching private salsa dance lessons.
 
@@ -63,30 +66,51 @@ Given my technical background, 70K-80K dollars a year would be fair.
 
 # Technical Interview Questions
 
-__Q0__
-
-// excel Vlookup formula
+## EXCEL
 
 ```
-=Vlookup(lookup value, table array, column number, range lookup);
-```
+// EXCEL VLOOKUP formula
 
-Task 1: find the n of days in transit from the data at L8
+=VLOOKUP(missing_table_cell_purchase_primary_key, fixed_reference_table, target_column_number_in_fixed_reference_table, is_exact_match)
 
-<img src="/content/vlookup1.png" alt="vlookup1">
+- date_cell_purchase_primary_key is the shared key in primary table (but under different name in reference table)
 
-Solution:
-
-```
-=VLOOKUP(store_purchased, fixed_table_array, output_column_of_n_transit, exact_match)
-
-- store purchased is the shared key in primary table (but under different name in reference table)
 - $ is fixed referenced table (to avoid reference movement when coping & pasting)
-- 3 is the target output column 
-- false for isApproximateMatch, we want exact matches
 ```
 
-<img src="/content/vlookup1_solution.png" alt="vlookup1 solution">
+__Task 1: find the n of days in transit from the data at L8__
+
+<img src="/resources/excel_vlookup_1.png" alt="excel vlookup 1">
+
+SAME TABLE SOLUTION:
+
+```
+=VLOOKUP(store_cell_purchase_primary_key, fixed_reference_table, target_column_number_in_fixed_reference_table, is_exact_match)
+
+=VLOOKUP(C3, $A$9:$C$13, 3, FALSE)
+```
+
+<img src="/resources/excel_vlookup_1.png" alt="excel vlookup 1 solution">
+
+__Task 2: fill in the missing columns in the purchase excel__ 
+
+<img src="/resources/excel_vlookup_2a.png" alt="excel vlookup 2" alt="excel vlookup 2">
+
+<img src="/resources/excel_vlookup_2b.png" alt="excel vlookup 2" alt="excel vlookup 2">
+
+<img src="/resources/excel_vlookup_2c.png" alt="excel vlookup 2" alt="excel vlookup 2">
+
+MULTI-TABLE SOLUTION:
+
+```
+=VLOOKUP(date_cell_purchase_primary_key, fixed_reference_table, target_column_number_in_fixed_reference_table, is_exact_match)
+```
+
+<img src="/resources/excel_vlookup_2a_solution.png" alt="excel vlookup 2">
+
+<img src="/resources/excel_vlookup_2b_solution.png" alt="excel vlookup 2">
+
+## Java
 
 __Q1__
 
@@ -1317,7 +1341,7 @@ USE imdb;
 
 CREATE TABLE reviewers(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(20)  NOT NULL DEFAULT "MISSING", 
+    first_name VARCHAR(20)  NOT NULL DEFAULT "MISSING",
     last_name VARCHAR(20) NOT NULL DEFAULT UPPER("missing")
 );
 
@@ -1349,31 +1373,6 @@ DESC reviews;
 SHOW TABLES;
 ```
 
-```
-/**
-* ! query many-to-many table from created reviewers, series, review tables
-*
-* * reviewers schema:
-* *    id,
-* *    first_name (default 'MISSING' max 20 chars),
-* *    last_name (default 'MISSING' max 20 chars)
-*
-* * series schema:
-* *    id,
-* *    title (default "MISSING" max 20 chars),
-* *    released_year (4-digit mandatory),
-* *    genre (max 100 chars)
-*
-* * reviews schema:
-* *    id,
-* *    rating (MIN 0.0 to MAX 9.9),
-* *    series_id,
-* *    reviewer_id
-*
-* * on delete cascade many-to-many relationships
-*/
-```
-
 challenge 1: reproduce the table below (no nulls):
 
 ```
@@ -1391,15 +1390,15 @@ SELECT database();
 USE imdb;
 
 SHOW TABLES;
-DESC series;
 DESC reviews;
+DESC series;
 
 SELECT
     series.title,
     reviews.rating
-FROM series
-INNER JOIN reviews
-    ON series.id = reviews.series_id
+FROM reviews
+INNER JOIN series
+    ON reviews.series_id = series.id
 ORDER BY series.title ASC
 LIMIT 4;
 ```
@@ -1417,7 +1416,7 @@ title | avg_rating
 ```
 SHOW DATABASES;
 SELECT database();
-USE imdb;
+USE imdb; 
 
 SHOW TABLES;
 DESC series;
@@ -1427,13 +1426,13 @@ SELECT
     series.title,
     ROUND(
         AVG(reviews.rating),
-        2
-    ) AS avg_rating
-FROM series
-INNER JOIN reviews
-    ON series.id = reviews.series_id
-GROUP BY series.id
-ORDER BY AVG(reviews.rating) ASC
+        3
+    ) AS "avg_rating"
+FROM reviews
+INNER JOIN series
+    ON reviews.series_id = series.id
+ORDER BY series.id
+ORDER BY avg_rating ASC
 LIMIT 3;
 ```
 
@@ -1577,14 +1576,14 @@ SELECT
     CASE
         WHEN AVG(reviews.rating) IS NULL OR AVG(reviews.rating) <= 0
             THEN UPPER("inactive")
-        WHEN AVG(reviews.rating) > 0 AND AVG(reviews.rating) < 10 
+        WHEN AVG(reviews.rating) > 0 AND AVG(reviews.rating) < 10
             THEN UPPER("active")
         ELSE
             THEN UPPER("power user")
     END
 FROM reviewers
 LEFT JOIN reviews
-    ON reviewers.id =  reviews.reviewer_id 
+    ON reviewers.id =  reviews.reviewer_id
 GROUP BY reviewers.id
 ORDER BY UPPER("min") DESC
 LIMIT 4;
@@ -1621,7 +1620,7 @@ SELECT
     ) AS "reviewer"
 FROM reviews
 INNER JOIN series
-    ON reviews.series_id = series.id 
+    ON reviews.series_id = series.id
 INNER JOIN reviewers
     ON reviews.reviewer_id = reviewers.id
 ORDER BY series.title ASC
@@ -1659,28 +1658,53 @@ __Q11__
 
 ```
 /**
-* ! query one-to-many table from created students and papers table that uses prep data for respective table
-*
-* ? get the student id, student first_name, paper title, paper grade,
-* ?    by student id of the respective paper
-* ?    and order by students id first, then paper's grade DESC
+* * school database
 *
 * * students schema:
-* *    primary key(id),
+* *    id primary key,
 * *    first_name mandatory default "MISSING"
 *
 * * papers schema:
-* *    id primary key mandatory,
-* *    title 100 max chars,
-* *    grade INT,
+* *    id primary key,
+* *    title 100 max chars mandatory,
+* *    grade INT not mandatory,
 * *    student_id INT,
 * *    foreign key (student_id)
 */
 ```
 
-get the student id, student first_name, paper title, paper grade,
+```
+SHOW DATABASES;
+SELECT database();
+
+CREATE DATABASE school;
+USE school;
+
+CREATE TABLE students(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(20) NOT NULL DEFAULT UPPER("missing")
+);
+
+DESC students;
+
+CREATE TABLE papers(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    grade INT,
+    student_id INT,
+    FOREIGN KEY(student_id)
+        REFERENCES students(id)
+        ON DELETE CASCADE
+);
+
+DESC papers;
+SHOW TABLES;
+```
+
+get
+student id, first_name, title, grade,
 by student id of the respective paper
-and order by paper's grade DESC
+and order by paper's grade highest-to-lowest
 
 ```
 SHOW DATABASES;
@@ -1695,9 +1719,9 @@ SELECT
     students.id,
     students.first_name,
     papers.title,
-    papers.grade 
+    papers.grade
 FROM students
 INNER JOIN papers
     ON students.id = papers.student_id
-ORDER BY students.id, papers.grade ASC;
+ORDER BY papers.grade DESC
 ```
