@@ -2,8 +2,9 @@
 
 __Interviewer__
 
-name:
-title:
+Name:
+
+Title:
 
 __1. Tell me about yourself__
 
@@ -18,12 +19,6 @@ My 4-core values, which align well with BetMgM's stated cultural tenets are:
 3. be committed to improvement
 
 4. insist on shared core values
-
-SIMILARITIES
-
-Do what is right = choose enduring long-term greatness
-Hustle Hard = do whatever you can to produce the desired results & be committed to improvement
-Backed By the Best = insist on shared core values"
 
 I train in the evenings & perform on the weekends as a latin dancer with the very achievable goal of becoming a multi-world champion.
 
@@ -64,35 +59,29 @@ Given my technical background, 70K-80K dollars a year would be fair.
 # End of Interview Questions
 
 
-# Technical Interview Questions
-
-## EXCEL
+# EXCEL
 
 ```
-// EXCEL VLOOKUP formula
-
-=VLOOKUP(missing_table_cell_purchase_primary_key, fixed_reference_table, target_column_number_in_fixed_reference_table, is_exact_match)
-
-- date_cell_purchase_primary_key is the shared key in primary table (but under different name in reference table)
+=VLOOKUP(missing_table_cell_primary_key, fixed_reference_table, target_column_number_in_fixed_reference_table, is_exact_match)
 
 - $ is fixed referenced table (to avoid reference movement when coping & pasting)
 ```
 
-__Task 1: find the n of days in transit from the data at L8__
+__Task 1: find the number of days in transit in the purchase table__
 
 <img src="/resources/excel_vlookup_1.png" alt="excel vlookup 1">
 
+```
 SAME TABLE SOLUTION:
 
-```
 =VLOOKUP(store_cell_purchase_primary_key, fixed_reference_table, target_column_number_in_fixed_reference_table, is_exact_match)
 
 =VLOOKUP(C3, $A$9:$C$13, 3, FALSE)
 ```
 
-<img src="/resources/excel_vlookup_1.png" alt="excel vlookup 1 solution">
+<img src="/resources/excel_vlookup_1_solution.png" alt="excel vlookup 1 solution">
 
-__Task 2: fill in the missing columns in the purchase excel__ 
+__Task 2: find the "num kgs sold" & "billing agent" in the purchase table__
 
 <img src="/resources/excel_vlookup_2a.png" alt="excel vlookup 2" alt="excel vlookup 2">
 
@@ -100,1044 +89,179 @@ __Task 2: fill in the missing columns in the purchase excel__
 
 <img src="/resources/excel_vlookup_2c.png" alt="excel vlookup 2" alt="excel vlookup 2">
 
+```
 MULTI-TABLE SOLUTION:
 
-```
 =VLOOKUP(date_cell_purchase_primary_key, fixed_reference_table, target_column_number_in_fixed_reference_table, is_exact_match)
+
+"number of kgs sold"
+=VLOOKUP(D2, Dates!$A$1:$B$5, 2, FALSE)
+
+"billing agent"
+=VLOOKUP(D2, Agents!$A$1:$B$5, 2, FALSE)
 ```
 
 <img src="/resources/excel_vlookup_2a_solution.png" alt="excel vlookup 2">
 
 <img src="/resources/excel_vlookup_2b_solution.png" alt="excel vlookup 2">
 
-## Java
+__Task 3: find the "city names" & "development category" in the purchase table__
 
-__Q1__
-
-Given a signed 32-bit integer x, return x with its digits reversed
-
-- if reversing x causes it to go outside the signed 32-bit integer range, return 0
-
-- assume env does not allow 64-bit integers
-
-TIME COMPLEXITY
-O(1) linear: dependent length of n
-
-SPACE COMPLEXITY
-O(1) constant: in-place algorithm that doesn't require additional memory space
-
-```json
-
-@Test
-void reversed_positiveInput() {
-    int input = 123;
-
-    int expected = 321;
-    int actual = Q1.reversed(input);
-    assertEquals(expected, actual);
-}
-
-@Test
-void reversed_negativeInput() {
-    int testInput = -123;
-
-    int expected = -321;
-    int actual = Q1.reversed(input);
-    assertEquals(expected, actual);
-}
-
-public static int reversed(int x) {
-
-    boolean isNegative = false;
-    int result = 0;
-
-    if(x < 0) {
-        x *= -1;
-        isNegative = true;
-    }
-
-    result = recursion(x, result);
-
-    if(isNegative) result *= -1;
-
-    return result;
-}
-
-private static int recursion(int x, int result) {
-
-    boolean isBaseCase = (x <= 0);
-
-    if(isBaseCase) return 0;
-
-    int lastDigit = x % 10;
-
-    x /= 10;
-    result = (result * 10) + lastDigit;
-
-    return recursion(x, result);
-}
-```
-
-__Q2__
-
-write a program that outputs the string representation of a long number from 1 to n
-
-- the method returns an arrayList of GENERIC CLASS strings
-
-for multiples of:
-- 3 it should return "Fizz" instead of the number
-- 5 it should return "Buzz" instead of the number
-- 5 AND 3 it should return "FizzBuzz" instead of the number
-
-TIME COMPLEXITY
-O(n) linear: dependent length of n
-
-SPACE COMPLEXITY
-O(1) constant: in-place algorithm that doesn't require additional memory space
-
-```json
-
-private static final String FIZZ = "Fizz";
-private static final String BUZZ = "Buzz";
-private static final String FIZZ_BUZZ = "FizzBuzz";
-
-@Test
-void fizzBuzz_0() {
-    ArrayList<String> actualValues = Q2.fizzBuzz(-3);
-    assertEquals(null, actualValues);
-}
-
-@Test
-void fizzBuzz_3() {
-    ArrayList<String> actualValues = Q2.fizzBuzz(3);
-    ArrayList<String> expectedValues = new ArrayList<>();
-
-    expectedValues.add("1");
-    expectedValues.add("2");
-    expectedValues.add(FIZZ);
-
-    assertEquals(expectedValues, actualValues);
-}
-
-@Test
-void fizzBuzz_5() {
-    ArrayList<String> actualValues = Q2.fizzBuzz(5);
-    ArrayList<String> expectedValues = new ArrayList<>();
-
-    expectedValues.add("1");
-    expectedValues.add("2");
-    expectedValues.add(FIZZ);
-    expectedValues.add("4");
-    expectedValues.add(BUZZ);
-
-    assertEquals(expectedValues, actualValues);
-}
-
-@Test
-void fizzBuzz_3And5() {
-    ArrayList<String> actualValues = Q2.fizzBuzz(15);
-    ArrayList<String> expectedValues = new ArrayList<>();
-
-    expectedValues.add("1");
-    expectedValues.add("2");
-    expectedValues.add(FIZZ);
-    expectedValues.add("4");
-    expectedValues.add(BUZZ);
-
-    expectedValues.add(FIZZ);
-    expectedValues.add("7");
-    expectedValues.add("8");
-    expectedValues.add(FIZZ);
-    expectedValues.add(BUZZ);
-
-    expectedValues.add("11");
-    expectedValues.add(FIZZ);
-    expectedValues.add("13");
-    expectedValues.add("14");
-    expectedValues.add(FIZZ_BUZZ);
-
-    assertEquals(expectedValues, actualValues);
-}
-
-public static ArrayList<String> fizzBuzz(long number) {
-
-    if(number < 1) return null;
-
-    ArrayList<String> strings = new ArrayList<>();
-    int i;
-
-    while(i <= number) {
-
-        boolean divBy5 = (i % 5 == 0);
-        boolean divBy3 = (i % 3 == 0);
-
-        if(divBy5 && divBy3) {
-
-            strings.add("FizzBuzz");
-
-        } else if(divBy3) {
-
-            strings.add("Fizz");
-
-        } else if(divBy5) {
-
-            strings.add("Buzz");
-
-        } else {
-            strings.add(Long.toStrings(i));
-        }
-
-        i++;
-    }
-
-    return strings;
-}
-```
-
-__Q3__
-
-Given a square matrix mat, return the sum of the matrix diagonals.
-
-- only include the sum of all the elements on the primary diagonal
-
-- all the elements on the secondary diagonal that are not part of the primary diagonal.
-
-Logic:
-
-     length = width or height
-
-     diagonal_1 = 1 + 5 + 9 = 15 = matrix[i][i]
-
-     diagonal_2 = 3 + 5 + 7 = 15 = matrix[i][length - i - 1]
-
-     matrix = [
-           [1,2,3],
-           [4,5,6],
-           [7,8,9]
-     ]
-
-     remove duplicate 5 that appears in both diagonals from current sum 30
-     diagonal_sum = 25
-
-     step 1a: define index of traversing row
-     step 1b: define index of shifting diagonal
-
-     step 2: add to sum
-
-     step 3: iterate over rows repeating process
-
-     step 4: remove duplicate middle element from sum if matrix length is odd
-
-     step 5: return sum
-
-TIME COMPLEXITY
-O(n) linear: where n is the length of the given array
-
-SPACE COMPLEXITY
-O(1) constant: in-place algorithm that doesn't require additional memory space
-
-```json
-
-@Test
-void matrixDiagonalSum_success() {
-
-    int[][] test = {
-            {1,2,3},
-            {4,5,6},
-            {7,8,9}
-    };
-
-    int expected = 25;
-    int actual = Q3.matrixDiagonalSum(test);
-    assertEquals(expected, actual);
-}
-
-@test
-matrixDiagonalSum_fail_badInput() {
-
-    int[][] input = null;
-
-    int expected = -1;
-    int actual = Q3.matrixDiagonalSum(input);
-    assertEquals(expected, actual);
-}
-
-public static int matrixDiagonalSum(int[][] matrix) {
-
-    if(matrix == null || matrix.length == 0) return -1;
-
-    int sum;
-
-    // traverse rows
-    for(int row = 0; row < matrix.length; row++) {
-
-        // start index of second diagonal
-        int diagonal = (matrix.length - 1) - row;
-
-        int valueD1 = matrix[row][row];
-        int valueD2 = matrix[row][diagonal];
-
-        sum += (valueD1 + valueD2);
-    }
-
-    // remove duplicate middle element
-    boolean isOddMatrixLength = (matrix.length % 2 != 0);
-
-    if(isOddMatrixLength) {
-
-        int middleIndex = matrix.length / 2;
-        int middleValue = matrix[middleIndex][middleIndex];
-
-        return sum - middleValue;
-    }
-
-    return sum;
-}
-```
-
-__Q4__
-
-Given an array of non-negative integers arr, you are initially positioned at start index of the array.
-
-- When you are at index i, you can jump to:
-
-```json
-
-(i + arr[i]) || (i - arr[i])
-```
-
-- check if you can reach to any index with value 0.
-
-- Notice that you can not jump outside the array at any time.
-
-Logic:
-
-- use Depth First Search (DFS) by using recursive functions calls for incrementing & decrementing start parameters
-- its DFS because the method will handle one direction first and drill down for a base case
-- before continuing to next recursive direction if necessary
-
-DEPTH FIRST SEARCH: recursively, check if the currentNode has any children (left-to-right) that has the search path for the target node
-
-- hasPath(s, t): recursively, nodeS do you have a path to nodeT?
-- nodeS asks (left-to-right) it's child if it has a path to nodeT, repeat until reached nodeT or null
-
-TIME COMPLEXITY
-O(n) linear: worst-case, traverse the length of the input array size
-
-SPACE COMPLEXITY
-O(1) constant SPACE COMPLEXITY: in-place algorithm that doesn't require additional memory space
-
-```json
-
-@Test
-jumpGame3_true() {
-
-    int[] input = {4,2,3,0,3,1,2};
-    int start = 5;
-    boolean actual = Q4.jumpGame3(input, start);
-    assertTrue(actual);
-}
-
-@Test
-jumpGame3_fail_badInput() {
-
-    int[] array = {};
-    int start = -1;
-
-    boolean actual = Q4.jumpGame3(array, start);
-    assertFalse(actual);
-}
-
-public static boolean jumpGame3(int[] array, int start) {
-
-    if(array.length == 0||
-        start < 0 ||
-        start >= (array.length - 1)
-    ) return false;
-
-    int currentElement = array[start];
-
-    boolean isBaseCase = (currentElement == 0);
-
-    if(isBaseCase) return true;
-
-    int incrementedStart = start + currentElement;
-    int decrementedStart = start - currentElement;
-
-    // depth-first search
-    return jumpGame3(array, incrementedStart) ||
-        jumpGame3(array, decrementedStart);
-}
-```
-
-__Q5__
-
-Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
-
-Logic:
-
-- BACKTRACKING recursive algorithm
-
-- RECURSION: an algorithm calls itself & each call is placed on the call stack waiting for a return value until the algorithm can no longer call itself (the base case/breaking condition)
-
-choice:
-- we can choose open "(" or close bracket ")"
-
-constraint: we can choose close bracket if left <= right
-- left = num open brackets
-- right = num close brackets
-
-goal:
-- find (2 * max) valid parenthesis
-
-TIME COMPLEXITY
-O(n) linear: depending on longest string of two arguments
-
-SPACE COMPLEXITY
-O(1) constant: using an array
+<img src="/resources/excel_vlookup_3.png" alt="excel vlookup 3">
 
 ```
-@Test
-void generateParenthesis_success(){
-    int test = 2;
+MULTI-TABLE SOLUTION:
 
-    List<String> expected = new ArrayList<>();
-    expected.add("(())");
-    expected.add("()()");
+=VLOOKUP(city_dev_index_primary_key, 'external sheet'!_reference_table, data_column_reference_table, is_approximate_match)
 
-    List<String> actual = Q5.generateParenthesis(test);
-    assertEquals(expected, actual);
-}
+- double click on the mini-box to auto-populate entire column
+- reference should always be on the left side
 
-@Test
-void generateParenthesis_fail(){
-    int test = 1;
-
-    List<String> expected = new ArrayList<>();
-    expected.add("()");
-
-    List<String> actual = Q5.generateParenthesis(test);
-    assertEquals(expected, actual);
-}
-
-public static List<String> generateParenthesis(int number) {
-
-    if(n <= 0) return null;
-
-    List<String> maxValidParenthesis = new ArrayList<>();
-    String currentParenthesis = "";
-
-    int numLeftP = 0;
-    int numRightP = 0;
-
-    recursiveBacktracking(maxValidParenthesis, currentParenthesis, numLeftP, numRightP, number);
-
-    return maxValidParenthesis;
-}
-
-private static void recursiveBacktracking(List<String> result, String currentParenthesis, int numOpenP, int numClosedP, int max) {
-
-    int pSet = 2;
-    int maxCombo = pSet * max;
-
-    boolean isBaseCase = (currentParenthesis.length() == maxCombo);
-
-    String pOpen = "(";
-    String pClosed = ")";
-
-    if(isBaseCase) {
-        result.add(currentParenthesis);
-        return;
-    }
-
-    // left-to-right
-    if(numOpenP < max) {
-
-        String addedOpenParenthesis = currentParenthesis + pOpen;
-        int incrementedNumOpenP = numOpenP + 1;
-
-        recursiveBacktracking(result, addedOpenParenthesis, incrementedNumOpenP, numClosedP, max);
-    }
-
-    if(numClosedP < numOpenedP) {
-
-        String addedClosedParenthesis = currentParenthesis + pClosed;
-        int incrementedNumClosedP = numClosedP + 1;
-
-        recursiveBacktracking(result, addedClosedParenthesis, numOpenP, incrementedNumClosedP, max);
-    }
-}
+"city names"
 ```
 
-__Q6__
+<img src="/resources/excel_vlookup_3_solution.png" alt="excel vlookup 3">
 
-read 10 numbers from the console entered by the user and print the sum of those 10 numbers
-
-use input validation, if the input is not a number print the message 'Invalid Number'
-    continue reading until you have read 10 numbers
-
-```json
-
-public class Q6 {
-
-    public static final String INVALID_NUMBER = "Invalid Number";
-    public static final String FINAL_SUM = "\nfinal sum: ".toUpperCase();
-    public static final String ENTER_NUMBER = "\nEnter number: ";
-    public static final String COMPLETED_TASK = "Completed Task";
-    public static final String RUNNING_SUM = "running sum: ";
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(sumUserInput(scanner, 0, 0));
-    }
-
-    private static String sumUserInput(Scanner scanner, int count, int sum) {
-
-        // ! RECURSIVE BASE CASE: breaking condition that initiates an upward propagation of return values for waiting stack calls
-        boolean isBaseCase = (count == 3);
-
-        if(isBaseCase) {
-
-            scanner.close();
-            System.out.println(FINAL_SUM + sum);
-            return COMPLETED_TASK;
-        }
-
-        System.out.println(ENTER_NUMBER);
-
-        if(scanner.hasNextInt()) {
-
-            sum += scanner.nextInt();
-
-            System.out.println(RUNNING_SUM + sum);
-            count++;
-
-        } else {
-            System.out.println(INVALID_NUMBER);
-        }
-
-        return sumUserInput(new Scanner(System.in), count, sum);
-    }
-}
-```
-
-__Q7__
-
-Demonstrate Object-Oriented Programming (OOP) by defining a Song, Album, and Playlist class that work in concert with each other.
-
-Song(String title, Double duration)
-
-Album(String name, String artist, ArrayList<Song> songs)
-
-- addSong(String title, double duration)
-- addToPlaylist(int trackNumber, LinkedList<Song> playlist)
-- addToPlaylist(String title, LinkedList<Song> playlist)
-- findSong(String title)
-
-Playlist = Doubly LinkedList class
-
-- play();
-- printList();
-- printMenu()
-
-```json
-
-public static void main(String[] args) {
-
-}
-
-public class Playlist {
-
-    // CONSTANTS: static class variables assigned FINAL value before compilation/instantiation
-    private static final String MENU =
-        "\n\tPlaylist Menu\n".toUpperCase() +
-        "0 - quit\n" +
-        "1 - next song\n" +
-        "2 - previous song\n" +
-        "3 - replay current song\n" +
-        "4 - list playlist songs\n" +
-        "5 - print available actions\n" +
-        "6 - delete current song from playlist\n";
-
-    private static final String CURRENTLY_PLAYING = "Currently playing: ";
-    private static final String INVALID_INPUT = "Invalid input";
-    private static final String NO_SONGS = "No songs in playlist";
-    private static final String PLAYLIST_BEGINNING = "Playlist beginning";
-    private static final String PLAYLIST_COMPLETE = "Playlist complete";
-    private static final String REPLAYING = "Now replaying: ";
-    private static final String SELECTION = "\nSelection: ";
-    private static final String SONG_REMOVED = " - song in playlist has been removed";
-
-    // OOP ENCAPSULATION private class fields
-    private String name;
-
-    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
-    public Playlist(String name) {
-        this.name = name;
-    }
-
-    // CLASS METHODS
-    private static void printMenu() {
-        System.out.println(MENU);
-    }
-
-    // STATIC: methods or variables associated with the class blueprint and not any individual instance and saved in a single place in memory
-    private static void printList(LinkedList<Song> playlist) {
-
-        // GENERIC CLASS: improve ENCAPSULATION by enforcing specific dataType parameters
-        ListIterator<Song> songIterator = playlist.listIterator();
-
-        while(songIterator.hasNext()) {
-            System.out.println(songIterator.next().toString());
-        }
-    }
-
-    public static void play(LinkedList<Song> playlist) {
-
-        Scanner scanner = new Scanner(System.in);
-        boolean quit = false;
-        boolean isForwardProgression = true;
-
-        // define listIterator for navigational linkedList
-        ListItarator<Song> songListIterator = play.listIterator();
-
-        if(playlist.size() <= 0) {
-
-            System.out.println(NO_SONGS);
-            return;
-
-        } else {
-
-            // iterate.next() to first node (Song, nextPointer)
-            System.out.println(
-                CURRENTLY_PLAYING +
-                songListIterator.next().toString()
-            );
-        }
-
-        printMenu();
-
-        while(!quit) {
-
-            System.out.println(SELECTION);
-
-            if(scanner.hasNextInt()) {
-
-                int choice = scanner.nextInt();
-
-                // handle 'enter' key-down to capture user input
-                scanner.nextLine();
-
-                switch(choice) {
-                    case 0:
-                        System.out.println(PLAYLIST_COMPLETE);
-                        quit = true;
-                        break;
-
-                    case 1: // move forward
-
-                        // handle direction: if !forward, prepare direction as forward to next node
-                        if(!isForwardProgression) {
-
-                            // validate current pointer not null
-                            if(songListIterator.hasNext()) {
-                                songListIterator.next();
-                            }
-
-                            isForward = true;
-                        }
-
-                        // move to next node
-                        if(songListIterator.hasNext) {
-
-                            System.out.println(
-                                CURRENTLY_PLAYING +
-                                songListIterator.next().toString()
-                            );
-
-                        } else {
-                            System.out.println(PLAYLIST_COMPLETE);
-                            isForward = false;
-                        }
-
-                        break;
-
-                    case 2: // move backward
-
-                        // handle direction: if !forward, prepare direction as backward to next node
-                        if(isForwardProgression) {
-
-                            // validate current pointer not null
-                            if(songListIterator.hasPrevious()) {
-                                songListIterator.previous();
-                            }
-
-                            isForwardProgression = false;
-                        }
-
-                        // move to previous node in linkedList
-                        if(songListIterator.hasPrevious()) {
-                            System.out.println(
-                                CURRENTLY_PLAYING + songListIterator.previous().toString()
-                            );
-
-                        } else {
-                            System.out.println(PLAYLIST_BEGINNING);
-                            isForwardProgression = true;
-                        }
-                        break;
-
-                    case 3: // repeat
-
-                        // handle direction: if forward, validate previous node & show
-
-                        break;
-
-                    case 4:
-                        printList(playlist);
-                        break;
-
-                    case 5:
-                        printMenu();
-                        break;
-
-                    case 6: // delete song
-
-                        break;
-                }
-
-            } else {
-                scanner = new Scanner(System.in);
-                System.out.println(INVALID_INPUT);
-                printMenu();
-            }
-
-        }
-    }
-
-    // OOP GETTERS & SETTERS
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-}
-
-public class Song {
-
-    // OOP ENCAPSULATION private class fields/object instance members
-    private String title;
-    private Double duration;
-
-    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
-    public Song(String title, Double duration) {
-        this.title = title;
-        this.duration = duration;
-    }
-
-    // OOP POLYMORPHISM: unique implementation of method for this object despite same signature shared by multiple objects via @Override
-    @Override
-    public String toString() {
-        return this.title + ":" + this.duration;
-    }
-
-    // OOP GETTERS & SETTERS
-    public String getTitle() {
-        return this.title;
-    }
-
-    public Double getDuration() {
-        return this.duration;
-    }
-
-    public void setDuration(double duration) {
-
-        // AUTOBOXING: cast primitive dataType to greater functional wrapper class dataType
-        this.duration = duration;
-    }
-}
-
-public class AlbumTest {
-
-    private static final String BEFORE_EACH = "before each".toUpperCase();
-    private static final String OUI = "Oui";
-
-    private Album album;
-
-    @BeforeAll
-    static void beforeAll() {
-        System.out.println("before all".toUpperCase());
-    }
-
-    @BeforeEach
-    void setup() {
-        album = new Album("Live at Yankee Stadium", "Fania All-Stars");
-        System.out.println(BEFORE_EACH);
-    }
-
-    @AfterEach
-    void teardown() {
-        System.out.println("after each".toUpperCase());
-    }
-
-    @AfterAll
-    static void afterAll() {
-        System.out.println("after all".toUpperCase());
-    }
-
-    @Test
-    void album_findSong_success() {
-
-        String testTitle = OUI;
-
-        Song expected = new Song(testTitle, 239);
-        Song actual = Album.findSong(testTitle);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void album_findSong_null() {
-
-        String testTitle = "Non-existent song";
-
-        Song actual = Album.findSong(testTitle);
-
-        assertNull(actual);
-    }
-
-    @Test
-    void album_findSong_badInput() {
-
-        String testTitle = "";
-
-        Song actual = Album.findSong(testTitle);
-
-        assertNull(actual);
-    }
-
-    @Test
-    void album_addSong_true() {
-
-        String testTitle = OUI;
-        double testDuration = 239;
-
-        boolean actual = Album.addSong(testTitle, testDuration);
-
-        assertTrue(actual);
-    }
-
-    @Test
-    void album_addSong_false() {
-
-        String testTitle = "";
-        double testDuration = 239;
-        boolean actual = Album.addSong(testTitle, testDuration);
-
-        assertFalse(actual);
-
-        testTitle = OUI;
-        testDuration = 0;
-        actual = Album.addSong(testTitle, testDuration);
-
-        assertFalse(actual);
-    }
-
-    @Test
-    void album_addToPlayList1_true() {
-
-        String testTitle = OUI;
-        LinkedList<Song> testPlaylist = new LinkedList<>();
-
-        boolean actual = Album.addToPlaylist(testTitle, testPlaylist);
-        assertTrue(actual);
-    }
-
-    @Test
-    void album_addToPlayList1_false() {
-
-        String testTitle = "";
-        LinkedList<Song> testPlaylist = new LinkedList<>();
-
-        boolean actual = Album.addToPlaylist(testTitle, testPlaylist);
-        assertFalse(actual);
-    }
-
-    @Test
-    void album_addToPlayList2_true() {
-
-        int testTrack = 0;
-        LinkedList<Song> testPlaylist = new LinkedList<>();
-
-        boolean actual = Album.addToPlaylist(testTrack, testPlaylist);
-        assertTrue(actual);
-    }
-
-    @Test
-    void album_addToPlayList2_false() {
-
-        int testTrack = -1;
-        LinkedList<Song> testPlaylist = new LinkedList<>();
-
-        boolean actual = Album.addToPlaylist(testTrack, testPlaylist);
-        assertFalse(actual);
-    }
-}
-
-public class Album {
-
-    // CONSTANTS static class variables assigned FINAL value before compilation/instantiation
-    private static final String NO_ALBUM_TITLE = " album does not have the title ";
-    private static final String NO_ALBUM_TRACK = " album does not have track ";
-
-    // OOP ENCAPSULATION private class fields/object instance members
-    private String name;
-    private String artist;
-
-    // GENERICS: improve OOP ENCAPSULATION by creating classes, interfaces, & methods that only take a specific dataType parameter
-    private ArrayList<Song> songs;
-
-    // OOP CONSTRUCTOR that initializes the class fields on class/object instantiation
-    public Album(String name, String artist) {
-        this.name = name;
-        this.artist = artist;
-
-        this.songs = new ArrayList<>();
-    }
-
-    // CLASS METHODS
-    private Song findSong(String title) {
-
-        if(title.length() == 0) return null;
-
-        // for each song in Songs
-        for(Song song: this.songs) {
-            boolean hasSong = song.getTitle().equals(title);
-            if(hasSong) return song;
-        }
-        return null;
-    }
-
-    public boolean addSong(String title, double duration) {
-
-        if((title.length() == 0) || (duration <= 0) || (this.songs == null)) return false;
-
-        if(findSong(title) == null) {
-
-            Song newSong = new Song(title, duration);
-
-            this.songs.add(newSong);
-            return true;
-        }
-        return false;
-    }
-
-    // METHOD OVERLOADING: write multiple methods with the same name, but each have different parameters to optimize readability & scalability of the codebase
-    public boolean addToPlaylist(String title, LinkedList<Song> playlist) {
-
-        if(title.length() == 0 || playlist == null) return false;
-
-        Song song = findSong(title);
-
-        if(song != null) {
-            playlist.add(song);
-            return true;
-        }
-
-        System.out.println(this.getName() + NO_ALBUM_TITLE + track);
-        return false;
-    }
-
-    public boolean addToPlaylist(int track, LinkedList<Song> playlist) {
-
-        if(track < 0 || playlist == null) return false;
-
-        int index = track - 1;
-
-        boolean inAlbum = (index >= 0) && (index <= this.songs.size());
-
-        if(inAlbum) {
-            Song song = this.songs.get(index);
-            playlist.add(song);
-            return true;
-        }
-
-        System.out.println(this.getName() + NO_ALBUM_TRACK + track);
-        return false;
-    }
-
-    // OOP GETTERS & SETTERS
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getArtist() {
-        return this.artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public ArrayList<Song> getSongs() {
-        return this.songs;
-    }
-}
-```
-
-__Q8__
+# SQL
 
 ```
 /**
 * ! instagram challenges
 *
-* * db schema:
-*
-* *   users:
-*       id,
-*       username (mandatory & one-of-a-kind),
-*       created_at (current date & time)
-* *   photos:
-*       id,
-*       image_url mandatory,
-*       created_at,
-*       user_id (mandatory & foreign key)
-* *   comments:
-*       id,
-*       comment_text mandatory,
-*       photo_id (foreign key),
-*       created_at (current date & time),
-*       user_id (foreign key),
-* *   likes:
-*       created_at (current date & time),
-*       user_id (foreign key),
-*       photo_id (foreign key),
-*       primary key order: user_id & photo_id
-* *   follows:
-*       created_at (current date & time),
-*       follow_id *foreign key,
-*       followee_id *foreign key,
-*       primary key order: user_id & photo_id
-* *   tags:
-*       id,
-*       tag_name unique,
-*       created_at (current date time)
-* *   photo_tags:
-*       photo_id (foreign key),
-*       tag_id (foreign key),
-*       primary key order: user_id & photo_id
+* * users:
+*     id,
+*     username (mandatory & one-of-a-kind),
+*     created_at (current date & time)
+* * photos:
+*     id,
+*     image_url mandatory,
+*     created_at,
+*     user_id (mandatory & foreign key)
+* * comments:
+*     id,
+*     comment_text mandatory,
+*     photo_id (foreign key),
+*     created_at (current date & time),
+*     user_id (foreign key),
+* * likes:
+*     created_at (current date & time),
+*     user_id (foreign key),
+*     photo_id (foreign key),
+*     primary key order: user_id & photo_id
+* * follows:
+*     created_at (current date & time),
+*     follow_id foreign key,
+*     followee_id foreign key,
+*     primary key order: follow_id, followee_id
+* * tags:
+*     id,
+*     tag_name mandatory unique,
+*     created_at (current date time)
+* * photo_tags:
+*     photo_id (foreign key),
+*     tag_id (foreign key),
+*     primary key order: photo_id, tag_id
 */
 ```
 
-we want to reward our users who have been around the longest
-find the 5 oldest users
+```
+SHOW DATABASES;
+SELECT database();
+
+CREATE DATABASE ig;
+USE ig;
+
+CREATE TABLE users(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT NOW()
+);
+
+DESC users;
+
+CREATE TABLE photos(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image_url VARCHAR(100) NOT NULL,
+    created_at DATETIME DEFAULT NOW(),
+    user_id INT,
+    FOREIGN KEY(user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+DESC photos;
+
+CREATE TABLE comments(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    comment_text VARCHAR(255),
+    created_at DATETIME DEFAULT NOW(),
+    photo_id INT,
+    user_id INT,
+    FOREIGN KEY(photo_id)
+        REFERENCES photos(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY(user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+DESC comments;
+
+CREATE TABLE likes(
+    created_at DATETIME DEFAULT NOW(),
+    user_id INT,
+    photo_id INT,
+    FOREIGN KEY(user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY(photo_id)
+        REFERENCES photos(id)
+        ON DELETE CASCADE,
+    PRIMARY KEY(user_id, photo_id)
+);
+
+DESC likes;
+
+CREATE TABLE follows(
+    created_at DATETIME DEFAULT NOW(),
+    follow_id INT,
+    followee_id INT,
+    FOREIGN KEY(follow_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY(followee_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+    PRIMARY KEY(follow_id, followee_id)
+);
+
+DESC follows;
+
+CREATE TABLE tags(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tag_name VARCHAR(20) NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT NOW()
+);
+
+DESC tags;
+
+CREATE TABLE photo_tags(
+    photo_id INT,
+    tag_id INT,
+    FOREIGN KEY(photo_id)
+        REFERENCES photos(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY(tag_id)
+        REFERENCES tags(id)
+        ON DELETE CASCADE,
+    PRIMARY KEY(photo_id, tag_id)
+);
+
+DESC photo_tags;
+SHOW TABLES;
+```
+
+__we want to reward our users who have been around the longest find the 5 oldest users__
 
 ```
 SHOW DATABASES;
@@ -1148,16 +272,13 @@ SHOW TABLES;
 
 DESC users;
 
-SELECT
-    *
+SELECT *
 FROM users
 ORDER BY created_at DESC
 LIMIT 5;
 ```
 
-we need to figure out when to schedule an ad campaign
-what day of the week do most users register on (labeled: most popular registration day)
-get count and day name
+__we need to figure out when to schedule an ad campaign what day of the week do most users register on (labeled: most popular registration day) get count and day name__
 
 ```
 SHOW DATABASES;
@@ -1305,14 +426,11 @@ HAVING "max likes" = (
 );
 ```
 
-__Q9__
-
 ```
 /**
 * ! query many-to-many table from created reviewers, series, review tables that uses prep data for respective table
 *
-* ? in imdb database, create reviewer, series, and reviews tables with the many-to-many connections for the review table
-* ?     on delete cascade for relevant fields and tables
+* * imdb database
 *
 * * reviewers schema:
 * *    id,
@@ -1416,7 +534,7 @@ title | avg_rating
 ```
 SHOW DATABASES;
 SELECT database();
-USE imdb; 
+USE imdb;
 
 SHOW TABLES;
 DESC series;
@@ -1627,33 +745,6 @@ ORDER BY series.title ASC
 LIMIT 6;
 ```
 
-__Q10__
-
-given an integer n, return the number of trailing zeroes in n!
-
-TIME COMPLEXITY: O(logn) logarithmic
-SPACE COMPLEXITY: O(1) constant
-
-```
-public static Integer trailingZeroFactorial(int n) {
-
-    if(n < 0) return -1;
-
-    Integer nFactorial = n; // AUTOBOXING
-    int everyFiveCount = 0
-
-    while(nFactorial % 5 == 0) {
-
-        nFactorial /= 5;
-
-        // ex) 15 / 5 = there are 3 fives in 15
-        everyFiveCount += nFactorial;
-    }
-
-    return everyFiveCount; // AUTOBOXING
-}
-```
-
 __Q11__
 
 ```
@@ -1724,4 +815,189 @@ FROM students
 INNER JOIN papers
     ON students.id = papers.student_id
 ORDER BY papers.grade DESC
+```
+
+# Java
+
+```
+public class TestStrings {
+
+    // CONSTANTS/static class variables assigned final value before compilation/instantiation
+    public static final String BEFORE_ALL = "Before all tests";
+    public static final String BEFORE_EACH = "Before each test";
+    public static final String AFTER_EACH = "After each test";
+    public static final String AFTER_ALL = "After all tests";
+    public static final String INVALID_VALUE = "Invalid Value";
+    public static final String NOT_IMPLEMENTED_FAIL = "This test is failing because it hasn't been implemented yet";
+}
+
+// OOP INHERITANCE: child subclass inherits public class fields + methods from extending parent super class
+public class PracticeTest extends TestStrings {
+
+    // OOP ENCAPSULATION: use private access modifiers to guard the class fields & methods methods from inappropriate external access
+    private Practice practice;
+
+    @BeforeAll
+    static void beforeAll() {
+        System.out.println(BEFORE_ALL);
+    }
+
+    @BeforeEach
+    void setUp() {
+        System.out.println(BEFORE_EACH);
+        practice = new Practice();
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.out.println(AFTER_EACH);
+    }
+
+    @AfterAll
+    static void afterAll() {
+        System.out.println(AFTER_ALL);
+    }
+
+    @Test
+    void findSingle_badInput() {
+        int[] testInput = {};
+
+        int actual = practice.findSingle(testInput);
+        int expected = -1;
+        assertEqual(actual, expected);
+    }
+
+    @Test
+    void findSingle_alternatingInput() {
+        int[] testInput = {4,1,2,1,2};
+
+        int actual = practice.findSingle(testInput);
+        int expected = 4;
+        assertEqual(actual, expected);
+    }
+
+    @Test
+    void findSingle_repeatingInput() {
+        int[] testInput = {2,2,1};
+
+        int actual = practice.findSingle(testInput);
+        int expected = 1;
+        assertEqual(actual, expected);
+    }
+
+    @Test
+    void findSingle_singleInput() {
+        int[] testInput = {1}
+
+        int actual = practice.findSingle(testInput);
+        int expected = 1;
+        assertEqual(actual, expected);
+    }
+
+    @Test
+    void reverseString_badInput() {
+
+        String testInput = "";
+
+        String actual = practice.reverseString(testInput);
+        assertNull(actual);
+    }
+
+    @Test
+    void reverseString_success() {
+
+        String testInput = "abcde";
+
+        String actual = practice.reverseString(testInput);
+        String expected = "edcba";
+        assertEqual(expected, actual);
+    }
+
+    @Test
+    void reverseString_fail() {
+
+        String testInput = NOT_IMPLEMENTED_FAIL;
+
+        String actual = practice.reverseString(testInput);
+        String expected = INVALID_VALUE;
+        assertNotEquals(expected, actual);
+    }
+}
+```
+
+```
+public class Practice extends TestStrings {
+
+    /**
+     * ? LeetCode 136: Amazon
+     *
+     * ? Given a non-empty array of integers (numbers), every element appears twice except for one. Find the single unique element.
+     *
+     * ? You must implement a solution with a linear runtime complexity and use only constant extra spit.
+     *
+     * * Logic:
+     *      ! use XOR operator: for two same bits, results in 0
+     *      XOR = ^
+     *
+     *      [2,2,1]
+     *
+     *          2 ^ 2 = 0
+     *          0 ^ 1 = 1
+     *
+     *          return 1
+     *
+     * * O(n) linear TIME COMPLEXITY:
+     * worst-case, the number of steps is directly proportional to the length of the input size because getting a value WITHOUT a key will require traversing to the end of a collection
+     *
+     * * O(1) constant TIME COMPLEXITY:
+     * worst-case, getting a value with a key will always take the same number of steps (3)
+     *
+     */
+    public int findSingle(int[] numbers) {
+
+        // EXCEPTION HANDLING look before you leap: use if-else statement to handle exceptions
+        if numbers.length == 0) return -1;
+
+        int uniqueNumbers = numbers[0];
+
+        for(int i = 1; i < numbers.length; i++) {
+            uniqueNumbers = uniqueNumbers ^ numbers[i];
+        }
+
+        return uniqueNumbers;
+    }
+
+    /**
+     * ? LeetCode 344:
+     *
+     * ? Write a function that reverses a String.
+     *
+     * ? The function is given a string of characters & returns a reversed String.
+     *
+     * ! O(n) linear TIME COMPLEXITY:
+     * worst-case, the number of steps is directly proportional to the length of the input size because getting a value WITHOUT a key will require traversing to the end of a collection
+     *
+     * ! O(1) constant SPACE COMPLEXITY: o(1) since it's happening in place
+     * worst-case, getting a value with a key will always take the same number of steps (3)
+     *
+     */
+     public String reverseString(String input) {
+
+        // EXCEPTION HANDLING look before you leap: use if-else statement to handle exceptions
+        if(input.length == 0) return null;
+
+        char letter = ' ';
+        String result = "";
+        int lastLetterIndex = input.length() - 1;
+
+        for(int i = lastLetterIndex; i >= 0; i--) {
+            letter = input.charAt(i);
+            result += letter;
+        }
+
+        return result;
+     }
+
+
+}
 ```

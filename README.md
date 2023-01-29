@@ -278,7 +278,7 @@ public class PC {
 
 __OOP ENCAPSULATION__
 
-use access modifiers to guard the class fields & methods methods from inappropriate external access
+use private access modifiers to guard the class fields & methods methods from inappropriate external access
 
 ```
 
