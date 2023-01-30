@@ -118,6 +118,10 @@ MULTI-TABLE SOLUTION:
 - reference should always be on the left side
 
 "city names"
+=VLOOKUP()
+
+"development category"
+=VLOOKUP()
 ```
 
 <img src="/resources/excel_vlookup_3_solution.png" alt="excel vlookup 3">
@@ -922,6 +926,43 @@ public class PracticeTest extends TestStrings {
         String expected = INVALID_VALUE;
         assertNotEquals(expected, actual);
     }
+
+    @Test
+    void kDiffPairs_badArray() {
+
+        int[] testArray = {};
+        int testK = 2;
+
+        int actual = practice.kDiff(testArray, testK);
+        int expected = -1;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void kDiffPairs_badK() {
+
+        int[] testArray = {3,1,4,1,5};
+        int testK = 0;
+
+        int actual = practice.kDiff(testArray, testK);
+        int expected = -1;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void kDiffPairs_success() {
+
+        int[] testArray = {3,1,4,1,5};
+        int testK = 2;
+
+        int actual = practice.kDiff(testArray, testK);
+        int expected = 3;
+
+        assertEquals(expected, actual);
+    }
+
 }
 ```
 
@@ -998,6 +1039,97 @@ public class Practice extends TestStrings {
         return result;
      }
 
+    /**
+     * ? LeetCode 532:
+     *      Company: Amazon
+     *
+     * ? Given an array of integers numbers and an integer k, return the number of unique k-diff pairs in the array.
+     *
+     * ? A k-diff pair is an integer pair (nums[i], nums[j])
+     *
+     *      where the following are true:
+     *
+     *          i >= 0, j < nums.length
+     *
+     *          i != j
+     *
+     *          k == (nums[i] - nums[j]) 
+     *
+     *          k-diff = (nums[i], nums[j]);
+     *
+     * * Logic:
+     *      define hashmap
+     *          key = element
+     *          value = number of element occurrences
+     *
+     *      iterate over input array and tally values in hashmap
+     *
+     *      iterate over hashmap key values (that has removed duplicate values)
+     *
+     *      subtract the key target from the unique element in the hashmap
+     *      if the kDiff value is equal to another value in the hashmap, they are a kDiff pair
+     *
+     *      Input:
+     *          nums = [3,1,4,1,5]
+     *          k = 2
+     *
+     *      Output: 2
+     *
+     *          There are two 2-diff pairs in the array, (1, 3) and (3, 5).
+     *          Although we have two 1s in the input, we should only return the number of unique pairs.
+     *
+     * * O(n) linear TIME COMPLEXITY
+     * to iterate over input array and hashmap key-set array
+     *
+     * * O(n) linear SPACE COMPLEXITY
+     * to construct hashmap data structure
+     */
+     public int kDiff(int[] numbers, int k) {
+
+        // EXCEPTION HANDLING look before you leap: use if-else statement to handle exceptions
+        if(numbers.length == 0 || k <= 0) return -1;
+
+        int uniquePairs = 0;
+
+        // ! MAPS: an INTERFACE of unique key-value pairs implemented with a HASHMAP or LINKED HASHMAP class that takes 2 GENERIC parameters
+        Map<Integer, Integer> hashmap = buildKDiffHashmap(numbers);
+
+        // iterate over hashmap key set (that has removed duplicate values in original input array)
+        // ! use hashmapInstance.keySet() + hashmapInstance.get(key) = loop through map & return all key-value pairs
+        for(Integer uniqueElement : hashmap.keySet()) {
+
+            // get kDiff by subtracting the key target from the unique element in the hashmap
+            int kDiff = uniqueElement - k;
+            boolean isKDiffPair = hashmap.containsKey(kDiff);
+
+            // if the kDiff value is equal to another value in the hashmap, they are a kDiff pair
+            if(isKDiffPair) uniquePairs++;
+        }
+        return uniquePairs;
+     }
+
+     private Map<Integer, Integer> buildKDiffHashmap(int[] numbers) {
+
+        // EXCEPTION HANDLING look before you leap: use if-else statement to handle exceptions 
+        if(numbers.length == 0) return null;
+
+        Map<Integer, Integer> hashmap = new Hashmap<>();
+
+        // iterate over input array & tally values in hashmap
+        for(int i = 0; i < numbers.length; i++) {
+
+            int key = numbers[i];
+            boolean isMissingKey = !hashmap.contains(key);
+
+            if(isMissingKey) {
+                hashmap.put(key, 1);
+            } else {
+                int incrementedValue = hashmap.get(key) + 1;
+                hashmap.put(key, incrementedValue);
+            }
+        }
+        return hashmap;
+     }
 
 }
 ```
